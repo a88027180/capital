@@ -12,9 +12,8 @@ import java.util.Map;
  * Created by dasiy on 16/12/19.
  */
 @Controller
-@RequestMapping(method = RequestMethod.POST)
 public class MainController {
-    @RequestMapping(value = "/test",method = RequestMethod.POST)
+    @RequestMapping(value = "/test")
     @ResponseBody
     public Map index(){
         Map<String,Object> map=new HashMap<>();

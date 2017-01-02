@@ -1,0 +1,159 @@
+package com.xiyoukeji.service;
+
+import com.xiyoukeji.entity.Evaluate;
+import com.xiyoukeji.entity.EvaluateAvg;
+import com.xiyoukeji.entity.EvaluateRecord;
+import com.xiyoukeji.tools.BaseDao;
+import com.xiyoukeji.tools.Utils;
+import com.xiyoukeji.utils.Core;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Created by dasiy on 16/12/23.
+ */
+@Service
+public class EvaluateService {
+    @Resource
+    BaseDao<Evaluate> evaluateBaseDao;
+    @Resource
+    BaseDao<EvaluateRecord> evaluateRecordBaseDao;
+    @Resource
+    BaseDao<EvaluateAvg> evaluateAvgBaseDao;
+
+    @Transactional
+    public Evaluate getEvaluate(Integer projectId, Integer userId) {
+        Map map = new HashMap<>();
+        map.put("projectId", projectId);
+        map.put("userId", userId);
+        return evaluateBaseDao.get(" from Evaluate where project.id = :projectId and user.id = :userId order by updateTime desc", map);
+    }
+
+    @Transactional
+    public List<Evaluate> getEvaluateList(Integer projectId, Integer userId, int number) {
+        if (userId == null) {
+            return evaluateBaseDao.find("from Evaluate where project.id = " + projectId + " group by user.id order by updateTime desc");
+        } else {
+            Map map = new HashMap<>();
+            map.put("projectId", projectId);
+            map.put("userId", userId);
+            return evaluateBaseDao.find(" from Evaluate where project.id = :projectId and user.id = :userId order by updateTime desc", 1, number, map);
+        }
+    }
+
+    @Transactional
+    public EvaluateAvg getEvaluateAvg(Integer projectId) {
+        Map map = new HashMap<>();
+        map.put("projectId", projectId);
+        return evaluateAvgBaseDao.get(" from EvaluateAvg where project.id = :projectId", map);
+    }
+
+    @Transactional
+    public List<EvaluateAvg> getEvaluateAvgList(Integer projectId, int number) {
+        Map map = new HashMap<>();
+        map.put("projectId", projectId);
+        return evaluateAvgBaseDao.find(" from EvaluateAvg where project.id = :projectId", 1, number, map);
+    }
+
+    @Transactional
+    public List<EvaluateRecord> getEvaluateRecordList(int number) {
+        return evaluateRecordBaseDao.find(" from EvaluateRecord order by updateTime desc", 1, number, null);
+    }
+
+    @Transactional
+    public Integer saveorupdateEvaluate(Evaluate evaluate) {
+        /*想插入记录 根据project.id,user.id,quarter判断saveorupdate
+        如果是save:根据project.id,quarter判断avg中saveorupdate
+            save:evaluate-evaluateAvg,save
+            update:setAvg,update
+        如果是update:直接update evaluateAvg*/
+        EvaluateRecord evaluateRecord = new EvaluateRecord();
+//        EvaluateAvg evaluateAvg = new EvaluateAvg();
+        evaluate.setUpdateTime(Utils.getTime());
+        evaluate.setQuarter(Utils.getQuarter());
+
+        /*record*/
+        try {
+            Utils.reflectionAttr(evaluate, evaluateRecord);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        evaluateRecordBaseDao.save(evaluateRecord);
+
+        Map map = new HashMap<>();
+        map.put("projectId", evaluate.getProject().getId());
+        map.put("userId", evaluate.getUser().getId());
+        map.put("quarter", evaluate.getQuarter());
+        Evaluate evaluate1 = evaluateBaseDao.get("from Evaluate where project.id = :projectId and user.id = :userId and quarter = :quarter", map);
+        EvaluateAvg evaluateAvg1 = evaluateAvgBaseDao.get("from EvaluateAvg where project.id = " + evaluate.getProject().getId() + " and quarter = '" + evaluate.getQuarter() + "'");
+        if (evaluate1 == null) {
+            evaluate1 = evaluate;
+            /*save*/
+            if (evaluateAvg1 == null) {
+                try {
+                    evaluateAvg1 = new EvaluateAvg();
+                    Utils.reflectionAttr(evaluate, evaluateAvg1);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                evaluateAvg1.setItem_all(evaluateAvg1.getItem_all() + evaluate1.getItem_all());
+                evaluateAvg1.setItem_one(evaluateAvg1.getItem_one() + evaluate1.getItem_one());
+                evaluateAvg1.setItem_two(evaluateAvg1.getItem_two() + evaluate1.getItem_two());
+                evaluateAvg1.setItem_three(evaluateAvg1.getItem_three() + evaluate1.getItem_three());
+                evaluateAvg1.setItem_four(evaluateAvg1.getItem_four() + evaluate1.getItem_four());
+                evaluateAvg1.setItem_five(evaluateAvg1.getItem_five() + evaluate1.getItem_five());
+                evaluateAvg1.setItem_six(evaluateAvg1.getItem_six() + evaluate1.getItem_six());
+                evaluateAvg1.setItem_seven(evaluateAvg1.getItem_seven() + evaluate1.getItem_seven());
+                evaluateAvg1.setItem_eight(evaluateAvg1.getItem_eight() + evaluate1.getItem_eight());
+                evaluateAvg1.setItem_nine(evaluateAvg1.getItem_nine() + evaluate1.getItem_nine());
+                evaluateAvg1.setItem_ten(evaluateAvg1.getItem_ten() + evaluate1.getItem_ten());
+                evaluateAvg1.setNumber(evaluateAvg1.getNumber() + 1);
+                evaluateAvg1.setUpdateTime(Utils.getTime());
+            }
+
+
+        } else {
+
+            evaluateAvg1.setItem_all(evaluateAvg1.getItem_all() - evaluate1.getItem_all() + evaluate.getItem_all());
+            evaluateAvg1.setItem_one(evaluateAvg1.getItem_one() - evaluate1.getItem_one() + evaluate.getItem_one());
+            evaluateAvg1.setItem_two(evaluateAvg1.getItem_two() - evaluate1.getItem_two() + evaluate.getItem_two());
+            evaluateAvg1.setItem_three(evaluateAvg1.getItem_three() - evaluate1.getItem_three() + evaluate.getItem_three());
+            evaluateAvg1.setItem_four(evaluateAvg1.getItem_four() - evaluate1.getItem_four() + evaluate.getItem_four());
+            evaluateAvg1.setItem_five(evaluateAvg1.getItem_five() - evaluate1.getItem_five() + evaluate.getItem_five());
+            evaluateAvg1.setItem_six(evaluateAvg1.getItem_six() - evaluate1.getItem_six() + evaluate.getItem_six());
+            evaluateAvg1.setItem_seven(evaluateAvg1.getItem_seven() - evaluate1.getItem_seven() + evaluate.getItem_seven());
+            evaluateAvg1.setItem_eight(evaluateAvg1.getItem_eight() - evaluate1.getItem_eight() + evaluate.getItem_eight());
+            evaluateAvg1.setItem_nine(evaluateAvg1.getItem_nine() - evaluate1.getItem_nine() + evaluate.getItem_nine());
+            evaluateAvg1.setItem_ten(evaluateAvg1.getItem_ten() - evaluate1.getItem_ten() + evaluate.getItem_ten());
+            evaluateAvg1.setUpdateTime(Utils.getTime());
+
+            evaluate1.setItem_all(evaluate.getItem_all());
+            evaluate1.setItem_one(evaluate.getItem_one());
+            evaluate1.setItem_two(evaluate.getItem_two());
+            evaluate1.setItem_three(evaluate.getItem_three());
+            evaluate1.setItem_four(evaluate.getItem_four());
+            evaluate1.setItem_five(evaluate.getItem_five());
+            evaluate1.setItem_six(evaluate.getItem_six());
+            evaluate1.setItem_seven(evaluate.getItem_seven());
+            evaluate1.setItem_eight(evaluate.getItem_eight());
+            evaluate1.setItem_nine(evaluate.getItem_nine());
+            evaluate1.setItem_ten(evaluate.getItem_ten());
+            evaluate1.setUpdateTime(Utils.getTime());
+            evaluate1.setQuarter(Utils.getQuarter());
+
+
+        }
+
+        evaluateAvgBaseDao.saveOrUpdate(evaluateAvg1);
+        evaluateBaseDao.saveOrUpdate(evaluate1);
+        return evaluate.getProject().getId();
+    }
+
+}
