@@ -28,8 +28,8 @@ public class RoleService {
         Map map = new HashMap<>();
         if (session.getAttribute("userId") == null) {
             map.put("exception", 0);
-        } else if ((int) session.getAttribute("roleId") != 2) {
-            map.put("exception", 1);
+        } else if ((int) session.getAttribute("roleId") != 1) {
+            map.put("exception", session.getAttribute("roleId"));
         } else {
             baseDao.saveOrUpdate(role);
             map.put("roleId", role.getId());

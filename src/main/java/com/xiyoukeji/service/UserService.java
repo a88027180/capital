@@ -27,7 +27,7 @@ public class UserService {
         Map map = new HashMap<>();
         if (session.getAttribute("userId") == null) {
             map.put("exception", 0);
-        } else if ((int) session.getAttribute("roleId") != 2) {
+        } else if ((int) session.getAttribute("roleId") != 1) {
             map.put("exception", 1);
         } else {
             baseDao.saveOrUpdate(user);
@@ -65,7 +65,7 @@ public class UserService {
         Map map = new HashMap<>();
         if (session.getAttribute("userId") == null) {
             map.put("exception", 0);
-        } else if ((int) session.getAttribute("roleId") != 2) {
+        } else if ((int) session.getAttribute("roleId") != 1) {
             map.put("exception", 1);
         } else {
             User user = baseDao.get(User.class, id);

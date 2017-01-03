@@ -29,7 +29,7 @@ public class CommentService {
         Map map = new HashMap<>();
         if (session.getAttribute("userId") == null) {
             map.put("exception", 0);
-        } else if ((int) session.getAttribute("roleId") != 2) {
+        } else if ((int) session.getAttribute("roleId") != 1) {
             map.put("exception", 1);
         } else {
             baseDao.saveOrUpdate(commentTab);
@@ -45,7 +45,7 @@ public class CommentService {
         Map map = new HashMap<>();
         if (session.getAttribute("userId") == null) {
             map.put("exception", 0);
-        } else if ((int) session.getAttribute("roleId") != 2) {
+        } else if ((int) session.getAttribute("roleId") != 1) {
             map.put("exception", 1);
         } else {
             CommentTab commentTab = baseDao.get(CommentTab.class, id);
