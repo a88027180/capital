@@ -26,16 +26,16 @@ public class RoleService {
     public Map saveorupdateRole(Role role) {
 
         Map map = new HashMap<>();
-        if (session.getAttribute("userId") == null) {
-            map.put("exception", 0);
-        } else if ((int) session.getAttribute("roleId") != 1) {
-            map.put("exception", session.getAttribute("roleId"));
-        } else {
+//        if (session.getAttribute("userId") == null) {
+//            map.put("exception", 0);
+//        } else if ((int) session.getAttribute("roleId") != 1) {
+//            map.put("exception", session.getAttribute("roleId"));
+//        } else {
             baseDao.saveOrUpdate(role);
             map.put("roleId", role.getId());
             if (role.getAuthority() != null) {
                 map.put("authorityId", role.getAuthority().getId());
-            }
+//            }
         }
 
 
