@@ -52,7 +52,7 @@ public class UserController {
                 e.printStackTrace();
             }
         }
-        return MapTool.Mapok().put("data", list);
+        return MapTool.Mapok().put("data", MapTool.Map().put("list", list));
     }
 
     /*获取用户信息*/
