@@ -38,10 +38,13 @@ public class FileService {
     }
 
     @Transactional
-    public Integer saveorupdatePhoto(MultipartFile file) {
+    public Map saveorupdatePhoto(MultipartFile file) {
+        Map map = new HashMap<>();
         File file1 = upload(file);
         baseDao.save(file1);
-        return file1.getId();
+        map.put("fileId",file1.getId());
+        map.put("fileUrl",file1.getUrl());
+        return map;
     }
 
     public File upload(MultipartFile file) {

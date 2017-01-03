@@ -30,7 +30,7 @@ public class FileController {
     @RequestMapping(value = "/uploadFile")
     @ResponseBody
     public Map saveorupdatePhoto(MultipartFile file) {
-        return MapTool.Mapok().put("data", MapTool.Map().put("fileId", fileService.saveorupdatePhoto(file)));
+        return MapTool.Mapok().put("data", fileService.saveorupdatePhoto(file));
     }
 
     /*保存视频文件*/
