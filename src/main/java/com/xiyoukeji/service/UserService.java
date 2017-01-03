@@ -68,6 +68,7 @@ public class UserService {
 //        } else if ((int) session.getAttribute("roleId") != 1) {
 //            map.put("exception", 1);
 //        } else {
+
             User user = baseDao.get(User.class, id);
             user.setAvailable(0);
             baseDao.update(user);
