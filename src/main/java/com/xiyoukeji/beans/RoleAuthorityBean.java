@@ -17,10 +17,10 @@ public class RoleAuthorityBean {
 
     private int project_grade;
     private int notice_publish;
-    private int file_one;
-    private int file_two;
-    private int file_three;
-    private int file_four;
+    private int file_report;
+    private int file_schedule;
+    private int file_manage;
+    private int file_profit;
 
     public Integer getId() {
         return id;
@@ -70,35 +70,35 @@ public class RoleAuthorityBean {
         this.notice_publish = notice_publish;
     }
 
-    public int getFile_one() {
-        return file_one;
+    public int getFile_report() {
+        return file_report;
     }
 
-    public void setFile_one(int file_one) {
-        this.file_one = file_one;
+    public void setFile_report(int file_report) {
+        this.file_report = file_report;
     }
 
-    public int getFile_two() {
-        return file_two;
+    public int getFile_schedule() {
+        return file_schedule;
     }
 
-    public void setFile_two(int file_two) {
-        this.file_two = file_two;
+    public void setFile_schedule(int file_schedule) {
+        this.file_schedule = file_schedule;
     }
 
-    public int getFile_three() {
-        return file_three;
+    public int getFile_manage() {
+        return file_manage;
     }
 
-    public void setFile_three(int file_three) {
-        this.file_three = file_three;
+    public void setFile_manage(int file_manage) {
+        this.file_manage = file_manage;
     }
 
-    public int getFile_four() {
-        return file_four;
+    public int getFile_profit() {
+        return file_profit;
     }
 
-    public void setFile_four(int file_four) {
-        this.file_four = file_four;
+    public void setFile_profit(int file_profit) {
+        this.file_profit = file_profit;
     }
 }
