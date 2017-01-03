@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +25,10 @@ import java.util.Map;
 public class UserController {
     @Resource
     UserService userService;
+    @Resource
+    HttpSession session;
+    @Resource
+    HttpServletRequest request;
 
     @ExceptionHandler
     @ResponseBody
@@ -80,7 +86,7 @@ public class UserController {
     /*登录*/
     @RequestMapping(value = "/login")
     @ResponseBody
-    public Map login(User user) {
+    public Map login(User user, HttpServletRequest request) {
         int flag = userService.login(user);
         return MapTool.Mapok().put("data", MapTool.Map().put("userId", flag));
     }

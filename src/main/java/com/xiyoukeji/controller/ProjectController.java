@@ -43,13 +43,14 @@ public class ProjectController {
     @ResponseBody
     public Map getProjectList(Search search) {
         List<ProjectBean> list = new ArrayList<>();
-        List<Project> projects = projectService.getProjecList(search);
+        Map map = projectService.getProjecList(search);
+        List<Project> projects = (List<Project>) map.get("list");
         for (int i = 0; i < projects.size(); i++) {
             ProjectBean projectBean = new ProjectBean();
             Core.assignDest(projectBean, projects.get(i));
             list.add(projectBean);
         }
-        return MapTool.Mapok().put("data", MapTool.Map().put("list", list));
+        return MapTool.Mapok().put("data", MapTool.Map().put("count", map.get("count")).put("list", list));
     }
 
     /*获取项目*/

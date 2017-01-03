@@ -9,7 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by dasiy on 16/12/21.
@@ -111,7 +113,8 @@ public class ProjectService {
     }
 
     @Transactional
-    public List<Project> getProjecList(Search search) {
+    public Map getProjecList(Search search) {
+        Map map = new HashMap<>();
         List<Project> list = new ArrayList<>();
         String sql = "from Project where ";
         if (search.getProjectId() != null) {
@@ -190,8 +193,10 @@ public class ProjectService {
         }
         sql += "1=1";
         list = projectBaseDao.find(sql, search.getPage(), search.getLine(), null);
-
-        return list;
+        long count = projectBaseDao.count(sql);
+        map.put("list", list);
+        map.put("count", count);
+        return map;
     }
 
     @Transactional
