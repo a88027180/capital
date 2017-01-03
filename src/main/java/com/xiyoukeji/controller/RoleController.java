@@ -23,6 +23,7 @@ public class RoleController {
     @Resource
     RoleService roleService;
 
+
     @ExceptionHandler
     @ResponseBody
     public Map exception(RuntimeException runtimeException) {

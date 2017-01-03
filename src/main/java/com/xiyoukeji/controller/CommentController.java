@@ -43,8 +43,7 @@ public class CommentController {
     @RequestMapping(value = "/deleteCommentTab")
     @ResponseBody
     public Map deleteCommentTab(Integer id) {
-        commentService.deleteCommentTab(id);
-        return MapTool.Mapok();
+        return MapTool.Mapok().put("commentId", commentService.deleteCommentTab(id));
     }
 
     /*获取评论标签*/

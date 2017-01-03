@@ -40,7 +40,7 @@ public class UserController {
     @RequestMapping(value = "/saveorupdateUser")
     @ResponseBody
     public Map saveorupdateUser(User user) {
-        return MapTool.Mapok().put("data", MapTool.Map().put("userId", userService.saveorupdateUser(user)));
+        return MapTool.Mapok().put("data", userService.saveorupdateUser(user));
     }
 
     /*获取用户列表*/
@@ -75,18 +75,17 @@ public class UserController {
         return MapTool.Mapok().put("data", MapTool.Map().put("user", user));
     }
 
-    /*获取用户信息*/
+    /*删除用户信息*/
     @RequestMapping(value = "/deleteUser")
     @ResponseBody
     public Map deleteUser(Integer id) {
-        userService.deleteUser(id);
-        return MapTool.Mapok();
+        return MapTool.Mapok().put("data", userService.deleteUser(id));
     }
 
     /*登录*/
     @RequestMapping(value = "/login")
     @ResponseBody
-    public Map login(User user, HttpServletRequest request) {
+    public Map login(User user) {
         int flag = userService.login(user);
         return MapTool.Mapok().put("data", MapTool.Map().put("userId", flag));
     }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,11 +19,22 @@ import java.util.Map;
 public class UserService {
     @Resource
     BaseDao<User> baseDao;
+    @Resource
+    HttpSession session;
 
     @Transactional
-    public Integer saveorupdateUser(User user) {
-        baseDao.saveOrUpdate(user);
-        return user.getId();
+    public Map saveorupdateUser(User user) {
+        Map map = new HashMap<>();
+        if (session.getAttribute("userId") == null) {
+            map.put("exception", 0);
+        } else if ((int) session.getAttribute("roleId") != 2) {
+            map.put("exception", 1);
+        } else {
+            baseDao.saveOrUpdate(user);
+            map.put("userId", user.getId());
+        }
+        return map;
+
     }
 
     @Transactional
@@ -49,10 +61,19 @@ public class UserService {
     }
 
     @Transactional
-    public void deleteUser(Integer id) {
-        User user = baseDao.get(User.class, id);
-        user.setAvailable(0);
-        baseDao.update(user);
+    public Map deleteUser(Integer id) {
+        Map map = new HashMap<>();
+        if (session.getAttribute("userId") == null) {
+            map.put("exception", 0);
+        } else if ((int) session.getAttribute("roleId") != 2) {
+            map.put("exception", 1);
+        } else {
+            User user = baseDao.get(User.class, id);
+            user.setAvailable(0);
+            baseDao.update(user);
+            map.put("userId", user.getId());
+        }
+        return map;
     }
 
     @Transactional
@@ -65,6 +86,8 @@ public class UserService {
         if (list.size() == 0) {
             return 0;
         } else {
+            session.setAttribute("userId", list.get(0).getId());
+            session.setAttribute("roleId", list.get(0).getRole().getId());
             return list.get(0).getId();
         }
 
