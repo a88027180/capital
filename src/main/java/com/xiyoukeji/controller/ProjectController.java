@@ -36,7 +36,7 @@ public class ProjectController {
     @ResponseBody
     public Map saveorupdateProject(String strProject, int type) {
         Project project = new Gson().fromJson(strProject, Project.class);
-        return MapTool.Mapok().put("data", MapTool.Map().put("projectId", projectService.saveorupdateProject(project, type)));
+        return MapTool.Mapok().put("data", projectService.saveorupdateProject(project, type));
 
     }
 

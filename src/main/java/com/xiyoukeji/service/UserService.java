@@ -30,11 +30,11 @@ public class UserService {
 //        } else if ((int) session.getAttribute("roleId") != 1) {
 //            map.put("exception", 1);
 //        } else {
-        if (user.getId() == null){
+        if (user.getId() == null) {
 
         }
-            baseDao.saveOrUpdate(user);
-            map.put("userId", user.getId());
+        baseDao.saveOrUpdate(user);
+        map.put("userId", user.getId());
 //        }
         return map;
 
@@ -72,10 +72,10 @@ public class UserService {
 //            map.put("exception", 1);
 //        } else {
 
-            User user = baseDao.get(User.class, id);
-            user.setAvailable(0);
-            baseDao.update(user);
-            map.put("userId", user.getId());
+        User user = baseDao.get(User.class, id);
+        user.setAvailable(0);
+        baseDao.update(user);
+        map.put("userId", user.getId());
 //        }
         return map;
     }
@@ -90,8 +90,7 @@ public class UserService {
         if (list.size() == 0) {
             return 0;
         } else {
-            session.setAttribute("userId", list.get(0).getId());
-            session.setAttribute("roleId", list.get(0).getRole().getId());
+            session.setAttribute("user", list.get(0));
             return list.get(0).getId();
         }
 
