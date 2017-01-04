@@ -18,6 +18,7 @@ import java.util.List;
 @AssignType
 public class ProjectUserBean {
     private Integer id;
+    private FileBean photo;
     private String userName;
     private String password;
     private UserRoleBean role;
@@ -27,6 +28,14 @@ public class ProjectUserBean {
     private String phone;
     private int isBand;
     private int available;
+
+    public FileBean getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(FileBean photo) {
+        this.photo = photo;
+    }
 
     public UserRoleBean getRole() {
         return role;

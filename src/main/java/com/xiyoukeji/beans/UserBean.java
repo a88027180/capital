@@ -1,5 +1,6 @@
 package com.xiyoukeji.beans;
 
+import com.xiyoukeji.entity.File;
 import com.xiyoukeji.entity.Role;
 import com.xiyoukeji.utils.AssignType;
 
@@ -12,6 +13,7 @@ import java.util.List;
 @AssignType
 public class UserBean {
     private Integer id;
+    private FileBean photo;
     private String userName;
     private String password;
     private UserRoleBean role;
@@ -121,6 +123,14 @@ public class UserBean {
 //        this.list_project = list_project;
 //    }
 
+
+    public FileBean getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(FileBean photo) {
+        this.photo = photo;
+    }
 
     public List<UserFoundationBean> getList_foundation() {
         return list_foundation;
