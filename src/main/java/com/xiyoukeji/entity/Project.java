@@ -42,9 +42,9 @@ public class Project {
     @ElementCollection
     private List<String> tab = new ArrayList<>();
     @ManyToMany
-    @JoinTable(name = "user_project", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "user_id")})
     private List<User> project_member = new ArrayList<>();
-    @OneToOne
+    @ManyToOne
+    @JoinTable(name = "user_project", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "user_id")})
     private User createUser;
     private String project_reason;
     private String company_name;
@@ -62,7 +62,9 @@ public class Project {
     private String subscription_money;
     private String project_resource;
     private String project_address;
+    private String project_evaluates;
     private String project_introducer;
+    private String project_introducer_tel;
     private String valuation_afterInvest;
     private String valuation_state;
     private String money_thisTime;
@@ -89,6 +91,22 @@ public class Project {
     @OneToOne
     @JoinTable(name = "project_projectFile", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "projectFile_id")})
     private ProjectFile projectFile;
+
+    public String getProject_evaluates() {
+        return project_evaluates;
+    }
+
+    public void setProject_evaluates(String project_evaluates) {
+        this.project_evaluates = project_evaluates;
+    }
+
+    public String getProject_introducer_tel() {
+        return project_introducer_tel;
+    }
+
+    public void setProject_introducer_tel(String project_introducer_tel) {
+        this.project_introducer_tel = project_introducer_tel;
+    }
 
     public ProjectFile getProjectFile() {
         return projectFile;

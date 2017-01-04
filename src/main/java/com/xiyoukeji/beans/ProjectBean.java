@@ -42,8 +42,10 @@ public class ProjectBean {
     private String subscription_amount;
     private String subscription_money;
     private String project_resource;
+    private String project_evaluates;
     private String project_address;
     private String project_introducer;
+    private String project_introducer_tel;
     private String valuation_afterInvest;
     private String valuation_state;
     private String money_thisTime;
@@ -60,6 +62,22 @@ public class ProjectBean {
 //    private List<NoteBean> project_notes = new ArrayList<>();
 //    private List<EvaluateBean> project_evaluate = new ArrayList<>();
     private FileBean video;
+
+    public String getProject_evaluates() {
+        return project_evaluates;
+    }
+
+    public void setProject_evaluates(String project_evaluates) {
+        this.project_evaluates = project_evaluates;
+    }
+
+    public String getProject_introducer_tel() {
+        return project_introducer_tel;
+    }
+
+    public void setProject_introducer_tel(String project_introducer_tel) {
+        this.project_introducer_tel = project_introducer_tel;
+    }
 
     public FileBean getVideo() {
         return video;
