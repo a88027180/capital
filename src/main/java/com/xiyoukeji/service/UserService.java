@@ -95,4 +95,9 @@ public class UserService {
         }
 
     }
+
+    @Transactional
+    public void logout() {
+        session.removeAttribute("user");
+    }
 }

@@ -90,4 +90,11 @@ public class UserController {
         return MapTool.Mapok().put("data", MapTool.Map().put("userId", flag));
     }
 
+    /*注销*/
+    @RequestMapping(value = "/logout")
+    @ResponseBody
+    public Map logout() {
+        userService.logout();
+        return MapTool.Mapok();
+    }
 }

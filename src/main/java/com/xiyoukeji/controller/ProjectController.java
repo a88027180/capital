@@ -40,7 +40,6 @@ public class ProjectController {
     @ResponseBody
     public Map saveorupdateProject(String strProject, int type) {
         Project project = new Gson().fromJson(strProject, Project.class);
-        Map map = new HashMap<>();
         if (session.getAttribute("user") == null) {
             return MapTool.Map().put("code", 2);
         } else {
@@ -52,15 +51,21 @@ public class ProjectController {
     @RequestMapping(value = "/getProjectList")
     @ResponseBody
     public Map getProjectList(Search search) {
-        List<ProjectBean> list = new ArrayList<>();
-        Map map = projectService.getProjecList(search);
-        List<Project> projects = (List<Project>) map.get("list");
-        for (int i = 0; i < projects.size(); i++) {
-            ProjectBean projectBean = new ProjectBean();
-            Core.assignDest(projectBean, projects.get(i));
-            list.add(projectBean);
+        if (session.getAttribute("user") == null) {
+            return MapTool.Map().put("code", 2);
+        } else {
+
+            List<ProjectBean> list = new ArrayList<>();
+            Map map = projectService.getProjecList(search);
+            List<Project> projects = (List<Project>) map.get("list");
+            for (int i = 0; i < projects.size(); i++) {
+                ProjectBean projectBean = new ProjectBean();
+                Core.assignDest(projectBean, projects.get(i));
+                list.add(projectBean);
+            }
+            return MapTool.Mapok().put("data", MapTool.Map().put("count", map.get("count")).put("list", list));
         }
-        return MapTool.Mapok().put("data", MapTool.Map().put("count", map.get("count")).put("list", list));
+
     }
 
     /*获取项目*/
