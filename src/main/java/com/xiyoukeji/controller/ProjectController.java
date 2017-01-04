@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.xiyoukeji.beans.ProjectBean;
 import com.xiyoukeji.beans.Search;
 import com.xiyoukeji.entity.Project;
+import com.xiyoukeji.entity.User;
 import com.xiyoukeji.service.ProjectService;
 import com.xiyoukeji.tools.MapTool;
 import com.xiyoukeji.utils.Core;
@@ -29,6 +30,7 @@ public class ProjectController {
     @Resource
     HttpSession session;
 
+
     @ExceptionHandler
     @ResponseBody
     public Map exception(RuntimeException runtimeException) {
@@ -39,8 +41,9 @@ public class ProjectController {
     @RequestMapping(value = "/saveorupdateProject")
     @ResponseBody
     public Map saveorupdateProject(String strProject, int type) {
+        User user1 = (User)session.getAttribute("user");
         Project project = new Gson().fromJson(strProject, Project.class);
-        if (session.getAttribute("user") == null) {
+        if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
             return MapTool.Mapok().put("data", projectService.saveorupdateProject(project, type));
@@ -51,10 +54,10 @@ public class ProjectController {
     @RequestMapping(value = "/getProjectList")
     @ResponseBody
     public Map getProjectList(Search search) {
-        if (session.getAttribute("user") == null) {
+        User user1 = (User)session.getAttribute("user");
+        if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
-
             List<ProjectBean> list = new ArrayList<>();
             Map map = projectService.getProjecList(search);
             List<Project> projects = (List<Project>) map.get("list");
@@ -72,24 +75,39 @@ public class ProjectController {
     @RequestMapping(value = "/getProject")
     @ResponseBody
     public Map getProject(Integer id) {
-        ProjectBean projectBean = new ProjectBean();
-        Project project = projectService.getProject(id);
-        Core.assignDest(projectBean, project);
-        return MapTool.Mapok().put("data", MapTool.Map().put("project", projectBean));
+        User user1 = (User)session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else {
+            ProjectBean projectBean = new ProjectBean();
+            Project project = projectService.getProject(id);
+            Core.assignDest(projectBean, project);
+            return MapTool.Mapok().put("data", MapTool.Map().put("project", projectBean));
+        }
     }
 
     /*添加或删除标签*/
     @RequestMapping(value = "/addordeleteProjectTab")
     @ResponseBody
     public Map addordeleteProjectTab(int type, Integer projectId, String tab) {
-        return MapTool.Mapok().put("data", MapTool.Map().put("projectId", projectService.addordeleteProjectTab(type, projectId, tab)));
+        User user1 = (User)session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else {
+            return MapTool.Mapok().put("data", MapTool.Map().put("projectId", projectService.addordeleteProjectTab(type, projectId, tab)));
+        }
     }
 
     /*添加或删除项目成员*/
     @RequestMapping(value = "/addordeleteProjectMember")
     @ResponseBody
     public Map addordeleteProjectMember(int type, Integer projectId, Integer userId) {
-        return MapTool.Mapok().put("data", MapTool.Map().put("projectId", projectService.addordeleteProjectMember(type, projectId, userId)));
+        User user1 = (User)session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else {
+            return MapTool.Mapok().put("data", MapTool.Map().put("projectId", projectService.addordeleteProjectMember(type, projectId, userId)));
+        }
     }
 
 

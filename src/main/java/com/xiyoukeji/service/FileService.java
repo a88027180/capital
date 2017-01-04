@@ -20,6 +20,8 @@ public class FileService {
     ServletContext servletContext;
     @Resource
     BaseDao<File> baseDao;
+    @Resource
+    BaseDao<FileEvaluate> fileEvaluateBaseDao;
     final Map<String, String> mimeType = new HashMap<>();
 
     public FileService() {
@@ -42,8 +44,8 @@ public class FileService {
         Map map = new HashMap<>();
         File file1 = upload(file);
         baseDao.save(file1);
-        map.put("fileId",file1.getId());
-        map.put("fileUrl",file1.getUrl());
+        map.put("fileId", file1.getId());
+        map.put("fileUrl", file1.getUrl());
         return map;
     }
 
@@ -78,5 +80,40 @@ public class FileService {
         file.setUrl(url);
         baseDao.saveOrUpdate(file);
         return file.getId();
+    }
+
+    @Transactional
+    public Map saveorupdateEvaluate(MultipartFile file) {
+        Map map = new HashMap<>();
+        FileEvaluate file1 = uploadEvaluate(file);
+        fileEvaluateBaseDao.save(file1);
+        map.put("fileId", file1.getId());
+        map.put("fileUrl", file1.getUrl());
+        return map;
+    }
+
+    public FileEvaluate uploadEvaluate(MultipartFile file) {
+        if (mimeType.containsKey(file.getContentType())) {
+            String path = servletContext.getRealPath("/") + "Evaluates/", suffix = "." + mimeType.get(file.getContentType());
+            String file_name = UUID.randomUUID().toString() + suffix;
+            String url = "/Evaluates/" + file_name;
+            return saveToEvaluateFile(file, path, file_name, url);
+        } else
+            throw new MultipartException("type error");
+    }
+
+    private FileEvaluate saveToEvaluateFile(MultipartFile file, String path, String file_name, String url) {
+        FileEvaluate file1 = new FileEvaluate();
+        file1.setUrl(url);
+        java.io.File dir = new java.io.File(path);
+        if (!dir.exists()) dir.mkdir();
+        String all_name = path + file_name;
+        java.io.File all = new java.io.File(all_name);
+        try {
+            file.transferTo(all);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return file1;
     }
 }

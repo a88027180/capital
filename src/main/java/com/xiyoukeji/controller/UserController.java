@@ -30,56 +30,83 @@ public class UserController {
     @Resource
     HttpServletRequest request;
 
+
     @ExceptionHandler
     @ResponseBody
     public Map exception(RuntimeException runtimeException) {
         return MapTool.Map().put("code", "1").put("msg", runtimeException.getMessage());
     }
 
-    /*创建或编辑用户*/
+    /*创建或编辑用户 管理员权限*/
     @RequestMapping(value = "/saveorupdateUser")
     @ResponseBody
     public Map saveorupdateUser(User user) {
-        return MapTool.Mapok().put("data", userService.saveorupdateUser(user));
+        User user1 = (User)session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else if (user1.getRole().getType() != 2) {
+            return MapTool.Map().put("code", 3);
+        } else {
+            return MapTool.Mapok().put("data", userService.saveorupdateUser(user));
+        }
+
     }
 
     /*获取用户列表*/
     @RequestMapping(value = "/getUserList")
     @ResponseBody
     public Map getUserList(int type) {
-        List<UserBean> list = new ArrayList<>();
-        List<User> users = userService.getUserList(type);
-        for (int i = 0; i < users.size(); i++) {
-            UserBean user = new UserBean();
-            try {
-                Core.assignDest(user, users.get(i));
-                list.add(user);
-            } catch (Exception e) {
-                e.printStackTrace();
+        User user1 = (User)session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else {
+            List<UserBean> list = new ArrayList<>();
+            List<User> users = userService.getUserList(type);
+            for (int i = 0; i < users.size(); i++) {
+                UserBean user = new UserBean();
+                try {
+                    Core.assignDest(user, users.get(i));
+                    list.add(user);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
+            return MapTool.Mapok().put("data", MapTool.Map().put("list", list));
         }
-        return MapTool.Mapok().put("data", MapTool.Map().put("list", list));
+
     }
 
     /*获取用户信息*/
     @RequestMapping(value = "/getUser")
     @ResponseBody
-    public Map getUser(Integer id) {
-        UserBean user = new UserBean();
-        try {
-            Core.assignDest(user, userService.getUser(id));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public Map getUser() {
+        User user1 = (User)session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else {
+            UserBean user = new UserBean();
+            try {
+                Core.assignDest(user, userService.getUser(user1.getId()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-        return MapTool.Mapok().put("data", MapTool.Map().put("user", user));
+            return MapTool.Mapok().put("data", MapTool.Map().put("user", user));
+        }
     }
 
-    /*删除用户信息*/
+    /*删除用户信息 管理员权限*/
     @RequestMapping(value = "/deleteUser")
     @ResponseBody
     public Map deleteUser(Integer id) {
-        return MapTool.Mapok().put("data", userService.deleteUser(id));
+        User user1 = (User)session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else if (user1.getRole().getType() != 2) {
+            return MapTool.Map().put("code", 3);
+        } else {
+            return MapTool.Mapok().put("data", userService.deleteUser(id));
+        }
     }
 
     /*登录*/
@@ -97,4 +124,5 @@ public class UserController {
         userService.logout();
         return MapTool.Mapok();
     }
+
 }

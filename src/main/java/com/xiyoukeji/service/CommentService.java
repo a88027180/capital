@@ -27,15 +27,8 @@ public class CommentService {
 
 
         Map map = new HashMap<>();
-//        if (session.getAttribute("userId") == null) {
-//            map.put("exception", 0);
-//        } else if ((int) session.getAttribute("roleId") != 1) {
-//            map.put("exception", 1);
-//        } else {
-            baseDao.saveOrUpdate(commentTab);
-            map.put("commentId", commentTab.getId());
-
-//        }
+        baseDao.saveOrUpdate(commentTab);
+        map.put("commentId", commentTab.getId());
         return map;
     }
 
@@ -43,16 +36,10 @@ public class CommentService {
     public Map deleteCommentTab(Integer id) {
         /*标签被删除,状态设置成0*/
         Map map = new HashMap<>();
-//        if (session.getAttribute("userId") == null) {
-//            map.put("exception", 0);
-//        } else if ((int) session.getAttribute("roleId") != 1) {
-//            map.put("exception", 1);
-//        } else {
-            CommentTab commentTab = baseDao.get(CommentTab.class, id);
-            commentTab.setState(0);
-            baseDao.update(commentTab);
-            map.put("commentId", commentTab.getId());
-//        }
+        CommentTab commentTab = baseDao.get(CommentTab.class, id);
+        commentTab.setState(0);
+        baseDao.update(commentTab);
+        map.put("commentId", commentTab.getId());
         return map;
 
 

@@ -129,7 +129,7 @@ public class ProjectService {
 
     @Transactional
     public Map getProjecList(Search search) {
-        User user = (User) session.getAttribute("user");
+        User user1 = (User)session.getAttribute("user");
         Map map = new HashMap<>();
         List<Project> list = new ArrayList<>();
         String sql = "from Project where ";
@@ -145,10 +145,10 @@ public class ProjectService {
         if (search.getProject_type() != null) {
             switch (search.getProject_type()) {
                 case 0:
-                    sql += "state = 0 and createUser.id = " + user.getId() + " and ";
+                    sql += "state = 0 and createUser.id = " + user1.getId() + " and ";
                     break;
                 case 1:
-                    sql += "state = 1 and createUser.id = " + user.getId() + " and ";
+                    sql += "state = 1 and createUser.id = " + user1.getId() + " and ";
                     break;
                 case 2:
                     sql += "state = 2 and ";

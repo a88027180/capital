@@ -18,6 +18,8 @@ public class EvaluateAvg {
     @GeneratedValue(generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private Integer id;
+    @OneToOne
+    private FileEvaluate fileEvaluate;
     @ManyToOne
     private Project project;
     private int item_all;
@@ -34,6 +36,14 @@ public class EvaluateAvg {
     private int number = 1;
     private String quarter;//年+季度
     private String updateTime;
+
+    public FileEvaluate getFileEvaluate() {
+        return fileEvaluate;
+    }
+
+    public void setFileEvaluate(FileEvaluate fileEvaluate) {
+        this.fileEvaluate = fileEvaluate;
+    }
 
     public String getQuarter() {
         return quarter;

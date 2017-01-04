@@ -2,6 +2,7 @@ package com.xiyoukeji.controller;
 
 import com.xiyoukeji.beans.CommentTabBean;
 import com.xiyoukeji.entity.CommentTab;
+import com.xiyoukeji.entity.User;
 import com.xiyoukeji.service.CommentService;
 import com.xiyoukeji.tools.MapTool;
 import com.xiyoukeji.utils.Core;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +26,8 @@ import java.util.Map;
 public class CommentController {
     @Resource
     private CommentService commentService;
+    @Resource
+    HttpSession session;
 
 
     @ExceptionHandler
@@ -32,31 +36,52 @@ public class CommentController {
         return MapTool.Map().put("code", "1").put("msg", runtimeException.getMessage());
     }
 
-    /*新增或编辑评论标签*/
+    /*新增或编辑评论标签 管理员权限*/
     @RequestMapping(value = "/saveorupdateCommentTab")
     @ResponseBody
     public Map addCommentTab(CommentTab commentTab) {
-        return MapTool.Mapok().put("data", commentService.saveorupdateCommentTab(commentTab));
+        User user1 = (User)session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else if (user1.getRole().getType() != 2) {
+            return MapTool.Map().put("code", 3);
+        } else {
+            return MapTool.Mapok().put("data", commentService.saveorupdateCommentTab(commentTab));
+        }
     }
 
-    /*删除评论标签*/
+    /*删除评论标签 管理员权限*/
     @RequestMapping(value = "/deleteCommentTab")
     @ResponseBody
     public Map deleteCommentTab(Integer id) {
-        return MapTool.Mapok().put("commentId", commentService.deleteCommentTab(id));
+        User user1 = (User)session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else if (user1.getRole().getType() != 2) {
+            return MapTool.Map().put("code", 3);
+        } else {
+            return MapTool.Mapok().put("data", commentService.deleteCommentTab(id));
+        }
     }
 
-    /*获取评论标签*/
+    /*获取评论标签 管理员权限*/
     @RequestMapping(value = "/getCommentTabList")
     @ResponseBody
     public Map getCommentTabList() {
-        List<CommentTabBean> list = new ArrayList<>();
-        List<CommentTab> commentTabs = commentService.getCommentTabList();
-        for (int i = 0; i < commentTabs.size(); i++) {
-            CommentTabBean commentTabBean = new CommentTabBean();
-            Core.assignDest(commentTabBean, commentTabs.get(i));
-            list.add(commentTabBean);
+        User user1 = (User)session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else if (user1.getRole().getType() != 2) {
+            return MapTool.Map().put("code", 3);
+        } else {
+            List<CommentTabBean> list = new ArrayList<>();
+            List<CommentTab> commentTabs = commentService.getCommentTabList();
+            for (int i = 0; i < commentTabs.size(); i++) {
+                CommentTabBean commentTabBean = new CommentTabBean();
+                Core.assignDest(commentTabBean, commentTabs.get(i));
+                list.add(commentTabBean);
+            }
+            return MapTool.Mapok().put("data", MapTool.Map().put("list", list));
         }
-        return MapTool.Mapok().put("data", MapTool.Map().put("list", list));
     }
 }

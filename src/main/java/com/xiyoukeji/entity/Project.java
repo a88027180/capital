@@ -28,7 +28,7 @@ public class Project {
     @ManyToOne
     @JoinTable(name = "project_foundation", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "foundation_id")})
     private Foundation foundation;
-    @Column(length = 50, unique = true)
+//    @Column(length = 50, unique = true)
     private String project_name;
     private String create_time;
     private String publish_time;
