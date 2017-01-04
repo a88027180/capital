@@ -1,5 +1,6 @@
 package com.xiyoukeji.controller;
 
+import com.google.gson.Gson;
 import com.xiyoukeji.beans.ProjectBean;
 import com.xiyoukeji.beans.Search;
 import com.xiyoukeji.entity.Project;
@@ -33,7 +34,8 @@ public class ProjectController {
     /*新增或编辑项目*/
     @RequestMapping(value = "/saveorupdateProject")
     @ResponseBody
-    public Map saveorupdateProject(Project project, int type) {
+    public Map saveorupdateProject(String strProject, int type) {
+        Project project = new Gson().fromJson(strProject,Project.class);
         return MapTool.Mapok().put("data", MapTool.Map().put("projectId", projectService.saveorupdateProject(project, type)));
 
     }

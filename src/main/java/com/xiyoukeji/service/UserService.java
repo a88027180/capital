@@ -30,6 +30,9 @@ public class UserService {
 //        } else if ((int) session.getAttribute("roleId") != 1) {
 //            map.put("exception", 1);
 //        } else {
+        if (user.getId() == null){
+
+        }
             baseDao.saveOrUpdate(user);
             map.put("userId", user.getId());
 //        }
