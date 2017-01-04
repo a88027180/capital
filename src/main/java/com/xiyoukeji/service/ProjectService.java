@@ -8,10 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.NumberFormat;
+import java.util.*;
 
 /**
  * Created by dasiy on 16/12/21.
@@ -105,10 +103,16 @@ public class ProjectService {
         } else {
             /*新建*/
             project1 = project;
+            project1.setCreate_time(Utils.getTime());
             project1.setState(0);
+
         }
 
         projectBaseDao.saveOrUpdate(project1);
+        //2093-09-98 66:77:88   567890874
+        String s = Utils.getCode(project1.getCreate_time()) + String.format("%04d", project1.getId());
+        System.out.print(s);
+        project1.setProject_code(s);
         return project1.getId();
     }
 
