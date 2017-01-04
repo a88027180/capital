@@ -145,10 +145,10 @@ public class ProjectService {
         if (search.getProject_type() != null) {
             switch (search.getProject_type()) {
                 case 0:
-                    sql += "state = 0 and createUser.id = " + user.getId();
+                    sql += "state = 0 and createUser.id = " + user.getId() + " and ";
                     break;
                 case 1:
-                    sql += "state = 1 and createUser.id = " + user.getId();
+                    sql += "state = 1 and createUser.id = " + user.getId() + " and ";
                     break;
                 case 2:
                     sql += "state = 2 and ";
