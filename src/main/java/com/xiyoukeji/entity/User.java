@@ -38,7 +38,7 @@ public class User {
     @ManyToMany
     @JoinTable(name = "user_foundation", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "foundation_id")})
     private List<Foundation> list_foundation = new ArrayList<>();
-    @OneToMany
+    @ManyToMany
     @JoinTable(name = "user_project", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "project_id")})
     private List<Project> list_project = new ArrayList<>();
 
