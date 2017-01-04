@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,6 +26,8 @@ import java.util.Map;
 public class ProjectController {
     @Resource
     ProjectService projectService;
+    @Resource
+    HttpSession session;
 
     @ExceptionHandler
     @ResponseBody
@@ -36,8 +40,12 @@ public class ProjectController {
     @ResponseBody
     public Map saveorupdateProject(String strProject, int type) {
         Project project = new Gson().fromJson(strProject, Project.class);
-        return MapTool.Mapok().put("data", projectService.saveorupdateProject(project, type));
-
+        Map map = new HashMap<>();
+        if (session.getAttribute("user") == null) {
+            return MapTool.Map().put("code", 2);
+        } else {
+            return MapTool.Mapok().put("data", projectService.saveorupdateProject(project, type));
+        }
     }
 
     /*获取项目列表*/
