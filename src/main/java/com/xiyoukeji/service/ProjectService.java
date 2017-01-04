@@ -34,6 +34,7 @@ public class ProjectService {
     public Map saveorupdateProject(Project project, int type) {
         /*0:项目概要 1:项目资料 2:项目节点 3:视频文件 4:项目发布*/
         Map map = new HashMap<>();
+
 //        if (session.getAttribute("user") == null) {
 //            map.put("exception", 0);
 //        } else {
