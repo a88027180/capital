@@ -159,6 +159,9 @@ public class ProjectService {
                 case 3:
                     sql += "state = 2 and exitState = 1 and ";
                     break;
+                case 4:
+                    sql += "state != 0 and createUser.id = " + user1.getId() + " and ";
+                    break;
             }
 
         }

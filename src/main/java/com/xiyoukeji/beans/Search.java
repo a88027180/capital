@@ -8,7 +8,7 @@ import com.xiyoukeji.utils.AssignType;
 @AssignType
 public class Search {
     private Integer projectId;
-//    private Integer search_type;//如果projectId没有 type必填:0草稿1发布(未投)2已投(有所属基金,foundationId必填)3退出
+    //    private Integer search_type;//如果projectId没有 type必填:0草稿1发布(未投)2已投(有所属基金,foundationId必填)3退出4已发布(用户相关)
     private Integer foundationId;
     private String nameorcode;
     private String begin_time;
