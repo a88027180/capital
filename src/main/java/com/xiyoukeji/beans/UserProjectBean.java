@@ -13,6 +13,8 @@ public class UserProjectBean {
     private String publish_time;
     private String invest_time;
     private String exit_time;
+    private int state;
+    private int exitState;
     private String project_introduction;
     private String project_code;
     private String project_stage;
@@ -47,6 +49,22 @@ public class UserProjectBean {
     private String share_other;
 
     private int project_schedule;
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public int getExitState() {
+        return exitState;
+    }
+
+    public void setExitState(int exitState) {
+        this.exitState = exitState;
+    }
 
     public String getProject_address() {
         return project_address;

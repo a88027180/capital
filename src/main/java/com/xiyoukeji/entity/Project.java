@@ -30,13 +30,13 @@ public class Project {
     @ManyToOne
     @JoinTable(name = "project_foundation", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "foundation_id")})
     private Foundation foundation;
-    //    @Column(length = 50, unique = true)
     private String project_name;
     private String create_time;
     private String publish_time;
     private String invest_time;
     private String exit_time;
     private int state;
+    private int exitState = 0;
     private String project_introduction;
     private String project_code;
     private String project_stage;
@@ -108,6 +108,14 @@ public class Project {
 
     public void setProject_introducer_tel(String project_introducer_tel) {
         this.project_introducer_tel = project_introducer_tel;
+    }
+
+    public int getExitState() {
+        return exitState;
+    }
+
+    public void setExitState(int exitState) {
+        this.exitState = exitState;
     }
 
     public FileEvaluate getFileEvaluate() {

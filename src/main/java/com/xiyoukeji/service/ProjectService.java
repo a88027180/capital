@@ -92,7 +92,8 @@ public class ProjectService {
                 case 2:
                     project1.setProject_schedule(project.getProject_schedule());
                     if (project.getProject_schedule() == 8) {
-                        project1.setState(3);
+                        project1.setExitState(1);
+                        project1.setExit_time(Utils.getTime());
                     }
                     break;
                 case 3:
@@ -156,7 +157,7 @@ public class ProjectService {
                     sql += "state = 2 and ";
                     break;
                 case 3:
-                    sql += "state = 3 and ";
+                    sql += "state = 2 and exitState = 1 and ";
                     break;
             }
 
