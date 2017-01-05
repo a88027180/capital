@@ -25,11 +25,21 @@ public class ProjectFileService {
 
     @Transactional
     public Integer saveorupdateProjectFile(ProjectFile projectFile) {
-
-        projectFileBaseDao.saveOrUpdate(projectFile);
-//        Project project = projectBaseDao.get(Project.class, projectFile.getProject().getId());
-//        project.setProposal(projectFile.getProposal());
-//        projectBaseDao.saveOrUpdate(project);
+        ProjectFile projectFile1 = null;
+        projectFile1 = projectFileBaseDao.get("from ProjectFile where project.id = " + projectFile.getProject().getId());
+        if (projectFile1 != null) {
+            projectFile1.setProject(projectFile.getProject());
+            projectFile1.setAgreement(projectFile.getAgreement());
+            projectFile1.setBriefing(projectFile.getBriefing());
+            projectFile1.setProposal(projectFile.getProposal());
+            projectFile1.setManages(projectFile.getManages());
+            projectFile1.setProfits(projectFile.getProfits());
+            projectFile1.setReports(projectFile.getReports());
+            projectFile1.setSchedules(projectFile.getSchedules());
+        } else {
+            projectFile1 = projectFile;
+        }
+        projectFileBaseDao.saveOrUpdate(projectFile1);
         return projectFile.getProject().getId();
     }
 }
