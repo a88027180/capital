@@ -151,7 +151,7 @@ public class ProjectService {
                     sql += "state = 0 and createUser.id = " + user1.getId() + " and ";
                     break;
                 case 1:
-                    sql += "state = 1 and createUser.id = " + user1.getId() + " and ";
+                    sql += "state = 1 and ";
                     break;
                 case 2:
                     sql += "state = 2 and ";
