@@ -18,7 +18,15 @@ public class UserRoleBean {
     private Integer id;
     private int type;
     private String roleName;
+    private RoleAuthorityBean authority;
 
+    public RoleAuthorityBean getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(RoleAuthorityBean authority) {
+        this.authority = authority;
+    }
 
     public Integer getId() {
         return id;

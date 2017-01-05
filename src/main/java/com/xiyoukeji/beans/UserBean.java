@@ -1,5 +1,6 @@
 package com.xiyoukeji.beans;
 
+import com.xiyoukeji.entity.Authority;
 import com.xiyoukeji.entity.File;
 import com.xiyoukeji.entity.Role;
 import com.xiyoukeji.utils.AssignType;
