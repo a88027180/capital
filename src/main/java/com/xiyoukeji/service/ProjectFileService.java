@@ -27,9 +27,9 @@ public class ProjectFileService {
     public Integer saveorupdateProjectFile(ProjectFile projectFile) {
 
         projectFileBaseDao.saveOrUpdate(projectFile);
-        Project project = projectBaseDao.get(Project.class, projectFile.getProject().getId());
-        project.setProposal(projectFile.getProposal());
-        projectBaseDao.saveOrUpdate(project);
+//        Project project = projectBaseDao.get(Project.class, projectFile.getProject().getId());
+//        project.setProposal(projectFile.getProposal());
+//        projectBaseDao.saveOrUpdate(project);
         return projectFile.getProject().getId();
     }
 }
