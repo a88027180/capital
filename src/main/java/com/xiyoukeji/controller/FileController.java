@@ -56,7 +56,7 @@ public class FileController {
     }
 
     /*上传项目评级文件  管理员权限*/
-    @RequestMapping(value = "/saveorupdateEvaluateFile")
+    @RequestMapping(value = "/uploadEvaluateFile")
     @ResponseBody
     public Map saveorupdateEvaluate(MultipartFile file) {
         User user1 = (User) session.getAttribute("user");

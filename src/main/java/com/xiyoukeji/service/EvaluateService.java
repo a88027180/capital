@@ -3,6 +3,7 @@ package com.xiyoukeji.service;
 import com.xiyoukeji.entity.Evaluate;
 import com.xiyoukeji.entity.EvaluateAvg;
 import com.xiyoukeji.entity.EvaluateRecord;
+import com.xiyoukeji.entity.FileEvaluate;
 import com.xiyoukeji.tools.BaseDao;
 import com.xiyoukeji.tools.Utils;
 import com.xiyoukeji.utils.Core;
@@ -26,6 +27,8 @@ public class EvaluateService {
     BaseDao<EvaluateRecord> evaluateRecordBaseDao;
     @Resource
     BaseDao<EvaluateAvg> evaluateAvgBaseDao;
+    @Resource
+    BaseDao<FileEvaluate> fileEvaluateBaseDao;
 
     @Transactional
     public Evaluate getEvaluate(Integer projectId, Integer userId) {
@@ -96,6 +99,7 @@ public class EvaluateService {
             evaluate1 = evaluate;
             /*save*/
             if (evaluateAvg1 == null) {
+                /*新建evaluate 新建evaluateAvg*/
                 try {
                     evaluateAvg1 = new EvaluateAvg();
                     Utils.reflectionAttr(evaluate, evaluateAvg1);
@@ -103,6 +107,7 @@ public class EvaluateService {
                     e.printStackTrace();
                 }
             } else {
+                /*新建evaluate 更新evaluateAvg*/
                 evaluateAvg1.setItem_all(evaluateAvg1.getItem_all() + evaluate1.getItem_all());
                 evaluateAvg1.setItem_one(evaluateAvg1.getItem_one() + evaluate1.getItem_one());
                 evaluateAvg1.setItem_two(evaluateAvg1.getItem_two() + evaluate1.getItem_two());
@@ -120,7 +125,7 @@ public class EvaluateService {
 
 
         } else {
-
+/*更新evaluate 新建evaluateAvg*/
             evaluateAvg1.setItem_all(evaluateAvg1.getItem_all() - evaluate1.getItem_all() + evaluate.getItem_all());
             evaluateAvg1.setItem_one(evaluateAvg1.getItem_one() - evaluate1.getItem_one() + evaluate.getItem_one());
             evaluateAvg1.setItem_two(evaluateAvg1.getItem_two() - evaluate1.getItem_two() + evaluate.getItem_two());
@@ -150,7 +155,69 @@ public class EvaluateService {
 
 
         }
+        int item_all = evaluateAvg1.getItem_all();
+        int number = evaluateAvg1.getNumber();
+        int avg = item_all / number / 10;
+        FileEvaluate fileEvaluate = null;
+        switch (avg) {
+            case 110:
+            case 100:
+                fileEvaluate = fileEvaluateBaseDao.get(FileEvaluate.class, 1);
+                break;
+            case 99:
+            case 98:
+            case 97:
+                fileEvaluate = fileEvaluateBaseDao.get(FileEvaluate.class, 2);
+                break;
+            case 96:
+            case 95:
+            case 94:
+            case 93:
+            case 92:
+            case 91:
+            case 90:
+                fileEvaluate = fileEvaluateBaseDao.get(FileEvaluate.class, 3);
+                break;
+            case 89:
+            case 88:
+            case 87:
+                fileEvaluate = fileEvaluateBaseDao.get(FileEvaluate.class, 4);
+                break;
+            case 86:
+            case 85:
+            case 84:
+            case 83:
+            case 82:
+                fileEvaluate = fileEvaluateBaseDao.get(FileEvaluate.class, 5);
+                break;
+            case 81:
+            case 80:
+                fileEvaluate = fileEvaluateBaseDao.get(FileEvaluate.class, 6);
+                break;
+            case 79:
+            case 78:
+            case 77:
+                fileEvaluate = fileEvaluateBaseDao.get(FileEvaluate.class, 7);
+                break;
+            case 76:
+            case 75:
+            case 74:
+            case 73:
+            case 72:
+                fileEvaluate = fileEvaluateBaseDao.get(FileEvaluate.class, 8);
+                break;
+            case 71:
+            case 70:
+                fileEvaluate = fileEvaluateBaseDao.get(FileEvaluate.class, 9);
+                break;
+            default:
+                fileEvaluate = fileEvaluateBaseDao.get(FileEvaluate.class, 10);
+                break;
 
+        }
+        if (fileEvaluate != null) {
+            evaluateAvg1.setFileEvaluate(fileEvaluate);
+        }
         evaluateAvgBaseDao.saveOrUpdate(evaluateAvg1);
         evaluateBaseDao.saveOrUpdate(evaluate1);
         return evaluate.getProject().getId();

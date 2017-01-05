@@ -1,13 +1,11 @@
 package com.xiyoukeji.controller;
 
+import com.google.gson.Gson;
 import com.xiyoukeji.beans.EvaluateAvgBean;
 import com.xiyoukeji.beans.EvaluateBean;
 import com.xiyoukeji.beans.EvaluateRecordBean;
 import com.xiyoukeji.beans.ProjectBean;
-import com.xiyoukeji.entity.Evaluate;
-import com.xiyoukeji.entity.EvaluateAvg;
-import com.xiyoukeji.entity.EvaluateRecord;
-import com.xiyoukeji.entity.User;
+import com.xiyoukeji.entity.*;
 import com.xiyoukeji.service.EvaluateService;
 import com.xiyoukeji.tools.MapTool;
 import com.xiyoukeji.utils.Core;
@@ -121,7 +119,8 @@ public class EvaluateController {
     /*新建项目评级*/
     @RequestMapping(value = "/saveorupdateEvaluate")
     @ResponseBody
-    public Map saveorupdateEvaluate(Evaluate evaluate) {
+    public Map saveorupdateEvaluate(String strEvaluate) {
+        Evaluate evaluate = new Gson().fromJson(strEvaluate, Evaluate.class);
         User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
