@@ -1,5 +1,6 @@
 package com.xiyoukeji.beans;
 
+import com.xiyoukeji.entity.EvaluateAvg;
 import com.xiyoukeji.entity.FileEvaluate;
 import com.xiyoukeji.utils.AssignType;
 
@@ -14,7 +15,7 @@ public class ProjectBean {
     private Integer id;
     private FileBean logo;
     private FileBean proposal;
-    private FileBean fileEvaluate;
+    private EvaluateAvgBean evaluateAvg;
     private ProjectFoundationBean foundation;
     private String project_name;
     private String create_time;
@@ -74,12 +75,12 @@ public class ProjectBean {
         this.exitState = exitState;
     }
 
-    public FileBean getFileEvaluate() {
-        return fileEvaluate;
+    public EvaluateAvgBean getEvaluateAvg() {
+        return evaluateAvg;
     }
 
-    public void setFileEvaluate(FileBean fileEvaluate) {
-        this.fileEvaluate = fileEvaluate;
+    public void setEvaluateAvg(EvaluateAvgBean evaluateAvg) {
+        this.evaluateAvg = evaluateAvg;
     }
 
     public String getProject_evaluates() {

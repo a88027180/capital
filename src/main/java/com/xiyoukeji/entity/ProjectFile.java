@@ -21,8 +21,9 @@ public class ProjectFile {
     @GenericGenerator(name = "native", strategy = "native")
     private Integer id;
     @OneToOne
-    @JoinTable(name = "project_projectFile", joinColumns = {@JoinColumn(name = "projectFile_id")}, inverseJoinColumns = {@JoinColumn(name = "project_id")})
     private Project project;
+//    @JoinTable(name = "project_projectFile", joinColumns = {@JoinColumn(name = "projectFile_id")}, inverseJoinColumns = {@JoinColumn(name = "project_id")})
+
     @OneToOne
     private File briefing;
     @OneToOne

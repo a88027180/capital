@@ -26,7 +26,7 @@ public class Project {
     @OneToOne
     private File proposal;
     @OneToOne
-    private FileEvaluate fileEvaluate;
+    private EvaluateAvg evaluateAvg;
     @ManyToOne
     @JoinTable(name = "project_foundation", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "foundation_id")})
     private Foundation foundation;
@@ -91,8 +91,9 @@ public class Project {
     @OneToOne
     private File video;
     @OneToOne
-    @JoinTable(name = "project_projectFile", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "projectFile_id")})
     private ProjectFile projectFile;
+//    @JoinTable(name = "project_projectFile", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "projectFile_id")})
+
 
     public String getProject_evaluates() {
         return project_evaluates;
@@ -118,12 +119,12 @@ public class Project {
         this.exitState = exitState;
     }
 
-    public FileEvaluate getFileEvaluate() {
-        return fileEvaluate;
+    public EvaluateAvg getEvaluateAvg() {
+        return evaluateAvg;
     }
 
-    public void setFileEvaluate(FileEvaluate fileEvaluate) {
-        this.fileEvaluate = fileEvaluate;
+    public void setEvaluateAvg(EvaluateAvg evaluateAvg) {
+        this.evaluateAvg = evaluateAvg;
     }
 
     public ProjectFile getProjectFile() {

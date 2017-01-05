@@ -217,7 +217,7 @@ public class EvaluateService {
         }
         if (fileEvaluate != null) {
             evaluateAvg1.setFileEvaluate(fileEvaluate);
-            project.setFileEvaluate(fileEvaluate);
+            project.setEvaluateAvg(evaluateAvg1);
         }
 
         evaluateAvgBaseDao.saveOrUpdate(evaluateAvg1);
