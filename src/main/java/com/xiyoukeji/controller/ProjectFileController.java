@@ -1,5 +1,6 @@
 package com.xiyoukeji.controller;
 
+import com.google.gson.Gson;
 import com.xiyoukeji.beans.ProjectFileBean;
 import com.xiyoukeji.entity.Project;
 import com.xiyoukeji.entity.ProjectFile;
@@ -50,7 +51,8 @@ public class ProjectFileController {
     /*新增或编辑项目文件列表*/
     @RequestMapping(value = "/saveorupdateProjectFile")
     @ResponseBody
-    public Map saveorupdateProjectFile(ProjectFile projectFile) {
+    public Map saveorupdateProjectFile(String strProjectFile) {
+        ProjectFile projectFile = new Gson().fromJson(strProjectFile, ProjectFile.class);
         User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);

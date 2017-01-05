@@ -61,13 +61,21 @@ public class ProjectService {
                     project1.setContact_phone(project.getContact_phone());
                     break;
                 case 1:
-                    /*如果不是草稿状态选择基金保存 都是投资*/
+
                     project1.setFinance_record(project.getFinance_record());
+                    /*取消投资*/
+                    if (project1.getFoundation() != null && project.getFoundation() == null) {
+                        project1.setState(1);
+                        project1.setInvest_time(null);
+                    }
+
                     project1.setFoundation(project.getFoundation());
+                    /*如果不是草稿状态选择基金保存 都是投资*/
                     if (project1.getState() != 0) {
                         project1.setInvest_time(Utils.getTime());
                         project1.setState(2);
                     }
+
                     project1.setMoney_thisTime(project.getMoney_thisTime());
                     project1.setMoney_totalShare(project.getMoney_totalShare());
                     project1.setMoney_eachShare(project.getMoney_eachShare());
