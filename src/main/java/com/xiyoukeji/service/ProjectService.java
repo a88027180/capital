@@ -25,7 +25,6 @@ public class ProjectService {
     BaseDao<File> fileBaseDao;
     @Resource
     BaseDao<Foundation> foundationBaseDao;
-
     @Resource
     HttpSession session;
 
@@ -97,7 +96,10 @@ public class ProjectService {
                     }
                     break;
                 case 3:
-                    project1.setVideo(project.getVideo());
+                    File file = new File();
+                    file.setUrl(project.getVideo().getUrl());
+                    fileBaseDao.saveOrUpdate(file);
+                    project1.setVideo(file);
                     break;
                 case 4:
                     if (project1.getFoundation() == null) {
@@ -129,7 +131,7 @@ public class ProjectService {
 
     @Transactional
     public Map getProjecList(Search search) {
-        User user1 = (User)session.getAttribute("user");
+        User user1 = (User) session.getAttribute("user");
         Map map = new HashMap<>();
         List<Project> list = new ArrayList<>();
         String sql = "from Project where ";

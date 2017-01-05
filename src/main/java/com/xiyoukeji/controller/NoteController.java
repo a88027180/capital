@@ -17,6 +17,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.nio.charset.CoderResult;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -53,14 +54,23 @@ public class NoteController {
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
-            List<NoteBean> list = new ArrayList<>();
+            List<NoteBean> list0 = new ArrayList<>();
+            List<NoteBean> list1 = new ArrayList<>();
             List<Note> notes = noteService.getNoteList(projectId, number);
             for (int i = 0; i < notes.size(); i++) {
                 NoteBean noteBean = new NoteBean();
                 Core.assignDest(noteBean, notes.get(i));
-                list.add(noteBean);
+                if (noteBean.getCommentTab().getType() == 0) {
+                    list0.add(noteBean);
+                } else {
+                    list1.add(noteBean);
+                }
+
             }
-            return MapTool.Mapok().put("data", MapTool.Map().put("list", list));
+            Map map = new HashMap<>();
+            map.put("type0", list0);
+            map.put("type1", list1);
+            return MapTool.Mapok().put("data", map);
         }
     }
 }
