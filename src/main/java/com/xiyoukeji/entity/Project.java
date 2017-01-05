@@ -25,10 +25,12 @@ public class Project {
     private File logo;
     @OneToOne
     private File proposal;
+    @OneToOne
+    private FileEvaluate fileEvaluate;
     @ManyToOne
     @JoinTable(name = "project_foundation", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "foundation_id")})
     private Foundation foundation;
-//    @Column(length = 50, unique = true)
+    //    @Column(length = 50, unique = true)
     private String project_name;
     private String create_time;
     private String publish_time;
@@ -106,6 +108,14 @@ public class Project {
 
     public void setProject_introducer_tel(String project_introducer_tel) {
         this.project_introducer_tel = project_introducer_tel;
+    }
+
+    public FileEvaluate getFileEvaluate() {
+        return fileEvaluate;
+    }
+
+    public void setFileEvaluate(FileEvaluate fileEvaluate) {
+        this.fileEvaluate = fileEvaluate;
     }
 
     public ProjectFile getProjectFile() {

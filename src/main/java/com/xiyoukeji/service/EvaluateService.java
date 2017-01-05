@@ -1,9 +1,6 @@
 package com.xiyoukeji.service;
 
-import com.xiyoukeji.entity.Evaluate;
-import com.xiyoukeji.entity.EvaluateAvg;
-import com.xiyoukeji.entity.EvaluateRecord;
-import com.xiyoukeji.entity.FileEvaluate;
+import com.xiyoukeji.entity.*;
 import com.xiyoukeji.tools.BaseDao;
 import com.xiyoukeji.tools.Utils;
 import com.xiyoukeji.utils.Core;
@@ -29,6 +26,8 @@ public class EvaluateService {
     BaseDao<EvaluateAvg> evaluateAvgBaseDao;
     @Resource
     BaseDao<FileEvaluate> fileEvaluateBaseDao;
+    @Resource
+    BaseDao<Project> projectBaseDao;
 
     @Transactional
     public Evaluate getEvaluate(Integer projectId, Integer userId) {
@@ -71,6 +70,7 @@ public class EvaluateService {
 
     @Transactional
     public Integer saveorupdateEvaluate(Evaluate evaluate) {
+        Project project = projectBaseDao.get(Project.class, evaluate.getProject().getId());
         /*想插入记录 根据project.id,user.id,quarter判断saveorupdate
         如果是save:根据project.id,quarter判断avg中saveorupdate
             save:evaluate-evaluateAvg,save
@@ -217,7 +217,9 @@ public class EvaluateService {
         }
         if (fileEvaluate != null) {
             evaluateAvg1.setFileEvaluate(fileEvaluate);
+            project.setFileEvaluate(fileEvaluate);
         }
+
         evaluateAvgBaseDao.saveOrUpdate(evaluateAvg1);
         evaluateBaseDao.saveOrUpdate(evaluate1);
         return evaluate.getProject().getId();

@@ -1,5 +1,6 @@
 package com.xiyoukeji.beans;
 
+import com.xiyoukeji.entity.FileEvaluate;
 import com.xiyoukeji.utils.AssignType;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ public class ProjectBean {
     private Integer id;
     private FileBean logo;
     private FileBean proposal;
+    private FileBean fileEvaluate;
     private ProjectFoundationBean foundation;
     private String project_name;
     private String create_time;
@@ -62,6 +64,14 @@ public class ProjectBean {
 //    private List<NoteBean> project_notes = new ArrayList<>();
 //    private List<EvaluateBean> project_evaluate = new ArrayList<>();
     private FileBean video;
+
+    public FileBean getFileEvaluate() {
+        return fileEvaluate;
+    }
+
+    public void setFileEvaluate(FileBean fileEvaluate) {
+        this.fileEvaluate = fileEvaluate;
+    }
 
     public String getProject_evaluates() {
         return project_evaluates;
