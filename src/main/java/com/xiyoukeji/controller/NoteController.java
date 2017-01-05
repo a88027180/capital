@@ -1,6 +1,8 @@
 package com.xiyoukeji.controller;
 
+import com.google.gson.Gson;
 import com.xiyoukeji.beans.NoteBean;
+import com.xiyoukeji.entity.Evaluate;
 import com.xiyoukeji.entity.Note;
 import com.xiyoukeji.entity.User;
 import com.xiyoukeji.service.NoteService;
@@ -32,8 +34,9 @@ public class NoteController {
     /*新建项目笔记*/
     @RequestMapping(value = "/saveorupdateNote")
     @ResponseBody
-    public Map saveorupdateNote(Note note) {
-        User user1 = (User)session.getAttribute("user");
+    public Map saveorupdateNote(String strNote) {
+        Note note = new Gson().fromJson(strNote, Note.class);
+        User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
@@ -46,7 +49,7 @@ public class NoteController {
     @RequestMapping(value = "/getNoteList")
     @ResponseBody
     public Map getNoteList(Integer projectId, int number) {
-        User user1 = (User)session.getAttribute("user");
+        User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
