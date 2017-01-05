@@ -16,7 +16,16 @@ import javax.persistence.Table;
 @AssignType
 public class FileBean {
     private Integer id;
+    private String fileName;
     private String url;
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
     public Integer getId() {
         return id;

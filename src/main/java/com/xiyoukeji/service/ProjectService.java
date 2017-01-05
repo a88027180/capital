@@ -106,6 +106,7 @@ public class ProjectService {
                     break;
                 case 3:
                     File file = new File();
+                    file.setFileName("video");
                     file.setUrl(project.getVideo().getUrl());
                     fileBaseDao.saveOrUpdate(file);
                     project1.setVideo(file);

@@ -34,12 +34,12 @@ public class FileController {
     /*上传文件*/
     @RequestMapping(value = "/uploadFile")
     @ResponseBody
-    public Map saveorupdatePhoto(MultipartFile file) {
+    public Map saveorupdatePhoto(MultipartFile file, String filename) {
         User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
-            return MapTool.Mapok().put("data", fileService.saveorupdatePhoto(file));
+            return MapTool.Mapok().put("data", fileService.saveorupdatePhoto(file, filename));
         }
     }
 
@@ -58,12 +58,12 @@ public class FileController {
     /*上传项目评级文件  管理员权限*/
     @RequestMapping(value = "/uploadEvaluateFile")
     @ResponseBody
-    public Map saveorupdateEvaluate(MultipartFile file) {
+    public Map saveorupdateEvaluate(MultipartFile file, String filename) {
         User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
-        return MapTool.Mapok().put("data", fileService.saveorupdateEvaluate(file));
+            return MapTool.Mapok().put("data", fileService.saveorupdateEvaluate(file,filename));
         }
     }
 

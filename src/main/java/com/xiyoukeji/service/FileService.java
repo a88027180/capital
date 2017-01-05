@@ -40,31 +40,33 @@ public class FileService {
     }
 
     @Transactional
-    public Map saveorupdatePhoto(MultipartFile file) {
+    public Map saveorupdatePhoto(MultipartFile file, String filename) {
         Map map = new HashMap<>();
-        File file1 = upload(file);
+        File file1 = upload(file, filename);
         baseDao.save(file1);
-        map.put("fileId", file1.getId());
-        map.put("fileUrl", file1.getUrl());
+        map.put("id", file1.getId());
+        map.put("url", file1.getUrl());
+        map.put("fileName", file1.getFileName());
         return map;
     }
 
-    public File upload(MultipartFile file) {
+    public File upload(MultipartFile file, String filename) {
         if (mimeType.containsKey(file.getContentType())) {
             String path = servletContext.getRealPath("/") + "Uploads/", suffix = "." + mimeType.get(file.getContentType());
             String file_name = UUID.randomUUID().toString() + suffix;
             String url = "/Uploads/" + file_name;
-            return saveToFile(file, path, file_name, url);
+            return saveToFile(file, path, filename, url);
         } else
             throw new MultipartException("type error");
     }
 
-    private File saveToFile(MultipartFile file, String path, String file_name, String url) {
+    private File saveToFile(MultipartFile file, String path, String filename, String url) {
         File file1 = new File();
         file1.setUrl(url);
+        file1.setFileName(filename);
         java.io.File dir = new java.io.File(path);
         if (!dir.exists()) dir.mkdir();
-        String all_name = path + file_name;
+        String all_name = path + filename;
         java.io.File all = new java.io.File(all_name);
         try {
             file.transferTo(all);
@@ -83,31 +85,33 @@ public class FileService {
     }
 
     @Transactional
-    public Map saveorupdateEvaluate(MultipartFile file) {
+    public Map saveorupdateEvaluate(MultipartFile file, String filename) {
         Map map = new HashMap<>();
-        FileEvaluate file1 = uploadEvaluate(file);
+        FileEvaluate file1 = uploadEvaluate(file, filename);
         fileEvaluateBaseDao.save(file1);
-        map.put("fileId", file1.getId());
-        map.put("fileUrl", file1.getUrl());
+        map.put("id", file1.getId());
+        map.put("url", file1.getUrl());
+        map.put("fileName", file1.getFileName());
         return map;
     }
 
-    public FileEvaluate uploadEvaluate(MultipartFile file) {
+    public FileEvaluate uploadEvaluate(MultipartFile file, String filename) {
         if (mimeType.containsKey(file.getContentType())) {
             String path = servletContext.getRealPath("/") + "Evaluates/", suffix = "." + mimeType.get(file.getContentType());
             String file_name = UUID.randomUUID().toString() + suffix;
             String url = "/Evaluates/" + file_name;
-            return saveToEvaluateFile(file, path, file_name, url);
+            return saveToEvaluateFile(file, path, filename, url);
         } else
             throw new MultipartException("type error");
     }
 
-    private FileEvaluate saveToEvaluateFile(MultipartFile file, String path, String file_name, String url) {
+    private FileEvaluate saveToEvaluateFile(MultipartFile file, String path, String filename, String url) {
         FileEvaluate file1 = new FileEvaluate();
         file1.setUrl(url);
+        file1.setFileName(filename);
         java.io.File dir = new java.io.File(path);
         if (!dir.exists()) dir.mkdir();
-        String all_name = path + file_name;
+        String all_name = path + filename;
         java.io.File all = new java.io.File(all_name);
         try {
             file.transferTo(all);

@@ -21,7 +21,16 @@ public class File {
     @GeneratedValue(generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private Integer id;
+    private String fileName;
     private String url;
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
     public Integer getId() {
         return id;
