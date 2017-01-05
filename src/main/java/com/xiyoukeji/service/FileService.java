@@ -46,8 +46,8 @@ public class FileService {
         Map map = new HashMap<>();
         File file1 = upload(file);
         baseDao.save(file1);
-        map.put("id", file1.getId());
-        map.put("url", file1.getUrl());
+        map.put("fileId", file1.getId());
+        map.put("fileUrl", file1.getUrl());
         map.put("fileName", file1.getFileName());
         return map;
     }
@@ -91,8 +91,8 @@ public class FileService {
         Map map = new HashMap<>();
         FileEvaluate file1 = uploadEvaluate(file);
         fileEvaluateBaseDao.save(file1);
-        map.put("id", file1.getId());
-        map.put("url", file1.getUrl());
+        map.put("fileId", file1.getId());
+        map.put("fileUrl", file1.getUrl());
         map.put("fileName", file1.getFileName());
         return map;
     }
