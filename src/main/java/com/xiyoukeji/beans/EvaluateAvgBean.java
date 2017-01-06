@@ -24,17 +24,8 @@ public class EvaluateAvgBean {
     private int item_nine;
     private int item_ten;
     private int number;
-    private int item_avg;
     private String quarter;//年+季度
     private String updateTime;
-
-    public int getItem_avg() {
-        return item_avg;
-    }
-
-    public void setItem_avg(int item_avg) {
-        this.item_avg = item_avg;
-    }
 
     public EvaluateProjectBean getProject() {
         return project;
