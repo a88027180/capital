@@ -90,7 +90,17 @@ public class EvaluateController {
             for (int i = 0; i < evaluateAvgs.size(); i++) {
                 EvaluateAvgBean evaluateAvgBean = new EvaluateAvgBean();
                 Core.assignDest(evaluateAvgBean, evaluateAvgs.get(i));
-                evaluateAvgBean.setItem_avg(evaluateAvgs.get(i).getItem_all() / evaluateAvgs.get(i).getNumber());
+                evaluateAvgBean.setItem_all(evaluateAvgs.get(i).getItem_all() / evaluateAvgs.get(i).getNumber());
+                evaluateAvgBean.setItem_one(evaluateAvgs.get(i).getItem_one() / evaluateAvgs.get(i).getNumber());
+                evaluateAvgBean.setItem_two(evaluateAvgs.get(i).getItem_two() / evaluateAvgs.get(i).getNumber());
+                evaluateAvgBean.setItem_three(evaluateAvgs.get(i).getItem_three() / evaluateAvgs.get(i).getNumber());
+                evaluateAvgBean.setItem_four(evaluateAvgs.get(i).getItem_four() / evaluateAvgs.get(i).getNumber());
+                evaluateAvgBean.setItem_five(evaluateAvgs.get(i).getItem_five() / evaluateAvgs.get(i).getNumber());
+                evaluateAvgBean.setItem_six(evaluateAvgs.get(i).getItem_six() / evaluateAvgs.get(i).getNumber());
+                evaluateAvgBean.setItem_seven(evaluateAvgs.get(i).getItem_seven() / evaluateAvgs.get(i).getNumber());
+                evaluateAvgBean.setItem_eight(evaluateAvgs.get(i).getItem_eight() / evaluateAvgs.get(i).getNumber());
+                evaluateAvgBean.setItem_nine(evaluateAvgs.get(i).getItem_nine() / evaluateAvgs.get(i).getNumber());
+                evaluateAvgBean.setItem_ten(evaluateAvgs.get(i).getItem_ten() / evaluateAvgs.get(i).getNumber());
                 list.add(evaluateAvgBean);
             }
             return MapTool.Mapok().put("data", MapTool.Map().put("list", list));

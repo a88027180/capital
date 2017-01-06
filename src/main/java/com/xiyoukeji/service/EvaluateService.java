@@ -45,7 +45,10 @@ public class EvaluateService {
             Map map = new HashMap<>();
             map.put("projectId", projectId);
             map.put("userId", userId);
-            return evaluateBaseDao.find(" from Evaluate where project.id = :projectId and user.id = :userId order by updateTime desc", 1, number, map);
+            if (number == 0) {
+                return evaluateBaseDao.find(" from Evaluate where project.id = :projectId and user.id = :userId order by updateTime desc", map);
+            } else
+                return evaluateBaseDao.find(" from Evaluate where project.id = :projectId and user.id = :userId order by updateTime desc", 1, number, map);
         }
     }
 
@@ -60,7 +63,10 @@ public class EvaluateService {
     public List<EvaluateAvg> getEvaluateAvgList(Integer projectId, int number) {
         Map map = new HashMap<>();
         map.put("projectId", projectId);
-        return evaluateAvgBaseDao.find(" from EvaluateAvg where project.id = :projectId", 1, number, map);
+        if (number == 0) {
+            return evaluateAvgBaseDao.find(" from EvaluateAvg where project.id = :projectId", map);
+        } else
+            return evaluateAvgBaseDao.find(" from EvaluateAvg where project.id = :projectId", 1, number, map);
     }
 
     @Transactional
