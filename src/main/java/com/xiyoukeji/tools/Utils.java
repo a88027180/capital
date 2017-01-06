@@ -118,7 +118,8 @@ public class Utils {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
-        String v = year + "-" + (month / 3 + 1);
+//        String v = year + "-" + (month / 3 + 1);
+        String v = year + "-" + (month / 3);
         return v;
     }
 
