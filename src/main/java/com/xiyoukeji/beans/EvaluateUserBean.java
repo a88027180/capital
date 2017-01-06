@@ -11,6 +11,7 @@ import java.util.List;
 @AssignType
 public class EvaluateUserBean {
     private Integer id;
+    private FileBean photo;
     private String userName;
     private String password;
     private String name;
@@ -19,6 +20,14 @@ public class EvaluateUserBean {
     private String phone;
     private int available;
     private int isBand;
+
+    public FileBean getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(FileBean photo) {
+        this.photo = photo;
+    }
 
     public Integer getId() {
         return id;
