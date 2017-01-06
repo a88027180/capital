@@ -2,6 +2,7 @@ package com.xiyoukeji.controller;
 
 import com.xiyoukeji.beans.FoundationBean;
 import com.xiyoukeji.entity.Foundation;
+import com.xiyoukeji.entity.Project;
 import com.xiyoukeji.entity.User;
 import com.xiyoukeji.service.FoundationService;
 import com.xiyoukeji.tools.MapTool;
@@ -38,7 +39,7 @@ public class FoundationController {
     @RequestMapping(value = "/saveorupdateFoundation")
     @ResponseBody
     public Map saveorupdate(Foundation foundation) {
-        User user1 = (User)session.getAttribute("user");
+        User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else if (user1.getRole().getType() != 2) {
@@ -52,15 +53,29 @@ public class FoundationController {
     @RequestMapping(value = "/getFoundationList")
     @ResponseBody
     public Map getFoundationList() {
-        User user1 = (User)session.getAttribute("user");
+        User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
             List<FoundationBean> list = new ArrayList<>();
+//            List<Foundation> foundations_list = new ArrayList<>();
             List<Foundation> foundations = foundationService.getFoundationList();
             for (int i = 0; i < foundations.size(); i++) {
                 FoundationBean foundationBean = new FoundationBean();
-                Core.assignDest(foundationBean, foundations.get(i));
+                Foundation foundation = new Foundation();
+                foundation.setId(foundations.get(i).getId());
+                foundation.setName(foundations.get(i).getName());
+                foundation.setMoney(foundation.getMoney());
+                foundation.setList_user(foundations.get(i).getList_user());
+                foundation.setResponsibility(foundations.get(i).getResponsibility());
+                List<Project> list1 = new ArrayList<>();
+                for (int j = 0; j < foundations.get(i).getList_project().size(); j++) {
+                    if (foundations.get(i).getList_project().get(j).getState() == 2) {
+                        list1.add(foundations.get(i).getList_project().get(j));
+                    }
+                }
+                foundation.setList_project(list1);
+                Core.assignDest(foundationBean, foundation);
                 list.add(foundationBean);
             }
             return MapTool.Mapok().put("data", MapTool.Map().put("list", list));
@@ -71,7 +86,7 @@ public class FoundationController {
     @RequestMapping(value = "/getFoundation")
     @ResponseBody
     public Map getFoundation(Integer id) {
-        User user1 = (User)session.getAttribute("user");
+        User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
@@ -86,7 +101,7 @@ public class FoundationController {
     @RequestMapping(value = "/addordeleteFoundationUser")
     @ResponseBody
     public Map addordeleteFoundationUser(int type, Integer foundationId, Integer userId) {
-        User user1 = (User)session.getAttribute("user");
+        User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else if (user1.getRole().getType() != 2) {
@@ -100,7 +115,7 @@ public class FoundationController {
     @RequestMapping(value = "/addordeleteFoundationProject")
     @ResponseBody
     public Map addordeleteFoundationProject(int type, Integer foundationId, Integer projectId) {
-        User user1 = (User)session.getAttribute("user");
+        User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else if (user1.getRole().getType() != 2) {

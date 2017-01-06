@@ -21,6 +21,7 @@ public class Foundation {
     private Integer id;
     @Column(length = 50, unique = true)
     private String name;
+    private String money;
     private String responsibility;
     @ManyToMany
     @JoinTable(name = "user_foundation", joinColumns = {@JoinColumn(name = "foundation_id")}, inverseJoinColumns = {@JoinColumn(name = "user_id")})
@@ -28,6 +29,14 @@ public class Foundation {
     @OneToMany
     @JoinTable(name = "project_foundation", joinColumns = {@JoinColumn(name = "foundation_id")}, inverseJoinColumns = {@JoinColumn(name = "project_id")})
     private List<Project> list_project;
+
+    public String getMoney() {
+        return money;
+    }
+
+    public void setMoney(String money) {
+        this.money = money;
+    }
 
     public Integer getId() {
         return id;

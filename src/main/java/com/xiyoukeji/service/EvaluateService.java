@@ -4,6 +4,8 @@ import com.xiyoukeji.entity.*;
 import com.xiyoukeji.tools.BaseDao;
 import com.xiyoukeji.tools.Utils;
 import com.xiyoukeji.utils.Core;
+import org.hibernate.SQLQuery;
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +30,8 @@ public class EvaluateService {
     BaseDao<FileEvaluate> fileEvaluateBaseDao;
     @Resource
     BaseDao<Project> projectBaseDao;
+    @Resource
+    private SessionFactory sessionFactory;
 
     @Transactional
     public Evaluate getEvaluate(Integer projectId, Integer userId) {
@@ -40,7 +44,9 @@ public class EvaluateService {
     @Transactional
     public List<Evaluate> getEvaluateList(Integer projectId, Integer userId, int number) {
         if (userId == null) {
-            return evaluateBaseDao.find("from Evaluate where project.id = " + projectId + " group by user.id order by updateTime desc");
+            SQLQuery sqlQuery = sessionFactory.getCurrentSession().createSQLQuery("SELECT * from (SELECT * FROM (SELECT * from evaluate LEFT OUTER JOIN project_evaluate on evaluate.id = project_evaluate.evaluate_id WHERE project_evaluate.project_id = " + projectId + ")AS a ORDER by a.`updateTime` DESC)AS b GROUP BY b.`user_id`");
+            List<Evaluate> list = sqlQuery.addEntity(Evaluate.class).list();
+            return list;
         } else {
             Map map = new HashMap<>();
             map.put("projectId", projectId);
@@ -64,9 +70,9 @@ public class EvaluateService {
         Map map = new HashMap<>();
         map.put("projectId", projectId);
         if (number == 0) {
-            return evaluateAvgBaseDao.find(" from EvaluateAvg where project.id = :projectId", map);
+            return evaluateAvgBaseDao.find(" from EvaluateAvg where project.id = :projectId order by updateTime desc", map);
         } else
-            return evaluateAvgBaseDao.find(" from EvaluateAvg where project.id = :projectId", 1, number, map);
+            return evaluateAvgBaseDao.find(" from EvaluateAvg where project.id = :projectId order by updateTime desc", 1, number, map);
     }
 
     @Transactional

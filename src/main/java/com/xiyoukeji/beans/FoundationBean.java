@@ -19,9 +19,18 @@ import java.util.List;
 public class FoundationBean {
     private Integer id;
     private String name;
+    private String money;
     private String responsibility;
     List<FoundationUserBean> list_user = new ArrayList<>();
     private List<FoundationProjectBean> list_project = new ArrayList<>();
+
+    public String getMoney() {
+        return money;
+    }
+
+    public void setMoney(String money) {
+        this.money = money;
+    }
 
     public Integer getId() {
         return id;
