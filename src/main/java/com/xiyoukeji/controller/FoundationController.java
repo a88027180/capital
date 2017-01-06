@@ -58,14 +58,13 @@ public class FoundationController {
             return MapTool.Map().put("code", 2);
         } else {
             List<FoundationBean> list = new ArrayList<>();
-//            List<Foundation> foundations_list = new ArrayList<>();
             List<Foundation> foundations = foundationService.getFoundationList();
             for (int i = 0; i < foundations.size(); i++) {
                 FoundationBean foundationBean = new FoundationBean();
                 Foundation foundation = new Foundation();
                 foundation.setId(foundations.get(i).getId());
                 foundation.setName(foundations.get(i).getName());
-                foundation.setMoney(foundation.getMoney());
+                foundation.setMoney(foundations.get(i).getMoney());
                 foundation.setList_user(foundations.get(i).getList_user());
                 foundation.setResponsibility(foundations.get(i).getResponsibility());
                 List<Project> list1 = new ArrayList<>();
