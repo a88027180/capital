@@ -90,6 +90,7 @@ public class EvaluateController {
             for (int i = 0; i < evaluateAvgs.size(); i++) {
                 EvaluateAvgBean evaluateAvgBean = new EvaluateAvgBean();
                 Core.assignDest(evaluateAvgBean, evaluateAvgs.get(i));
+                evaluateAvgBean.setItem_avg(evaluateAvgs.get(i).getItem_all() / evaluateAvgs.get(i).getNumber());
                 list.add(evaluateAvgBean);
             }
             return MapTool.Mapok().put("data", MapTool.Map().put("list", list));

@@ -149,7 +149,7 @@ public class ProjectService {
             sql += "id = " + search.getProjectId() + " and ";
         }
         if (search.getFoundationId() != null) {
-            sql += "foundation.id = " + search.getFoundationId() + " and ";
+            sql += "foundation.id = " + search.getFoundationId() + " and state = 2 and ";
         }
         if (search.getNameorcode() != null) {
             sql += "project_name like '%" + search.getNameorcode() + "%' or project_code like '%" + search.getNameorcode() + "%' and ";

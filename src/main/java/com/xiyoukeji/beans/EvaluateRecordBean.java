@@ -24,6 +24,7 @@ public class EvaluateRecordBean {
     private String updateTime;
     private EvaluateUserBean user;
 
+
     public EvaluateProjectBean getProject() {
         return project;
     }
