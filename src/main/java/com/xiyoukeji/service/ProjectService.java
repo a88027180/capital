@@ -66,13 +66,13 @@ public class ProjectService {
                     /*取消投资*/
                     if (project1.getFoundation() != null && project.getFoundation() == null) {
                         project1.setState(1);
-                        project1.setInvest_time(null);
+                        project1.setInvest_time(0);
                     }
 
                     project1.setFoundation(project.getFoundation());
                     /*如果不是草稿状态选择基金保存 都是投资*/
                     if (project1.getState() != 0) {
-                        project1.setInvest_time(Utils.getTime());
+                        project1.setInvest_time(System.currentTimeMillis());
                         project1.setState(2);
                     }
 
@@ -101,7 +101,7 @@ public class ProjectService {
                     project1.setProject_schedule(project.getProject_schedule());
                     if (project.getProject_schedule() == 8) {
                         project1.setExitState(1);
-                        project1.setExit_time(Utils.getTime());
+                        project1.setExit_time(System.currentTimeMillis());
                     }
                     break;
                 case 3:
@@ -116,15 +116,15 @@ public class ProjectService {
                         project1.setState(1);
                     } else {
                         project1.setState(2);
-                        project1.setInvest_time(Utils.getTime());
+                        project1.setInvest_time(System.currentTimeMillis());
                     }
-                    project1.setPublish_time(Utils.getTime());
+                    project1.setPublish_time(System.currentTimeMillis());
                     break;
             }
         } else {
             /*新建*/
             project1 = project;
-            project1.setCreate_time(Utils.getTime());
+            project1.setCreate_time(System.currentTimeMillis());
             project1.setCreateUser((User) session.getAttribute("user"));
             project1.setState(0);
 
@@ -132,9 +132,9 @@ public class ProjectService {
 
         projectBaseDao.saveOrUpdate(project1);
         //2093-09-98 66:77:88   567890874
-        String s = Utils.getCode(project1.getCreate_time()) + String.format("%04d", project1.getId());
-        System.out.print(s);
-        project1.setProject_code(s);
+//        String s = Utils.getCode(project1.getCreate_time()) + String.format("%04d", project1.getId());
+//        System.out.print(s);
+        project1.setProject_code(String.valueOf(project1.getCreate_time()));
         map.put("projectId", project1.getId());
         return map;
     }
@@ -179,7 +179,7 @@ public class ProjectService {
             }
 
         }
-        if (search.getBegin_time() != null) {
+        if (search.getBegin_time() != 0) {
 
             switch (search.getProject_type()) {
                 case 0:
@@ -196,7 +196,7 @@ public class ProjectService {
                     break;
             }
         }
-        if (search.getEnd_time() != null) {
+        if (search.getEnd_time() != 0) {
             switch (search.getProject_type()) {
                 case 0:
                     sql += "create_time <= '" + search.getEnd_time() + "' and ";

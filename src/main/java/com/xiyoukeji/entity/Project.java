@@ -31,10 +31,10 @@ public class Project {
     @JoinTable(name = "project_foundation", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "foundation_id")})
     private Foundation foundation;
     private String project_name;
-    private String create_time;
-    private String publish_time;
-    private String invest_time;
-    private String exit_time;
+    private long create_time;
+    private long publish_time;
+    private long invest_time;
+    private long exit_time;
     private int state;
     private int exitState = 0;
     private String project_introduction;
@@ -95,126 +95,6 @@ public class Project {
 //    @JoinTable(name = "project_projectFile", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "projectFile_id")})
 
 
-    public String getProject_evaluates() {
-        return project_evaluates;
-    }
-
-    public void setProject_evaluates(String project_evaluates) {
-        this.project_evaluates = project_evaluates;
-    }
-
-    public String getProject_introducer_tel() {
-        return project_introducer_tel;
-    }
-
-    public void setProject_introducer_tel(String project_introducer_tel) {
-        this.project_introducer_tel = project_introducer_tel;
-    }
-
-    public int getExitState() {
-        return exitState;
-    }
-
-    public void setExitState(int exitState) {
-        this.exitState = exitState;
-    }
-
-    public EvaluateAvg getEvaluateAvg() {
-        return evaluateAvg;
-    }
-
-    public void setEvaluateAvg(EvaluateAvg evaluateAvg) {
-        this.evaluateAvg = evaluateAvg;
-    }
-
-    public ProjectFile getProjectFile() {
-        return projectFile;
-    }
-
-    public void setProjectFile(ProjectFile projectFile) {
-        this.projectFile = projectFile;
-    }
-
-    public File getVideo() {
-        return video;
-    }
-
-    public void setVideo(File video) {
-        this.video = video;
-    }
-
-    public String getExit_time() {
-        return exit_time;
-    }
-
-    public void setExit_time(String exit_time) {
-        this.exit_time = exit_time;
-    }
-
-    public String getProject_address() {
-        return project_address;
-    }
-
-    public void setProject_address(String project_address) {
-        this.project_address = project_address;
-    }
-
-    public int getState() {
-        return state;
-    }
-
-    public void setState(int state) {
-        this.state = state;
-    }
-
-    public String getCreate_time() {
-        return create_time;
-    }
-
-    public void setCreate_time(String create_time) {
-        this.create_time = create_time;
-    }
-
-    public String getPublish_time() {
-        return publish_time;
-    }
-
-    public void setPublish_time(String publish_time) {
-        this.publish_time = publish_time;
-    }
-
-    public String getInvest_time() {
-        return invest_time;
-    }
-
-    public void setInvest_time(String invest_time) {
-        this.invest_time = invest_time;
-    }
-
-    public User getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(User createUser) {
-        this.createUser = createUser;
-    }
-
-    public Foundation getFoundation() {
-        return foundation;
-    }
-
-    public void setFoundation(Foundation foundation) {
-        this.foundation = foundation;
-    }
-
-    public List<User> getProject_member() {
-        return project_member;
-    }
-
-    public void setProject_member(List<User> project_member) {
-        this.project_member = project_member;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -239,12 +119,76 @@ public class Project {
         this.proposal = proposal;
     }
 
+    public EvaluateAvg getEvaluateAvg() {
+        return evaluateAvg;
+    }
+
+    public void setEvaluateAvg(EvaluateAvg evaluateAvg) {
+        this.evaluateAvg = evaluateAvg;
+    }
+
+    public Foundation getFoundation() {
+        return foundation;
+    }
+
+    public void setFoundation(Foundation foundation) {
+        this.foundation = foundation;
+    }
+
     public String getProject_name() {
         return project_name;
     }
 
     public void setProject_name(String project_name) {
         this.project_name = project_name;
+    }
+
+    public long getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(long create_time) {
+        this.create_time = create_time;
+    }
+
+    public long getPublish_time() {
+        return publish_time;
+    }
+
+    public void setPublish_time(long publish_time) {
+        this.publish_time = publish_time;
+    }
+
+    public long getInvest_time() {
+        return invest_time;
+    }
+
+    public void setInvest_time(long invest_time) {
+        this.invest_time = invest_time;
+    }
+
+    public long getExit_time() {
+        return exit_time;
+    }
+
+    public void setExit_time(long exit_time) {
+        this.exit_time = exit_time;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
+    public int getExitState() {
+        return exitState;
+    }
+
+    public void setExitState(int exitState) {
+        this.exitState = exitState;
     }
 
     public String getProject_introduction() {
@@ -285,6 +229,22 @@ public class Project {
 
     public void setTab(List<String> tab) {
         this.tab = tab;
+    }
+
+    public List<User> getProject_member() {
+        return project_member;
+    }
+
+    public void setProject_member(List<User> project_member) {
+        this.project_member = project_member;
+    }
+
+    public User getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(User createUser) {
+        this.createUser = createUser;
     }
 
     public String getProject_reason() {
@@ -407,12 +367,36 @@ public class Project {
         this.project_resource = project_resource;
     }
 
+    public String getProject_address() {
+        return project_address;
+    }
+
+    public void setProject_address(String project_address) {
+        this.project_address = project_address;
+    }
+
+    public String getProject_evaluates() {
+        return project_evaluates;
+    }
+
+    public void setProject_evaluates(String project_evaluates) {
+        this.project_evaluates = project_evaluates;
+    }
+
     public String getProject_introducer() {
         return project_introducer;
     }
 
     public void setProject_introducer(String project_introducer) {
         this.project_introducer = project_introducer;
+    }
+
+    public String getProject_introducer_tel() {
+        return project_introducer_tel;
+    }
+
+    public void setProject_introducer_tel(String project_introducer_tel) {
+        this.project_introducer_tel = project_introducer_tel;
     }
 
     public String getValuation_afterInvest() {
@@ -527,4 +511,19 @@ public class Project {
         this.project_evaluate = project_evaluate;
     }
 
+    public File getVideo() {
+        return video;
+    }
+
+    public void setVideo(File video) {
+        this.video = video;
+    }
+
+    public ProjectFile getProjectFile() {
+        return projectFile;
+    }
+
+    public void setProjectFile(ProjectFile projectFile) {
+        this.projectFile = projectFile;
+    }
 }
