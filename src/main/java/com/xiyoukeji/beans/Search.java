@@ -17,7 +17,8 @@ public class Search {
     private Integer project_type;
     private String address;
     private String resource;
-    private String responsibility;
+    private Integer userId;
+//    private String responsibility;
     private int page;
     private int line;
 
@@ -101,12 +102,12 @@ public class Search {
         this.resource = resource;
     }
 
-    public String getResponsibility() {
-        return responsibility;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setResponsibility(String responsibility) {
-        this.responsibility = responsibility;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public int getPage() {

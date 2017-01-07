@@ -219,8 +219,8 @@ public class ProjectService {
         if (search.getResource() != null) {
             sql += "project_resource = '" + search.getResource() + "' and ";
         }
-        if (search.getResponsibility() != null) {
-            sql += "createUser.userName like '%" + search.getResponsibility() + "%' and ";
+        if (search.getUserId() != null) {
+            sql += "createUser.id = " + search.getUserId() + " and ";
         }
         sql += "1=1";
         list = projectBaseDao.find(sql, search.getPage(), search.getLine(), null);
