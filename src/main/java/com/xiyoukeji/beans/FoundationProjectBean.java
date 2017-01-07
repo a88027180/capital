@@ -9,13 +9,45 @@ import com.xiyoukeji.utils.AssignType;
 public class FoundationProjectBean {
     private Integer id;
     private String project_name;
-    private String create_time;
-    private String publish_time;
-    private String invest_time;
-    private String exit_time;
+    private long create_current;
+    private long publish_current;
+    private long invest_current;
+    private long exit_current;
     private int state;
     private int exitState;
-//    private String project_introduction;
+
+    public long getCreate_current() {
+        return create_current;
+    }
+
+    public void setCreate_current(long create_current) {
+        this.create_current = create_current;
+    }
+
+    public long getPublish_current() {
+        return publish_current;
+    }
+
+    public void setPublish_current(long publish_current) {
+        this.publish_current = publish_current;
+    }
+
+    public long getInvest_current() {
+        return invest_current;
+    }
+
+    public void setInvest_current(long invest_current) {
+        this.invest_current = invest_current;
+    }
+
+    public long getExit_current() {
+        return exit_current;
+    }
+
+    public void setExit_current(long exit_current) {
+        this.exit_current = exit_current;
+    }
+    //    private String project_introduction;
 //    private String project_code;
 //    private String project_stage;
 //    private String valuation;
@@ -74,37 +106,6 @@ public class FoundationProjectBean {
         this.project_name = project_name;
     }
 
-    public String getCreate_time() {
-        return create_time;
-    }
-
-    public void setCreate_time(String create_time) {
-        this.create_time = create_time;
-    }
-
-    public String getPublish_time() {
-        return publish_time;
-    }
-
-    public void setPublish_time(String publish_time) {
-        this.publish_time = publish_time;
-    }
-
-    public String getInvest_time() {
-        return invest_time;
-    }
-
-    public void setInvest_time(String invest_time) {
-        this.invest_time = invest_time;
-    }
-
-    public String getExit_time() {
-        return exit_time;
-    }
-
-    public void setExit_time(String exit_time) {
-        this.exit_time = exit_time;
-    }
 
     public int getState() {
         return state;

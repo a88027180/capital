@@ -65,13 +65,13 @@ public class FoundationService {
             case 0:
 
                 foundation.getList_project().add(project);
-                project.setInvest_time(Utils.getTime());
+                project.setInvest_current(System.currentTimeMillis());
                 project.setState(2);
 
                 break;
             case 1:
                 foundation.getList_project().remove(project);
-                project.setInvest_time(null);
+                project.setInvest_current(0);
                 project.setState(1);
                 break;
         }

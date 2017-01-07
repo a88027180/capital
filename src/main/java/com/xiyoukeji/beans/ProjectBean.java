@@ -18,10 +18,6 @@ public class ProjectBean {
     private EvaluateAvgBean evaluateAvg;
     private ProjectFoundationBean foundation;
     private String project_name;
-//    private String create_time;
-//    private String publish_time;
-//    private String invest_time;
-//    private String exit_time;
     private long create_current;
     private long publish_current;
     private long invest_current;
@@ -86,6 +82,7 @@ public class ProjectBean {
     public void setLogo(FileBean logo) {
         this.logo = logo;
     }
+
 
     public FileBean getProposal() {
         return proposal;

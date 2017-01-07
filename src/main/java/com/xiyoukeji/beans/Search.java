@@ -11,8 +11,8 @@ public class Search {
     //    private Integer search_type;//如果projectId没有 type必填:0草稿1发布(未投)2已投(有所属基金,foundationId必填)3退出4已发布(用户相关)
     private Integer foundationId;
     private String nameorcode;
-    private String begin_time;
-    private String end_time;
+    private long begin_time;
+    private long end_time;
     private Integer schedule;
     private Integer project_type;
     private String address;
@@ -46,19 +46,20 @@ public class Search {
         this.nameorcode = nameorcode;
     }
 
-    public String getBegin_time() {
+
+    public long getBegin_time() {
         return begin_time;
     }
 
-    public void setBegin_time(String begin_time) {
+    public void setBegin_time(long begin_time) {
         this.begin_time = begin_time;
     }
 
-    public String getEnd_time() {
+    public long getEnd_time() {
         return end_time;
     }
 
-    public void setEnd_time(String end_time) {
+    public void setEnd_time(long end_time) {
         this.end_time = end_time;
     }
 

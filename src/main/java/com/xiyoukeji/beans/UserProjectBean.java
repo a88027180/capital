@@ -9,10 +9,10 @@ import com.xiyoukeji.utils.AssignType;
 public class UserProjectBean {
     private Integer id;
     private String project_name;
-    private String create_time;
-    private String publish_time;
-    private String invest_time;
-    private String exit_time;
+    private long create_current;
+    private long publish_current;
+    private long invest_current;
+    private long exit_current;
     private int state;
     private int exitState;
     private String project_introduction;
@@ -70,13 +70,6 @@ public class UserProjectBean {
         return project_address;
     }
 
-    public String getExit_time() {
-        return exit_time;
-    }
-
-    public void setExit_time(String exit_time) {
-        this.exit_time = exit_time;
-    }
 
     public void setProject_address(String project_address) {
         this.project_address = project_address;
@@ -192,30 +185,6 @@ public class UserProjectBean {
 
     public void setCompany_contact(String company_contact) {
         this.company_contact = company_contact;
-    }
-
-    public String getCreate_time() {
-        return create_time;
-    }
-
-    public void setCreate_time(String create_time) {
-        this.create_time = create_time;
-    }
-
-    public String getPublish_time() {
-        return publish_time;
-    }
-
-    public void setPublish_time(String publish_time) {
-        this.publish_time = publish_time;
-    }
-
-    public String getInvest_time() {
-        return invest_time;
-    }
-
-    public void setInvest_time(String invest_time) {
-        this.invest_time = invest_time;
     }
 
     public String getContact_phone() {

@@ -31,10 +31,6 @@ public class Project {
     @JoinTable(name = "project_foundation", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "foundation_id")})
     private Foundation foundation;
     private String project_name;
-    private String create_time;
-    private String publish_time;
-    private String invest_time;
-    private String exit_time;
     private long create_current;
     private long publish_current;
     private long invest_current;
@@ -179,13 +175,6 @@ public class Project {
         this.video = video;
     }
 
-    public String getExit_time() {
-        return exit_time;
-    }
-
-    public void setExit_time(String exit_time) {
-        this.exit_time = exit_time;
-    }
 
     public String getProject_address() {
         return project_address;
@@ -203,29 +192,6 @@ public class Project {
         this.state = state;
     }
 
-    public String getCreate_time() {
-        return create_time;
-    }
-
-    public void setCreate_time(String create_time) {
-        this.create_time = create_time;
-    }
-
-    public String getPublish_time() {
-        return publish_time;
-    }
-
-    public void setPublish_time(String publish_time) {
-        this.publish_time = publish_time;
-    }
-
-    public String getInvest_time() {
-        return invest_time;
-    }
-
-    public void setInvest_time(String invest_time) {
-        this.invest_time = invest_time;
-    }
 
     public User getCreateUser() {
         return createUser;

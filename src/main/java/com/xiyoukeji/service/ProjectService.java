@@ -66,14 +66,12 @@ public class ProjectService {
                     /*取消投资*/
                     if (project1.getFoundation() != null && project.getFoundation() == null) {
                         project1.setState(1);
-                        project1.setInvest_time(null);
                     }
 
                     project1.setFoundation(project.getFoundation());
                     /*如果不是草稿状态选择基金保存 都是投资*/
                     if (project1.getState() != 0) {
                         project1.setInvest_current(System.currentTimeMillis());
-                        project1.setInvest_time(Utils.getTime());
                         project1.setState(2);
                     }
 
@@ -103,7 +101,6 @@ public class ProjectService {
                     if (project.getProject_schedule() == 8) {
                         project1.setExitState(1);
                         project1.setExit_current(System.currentTimeMillis());
-                        project1.setExit_time(Utils.getTime());
                     }
                     break;
                 case 3:
@@ -119,17 +116,14 @@ public class ProjectService {
                     } else {
                         project1.setState(2);
                         project1.setInvest_current(System.currentTimeMillis());
-                        project1.setInvest_time(Utils.getTime());
                     }
                     project.setPublish_current(System.currentTimeMillis());
-                    project1.setPublish_time(Utils.getTime());
                     break;
             }
         } else {
             /*新建*/
             project1 = project;
             project1.setCreate_current(System.currentTimeMillis());
-            project1.setCreate_time(Utils.getTime());
             project1.setCreateUser((User) session.getAttribute("user"));
             project1.setState(0);
 
@@ -182,36 +176,36 @@ public class ProjectService {
             }
 
         }
-        if (search.getBegin_time() != null) {
+        if (search.getBegin_time() != 0) {
 
             switch (search.getProject_type()) {
                 case 0:
-                    sql += "create_time >= '" + search.getBegin_time() + "' and ";
+                    sql += "create_current >= '" + search.getBegin_time() + "' and ";
                     break;
                 case 1:
-                    sql += "publish_time >= '" + search.getBegin_time() + "' and ";
+                    sql += "publish_current >= '" + search.getBegin_time() + "' and ";
                     break;
                 case 2:
-                    sql += "invest_time >= '" + search.getBegin_time() + "' and ";
+                    sql += "invest_current >= '" + search.getBegin_time() + "' and ";
                     break;
                 case 3:
-                    sql += "exit_time <= '" + search.getBegin_time() + "' and ";
+                    sql += "exit_current <= '" + search.getBegin_time() + "' and ";
                     break;
             }
         }
-        if (search.getEnd_time() != null) {
+        if (search.getEnd_time() != 0) {
             switch (search.getProject_type()) {
                 case 0:
-                    sql += "create_time <= '" + search.getEnd_time() + "' and ";
+                    sql += "create_current <= '" + search.getEnd_time() + "' and ";
                     break;
                 case 1:
-                    sql += "publish_time <= '" + search.getEnd_time() + "' and ";
+                    sql += "publish_current <= '" + search.getEnd_time() + "' and ";
                     break;
                 case 2:
-                    sql += "invest_time <= '" + search.getEnd_time() + "' and ";
+                    sql += "invest_current <= '" + search.getEnd_time() + "' and ";
                     break;
                 case 3:
-                    sql += "exit_time <= '" + search.getEnd_time() + "' and ";
+                    sql += "exit_current <= '" + search.getEnd_time() + "' and ";
                     break;
             }
 
