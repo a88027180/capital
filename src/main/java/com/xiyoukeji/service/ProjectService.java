@@ -157,18 +157,23 @@ public class ProjectService {
         if (search.getProject_type() != null) {
             switch (search.getProject_type()) {
                 case 0:
+                    /*我的项目(草稿箱)*/
                     sql += "state = 0 and createUser.id = " + user1.getId() + " and ";
                     break;
                 case 1:
+                    /*所有已发布的项目*/
                     sql += "state = 1 and ";
                     break;
                 case 2:
+                    /*所有已投的项目*/
                     sql += "state = 2 and ";
                     break;
                 case 3:
+                    /*所有退出投资的项目*/
                     sql += "state = 2 and exitState = 1 and ";
                     break;
                 case 4:
+                    /*我的项目(包含已发布和已投)*/
                     sql += "state != 0 and createUser.id = " + user1.getId() + " and ";
                     break;
             }
@@ -223,7 +228,10 @@ public class ProjectService {
             sql += "createUser.id = " + search.getUserId() + " and ";
         }
         sql += "1=1";
-        list = projectBaseDao.find(sql, search.getPage(), search.getLine(), null);
+        if (search.getPage() == 0 || search.getLine() == 0) {
+            list = projectBaseDao.find(sql);
+        } else
+            list = projectBaseDao.find(sql, search.getPage(), search.getLine(), null);
         long count = projectBaseDao.count(sql);
         map.put("list", list);
         map.put("count", count);
