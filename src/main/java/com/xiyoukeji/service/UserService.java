@@ -45,7 +45,7 @@ public class UserService {
         List<User> list = new ArrayList<>();
         switch (type) {
             case 0:
-                list = baseDao.find("from User where available = 1 and role.type = 0");
+                list = baseDao.find("from User where available = 1 and role.type = 0 or role.type = 2");
                 break;
             case 1:
                 list = baseDao.find("from User where available = 1 and role.type = 1");
