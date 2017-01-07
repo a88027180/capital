@@ -9,10 +9,10 @@ import com.xiyoukeji.utils.AssignType;
 public class UserProjectBean {
     private Integer id;
     private String project_name;
-    private long create_time;
-    private long publish_time;
-    private long invest_time;
-    private long exit_time;
+    private String create_time;
+    private String publish_time;
+    private String invest_time;
+    private String exit_time;
     private int state;
     private int exitState;
     private String project_introduction;
@@ -50,54 +50,6 @@ public class UserProjectBean {
 
     private int project_schedule;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public String getProject_name() {
-        return project_name;
-    }
-
-    public void setProject_name(String project_name) {
-        this.project_name = project_name;
-    }
-
-    public long getCreate_time() {
-        return create_time;
-    }
-
-    public void setCreate_time(long create_time) {
-        this.create_time = create_time;
-    }
-
-    public long getPublish_time() {
-        return publish_time;
-    }
-
-    public void setPublish_time(long publish_time) {
-        this.publish_time = publish_time;
-    }
-
-    public long getInvest_time() {
-        return invest_time;
-    }
-
-    public void setInvest_time(long invest_time) {
-        this.invest_time = invest_time;
-    }
-
-    public long getExit_time() {
-        return exit_time;
-    }
-
-    public void setExit_time(long exit_time) {
-        this.exit_time = exit_time;
-    }
-
     public int getState() {
         return state;
     }
@@ -112,6 +64,38 @@ public class UserProjectBean {
 
     public void setExitState(int exitState) {
         this.exitState = exitState;
+    }
+
+    public String getProject_address() {
+        return project_address;
+    }
+
+    public String getExit_time() {
+        return exit_time;
+    }
+
+    public void setExit_time(String exit_time) {
+        this.exit_time = exit_time;
+    }
+
+    public void setProject_address(String project_address) {
+        this.project_address = project_address;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getProject_name() {
+        return project_name;
+    }
+
+    public void setProject_name(String project_name) {
+        this.project_name = project_name;
     }
 
     public String getProject_introduction() {
@@ -210,6 +194,30 @@ public class UserProjectBean {
         this.company_contact = company_contact;
     }
 
+    public String getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(String create_time) {
+        this.create_time = create_time;
+    }
+
+    public String getPublish_time() {
+        return publish_time;
+    }
+
+    public void setPublish_time(String publish_time) {
+        this.publish_time = publish_time;
+    }
+
+    public String getInvest_time() {
+        return invest_time;
+    }
+
+    public void setInvest_time(String invest_time) {
+        this.invest_time = invest_time;
+    }
+
     public String getContact_phone() {
         return contact_phone;
     }
@@ -264,14 +272,6 @@ public class UserProjectBean {
 
     public void setProject_resource(String project_resource) {
         this.project_resource = project_resource;
-    }
-
-    public String getProject_address() {
-        return project_address;
-    }
-
-    public void setProject_address(String project_address) {
-        this.project_address = project_address;
     }
 
     public String getProject_introducer() {
@@ -377,4 +377,5 @@ public class UserProjectBean {
     public void setProject_schedule(int project_schedule) {
         this.project_schedule = project_schedule;
     }
+
 }

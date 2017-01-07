@@ -9,10 +9,10 @@ import com.xiyoukeji.utils.AssignType;
 public class FoundationProjectBean {
     private Integer id;
     private String project_name;
-    private long create_time;
-    private long publish_time;
-    private long invest_time;
-    private long exit_time;
+    private String create_time;
+    private String publish_time;
+    private String invest_time;
+    private String exit_time;
     private int state;
     private int exitState;
 //    private String project_introduction;
@@ -48,6 +48,15 @@ public class FoundationProjectBean {
 //    private String investment_other;
 //    private String share_other;
 
+    private int project_schedule;
+
+    public int getExitState() {
+        return exitState;
+    }
+
+    public void setExitState(int exitState) {
+        this.exitState = exitState;
+    }
 
     public Integer getId() {
         return id;
@@ -65,35 +74,35 @@ public class FoundationProjectBean {
         this.project_name = project_name;
     }
 
-    public long getCreate_time() {
+    public String getCreate_time() {
         return create_time;
     }
 
-    public void setCreate_time(long create_time) {
+    public void setCreate_time(String create_time) {
         this.create_time = create_time;
     }
 
-    public long getPublish_time() {
+    public String getPublish_time() {
         return publish_time;
     }
 
-    public void setPublish_time(long publish_time) {
+    public void setPublish_time(String publish_time) {
         this.publish_time = publish_time;
     }
 
-    public long getInvest_time() {
+    public String getInvest_time() {
         return invest_time;
     }
 
-    public void setInvest_time(long invest_time) {
+    public void setInvest_time(String invest_time) {
         this.invest_time = invest_time;
     }
 
-    public long getExit_time() {
+    public String getExit_time() {
         return exit_time;
     }
 
-    public void setExit_time(long exit_time) {
+    public void setExit_time(String exit_time) {
         this.exit_time = exit_time;
     }
 
@@ -105,11 +114,11 @@ public class FoundationProjectBean {
         this.state = state;
     }
 
-    public int getExitState() {
-        return exitState;
+    public int getProject_schedule() {
+        return project_schedule;
     }
 
-    public void setExitState(int exitState) {
-        this.exitState = exitState;
+    public void setProject_schedule(int project_schedule) {
+        this.project_schedule = project_schedule;
     }
 }

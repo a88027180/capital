@@ -18,10 +18,10 @@ public class ProjectBean {
     private EvaluateAvgBean evaluateAvg;
     private ProjectFoundationBean foundation;
     private String project_name;
-    private long create_time;
-    private long publish_time;
-    private long invest_time;
-    private long exit_time;
+    private String create_time;
+    private String publish_time;
+    private String invest_time;
+    private String exit_time;
     private int state;
     private int exitState;
     private String project_introduction;
@@ -67,6 +67,70 @@ public class ProjectBean {
 //    private List<EvaluateBean> project_evaluate = new ArrayList<>();
     private FileBean video;
 
+    public int getExitState() {
+        return exitState;
+    }
+
+    public void setExitState(int exitState) {
+        this.exitState = exitState;
+    }
+
+    public EvaluateAvgBean getEvaluateAvg() {
+        return evaluateAvg;
+    }
+
+    public void setEvaluateAvg(EvaluateAvgBean evaluateAvg) {
+        this.evaluateAvg = evaluateAvg;
+    }
+
+    public String getProject_evaluates() {
+        return project_evaluates;
+    }
+
+    public void setProject_evaluates(String project_evaluates) {
+        this.project_evaluates = project_evaluates;
+    }
+
+    public String getProject_introducer_tel() {
+        return project_introducer_tel;
+    }
+
+    public void setProject_introducer_tel(String project_introducer_tel) {
+        this.project_introducer_tel = project_introducer_tel;
+    }
+
+    public FileBean getVideo() {
+        return video;
+    }
+
+    public void setVideo(FileBean video) {
+        this.video = video;
+    }
+
+    public String getProject_address() {
+        return project_address;
+    }
+
+    public String getExit_time() {
+        return exit_time;
+    }
+
+    public void setExit_time(String exit_time) {
+        this.exit_time = exit_time;
+    }
+
+    public void setProject_address(String project_address) {
+        this.project_address = project_address;
+    }
+
+    public ProjectUserBean getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(ProjectUserBean createUser) {
+        this.createUser = createUser;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -91,14 +155,6 @@ public class ProjectBean {
         this.proposal = proposal;
     }
 
-    public EvaluateAvgBean getEvaluateAvg() {
-        return evaluateAvg;
-    }
-
-    public void setEvaluateAvg(EvaluateAvgBean evaluateAvg) {
-        this.evaluateAvg = evaluateAvg;
-    }
-
     public ProjectFoundationBean getFoundation() {
         return foundation;
     }
@@ -113,54 +169,6 @@ public class ProjectBean {
 
     public void setProject_name(String project_name) {
         this.project_name = project_name;
-    }
-
-    public long getCreate_time() {
-        return create_time;
-    }
-
-    public void setCreate_time(long create_time) {
-        this.create_time = create_time;
-    }
-
-    public long getPublish_time() {
-        return publish_time;
-    }
-
-    public void setPublish_time(long publish_time) {
-        this.publish_time = publish_time;
-    }
-
-    public long getInvest_time() {
-        return invest_time;
-    }
-
-    public void setInvest_time(long invest_time) {
-        this.invest_time = invest_time;
-    }
-
-    public long getExit_time() {
-        return exit_time;
-    }
-
-    public void setExit_time(long exit_time) {
-        this.exit_time = exit_time;
-    }
-
-    public int getState() {
-        return state;
-    }
-
-    public void setState(int state) {
-        this.state = state;
-    }
-
-    public int getExitState() {
-        return exitState;
-    }
-
-    public void setExitState(int exitState) {
-        this.exitState = exitState;
     }
 
     public String getProject_introduction() {
@@ -193,14 +201,6 @@ public class ProjectBean {
 
     public void setValuation(String valuation) {
         this.valuation = valuation;
-    }
-
-    public ProjectUserBean getCreateUser() {
-        return createUser;
-    }
-
-    public void setCreateUser(ProjectUserBean createUser) {
-        this.createUser = createUser;
     }
 
     public List<String> getTab() {
@@ -283,6 +283,38 @@ public class ProjectBean {
         this.company_contact = company_contact;
     }
 
+    public String getCreate_time() {
+        return create_time;
+    }
+
+    public void setCreate_time(String create_time) {
+        this.create_time = create_time;
+    }
+
+    public String getPublish_time() {
+        return publish_time;
+    }
+
+    public void setPublish_time(String publish_time) {
+        this.publish_time = publish_time;
+    }
+
+    public String getInvest_time() {
+        return invest_time;
+    }
+
+    public void setInvest_time(String invest_time) {
+        this.invest_time = invest_time;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+    }
+
     public String getContact_phone() {
         return contact_phone;
     }
@@ -339,36 +371,12 @@ public class ProjectBean {
         this.project_resource = project_resource;
     }
 
-    public String getProject_evaluates() {
-        return project_evaluates;
-    }
-
-    public void setProject_evaluates(String project_evaluates) {
-        this.project_evaluates = project_evaluates;
-    }
-
-    public String getProject_address() {
-        return project_address;
-    }
-
-    public void setProject_address(String project_address) {
-        this.project_address = project_address;
-    }
-
     public String getProject_introducer() {
         return project_introducer;
     }
 
     public void setProject_introducer(String project_introducer) {
         this.project_introducer = project_introducer;
-    }
-
-    public String getProject_introducer_tel() {
-        return project_introducer_tel;
-    }
-
-    public void setProject_introducer_tel(String project_introducer_tel) {
-        this.project_introducer_tel = project_introducer_tel;
     }
 
     public String getValuation_afterInvest() {
@@ -466,12 +474,21 @@ public class ProjectBean {
     public void setProject_schedule(int project_schedule) {
         this.project_schedule = project_schedule;
     }
+//
+//    public List<NoteBean> getProject_notes() {
+//        return project_notes;
+//    }
+//
+//    public void setProject_notes(List<NoteBean> project_notes) {
+//        this.project_notes = project_notes;
+//    }
+//
+//    public List<EvaluateBean> getProject_evaluate() {
+//        return project_evaluate;
+//    }
+//
+//    public void setProject_evaluate(List<EvaluateBean> project_evaluate) {
+//        this.project_evaluate = project_evaluate;
+//    }
 
-    public FileBean getVideo() {
-        return video;
-    }
-
-    public void setVideo(FileBean video) {
-        this.video = video;
-    }
 }
