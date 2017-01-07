@@ -72,6 +72,7 @@ public class ProjectService {
                     project1.setFoundation(project.getFoundation());
                     /*如果不是草稿状态选择基金保存 都是投资*/
                     if (project1.getState() != 0) {
+                        project1.setInvest_current(System.currentTimeMillis());
                         project1.setInvest_time(Utils.getTime());
                         project1.setState(2);
                     }
@@ -101,6 +102,7 @@ public class ProjectService {
                     project1.setProject_schedule(project.getProject_schedule());
                     if (project.getProject_schedule() == 8) {
                         project1.setExitState(1);
+                        project1.setExit_current(System.currentTimeMillis());
                         project1.setExit_time(Utils.getTime());
                     }
                     break;
@@ -116,14 +118,17 @@ public class ProjectService {
                         project1.setState(1);
                     } else {
                         project1.setState(2);
+                        project1.setInvest_current(System.currentTimeMillis());
                         project1.setInvest_time(Utils.getTime());
                     }
+                    project.setPublish_current(System.currentTimeMillis());
                     project1.setPublish_time(Utils.getTime());
                     break;
             }
         } else {
             /*新建*/
             project1 = project;
+            project1.setCreate_current(System.currentTimeMillis());
             project1.setCreate_time(Utils.getTime());
             project1.setCreateUser((User) session.getAttribute("user"));
             project1.setState(0);
@@ -131,7 +136,7 @@ public class ProjectService {
         }
 
         projectBaseDao.saveOrUpdate(project1);
-        project1.setProject_code(String.valueOf(project1.getCreate_time()));
+        project1.setProject_code(String.valueOf(project1.getCreate_current()));
         map.put("projectId", project1.getId());
         return map;
     }
@@ -150,7 +155,7 @@ public class ProjectService {
             sql += "foundation.id = " + search.getFoundationId() + " and state = 2 and ";
         }
         if (search.getNameorcode() != null) {
-            sql += "project_name like '%" + search.getNameorcode() + "%' or project_code like '%" + search.getNameorcode() + "%' and ";
+            sql += "(project_name like '%" + search.getNameorcode() + "%' or project_code like '%" + search.getNameorcode() + "%') and ";
         }
         if (search.getProject_type() != null) {
             switch (search.getProject_type()) {
