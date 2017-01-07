@@ -35,6 +35,10 @@ public class Project {
     private String publish_time;
     private String invest_time;
     private String exit_time;
+    private long create_current;
+    private long publish_current;
+    private long invest_current;
+    private long exit_current;
     private int state;
     private int exitState = 0;
     private String project_introduction;
@@ -109,6 +113,38 @@ public class Project {
 
     public void setProject_introducer_tel(String project_introducer_tel) {
         this.project_introducer_tel = project_introducer_tel;
+    }
+
+    public long getCreate_current() {
+        return create_current;
+    }
+
+    public void setCreate_current(long create_current) {
+        this.create_current = create_current;
+    }
+
+    public long getPublish_current() {
+        return publish_current;
+    }
+
+    public void setPublish_current(long publish_current) {
+        this.publish_current = publish_current;
+    }
+
+    public long getInvest_current() {
+        return invest_current;
+    }
+
+    public void setInvest_current(long invest_current) {
+        this.invest_current = invest_current;
+    }
+
+    public long getExit_current() {
+        return exit_current;
+    }
+
+    public void setExit_current(long exit_current) {
+        this.exit_current = exit_current;
     }
 
     public int getExitState() {
