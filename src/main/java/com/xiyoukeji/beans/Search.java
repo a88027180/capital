@@ -17,8 +17,8 @@ public class Search {
     private Integer project_type;
     private String address;
     private String resource;
-    private Integer userId;
-//    private String responsibility;
+    private Integer userId;//项目负责人id
+    //    private String responsibility;
     private int page;
     private int line;
 
