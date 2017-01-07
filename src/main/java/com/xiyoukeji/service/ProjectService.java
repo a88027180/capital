@@ -131,13 +131,11 @@ public class ProjectService {
         }
 
         projectBaseDao.saveOrUpdate(project1);
-        //2093-09-98 66:77:88   567890874
-//        String s = Utils.getCode(project1.getCreate_time()) + String.format("%04d", project1.getId());
-//        System.out.print(s);
         project1.setProject_code(String.valueOf(project1.getCreate_time()));
         map.put("projectId", project1.getId());
         return map;
     }
+
 
     @Transactional
     public Map getProjecList(Search search) {
