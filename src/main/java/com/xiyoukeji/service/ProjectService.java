@@ -163,7 +163,7 @@ public class ProjectService {
                     break;
                 case 2:
                     /*所有已投的项目*/
-                    sql += "state = 2 and ";
+                    sql += "state = 2 and exitState = 0 and ";
                     break;
                 case 3:
                     /*所有退出投资的项目*/
@@ -225,10 +225,7 @@ public class ProjectService {
             sql += "createUser.id = " + search.getUserId() + " and ";
         }
         sql += "1=1";
-        if (search.getPage() == 0 || search.getLine() == 0) {
-            list = projectBaseDao.find(sql);
-        } else
-            list = projectBaseDao.find(sql, search.getPage(), search.getLine(), null);
+        list = projectBaseDao.find(sql, search.getPage(), search.getLine(), null);
         long count = projectBaseDao.count(sql);
         map.put("list", list);
         map.put("count", count);
