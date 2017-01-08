@@ -14,7 +14,6 @@ import javax.persistence.*;
 @AssignType
 public class InvestmentOtherBean {
     private Integer id;
-    private ProjectBean project;
     private String other;
     private String investment_other;
     private String share_other;
@@ -25,14 +24,6 @@ public class InvestmentOtherBean {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public ProjectBean getProject() {
-        return project;
-    }
-
-    public void setProject(ProjectBean project) {
-        this.project = project;
     }
 
     public String getOther() {

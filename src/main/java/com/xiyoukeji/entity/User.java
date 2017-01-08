@@ -23,7 +23,6 @@ public class User {
     private Integer id;
     @OneToOne
     private File photo;
-    @Column(length = 50, unique = true)
     private String userName;
     private String password;
     @ManyToOne

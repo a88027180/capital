@@ -82,14 +82,19 @@ public class UserController {
     /*获取用户信息*/
     @RequestMapping(value = "/getUser")
     @ResponseBody
-    public Map getUser() {
+    public Map getUser(Integer userId) {
         User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
             UserBean user = new UserBean();
             try {
-                Core.assignDest(user, userService.getUser(user1.getId()));
+                if (userId == null) {
+                    Core.assignDest(user, userService.getUser(user1.getId()));
+                } else {
+                    Core.assignDest(user, userService.getUser(userId));
+                }
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

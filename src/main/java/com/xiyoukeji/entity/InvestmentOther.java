@@ -18,19 +18,19 @@ public class InvestmentOther {
     @GeneratedValue(generator = "native")
     @GenericGenerator(name = "native", strategy = "native")
     private Integer id;
-//    @ManyToOne
-//    private Project project;
+    @ManyToOne
+    private Project project;
     private String other;
     private String investment_other;
     private String share_other;
-//
-//    public Project getProject() {
-//        return project;
-//    }
-//
-//    public void setProject(Project project) {
-//        this.project = project;
-//    }
+
+    public Project getProject() {
+        return project;
+    }
+
+    public void setProject(Project project) {
+        this.project = project;
+    }
 
     public Integer getId() {
         return id;

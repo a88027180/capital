@@ -27,6 +27,8 @@ public class ProjectService {
     BaseDao<Foundation> foundationBaseDao;
     @Resource
     HttpSession session;
+    @Resource
+    BaseDao<InvestmentOther> investmentOtherBaseDao;
 
 
     @Transactional
@@ -92,6 +94,12 @@ public class ProjectService {
                     project1.setEnjoyor(project.getEnjoyor());
                     project1.setInvestment_enjoyor(project.getInvestment_enjoyor());
                     project1.setShare_enjoyor(project.getShare_enjoyor());
+                    List<InvestmentOther> list = investmentOtherBaseDao.find("from InvestmentOther where project.id = " + project.getId());
+                    if (list.size() > 0) {
+                        for (int i = 0; i < list.size(); i++) {
+                            investmentOtherBaseDao.delete(list.get(i));
+                        }
+                    }
                     project1.setInvestment_others(project.getInvestment_others());
 
                     break;

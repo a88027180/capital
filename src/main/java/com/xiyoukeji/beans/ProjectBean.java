@@ -62,7 +62,7 @@ public class ProjectBean {
     private String other;
     private String investment_other;
     private String share_other;
-    private List<InvestmentOtherBean> investment_others;
+    private List<InvestmentOtherBean> investment_others = new ArrayList<>();
     private int project_schedule;
     //    private List<NoteBean> project_notes = new ArrayList<>();
 //    private List<EvaluateBean> project_evaluate = new ArrayList<>();
