@@ -194,6 +194,9 @@ public class ProjectService {
                 case 3:
                     sql += "exit_current <= '" + search.getBegin_time() + "' and ";
                     break;
+                case 4:
+                    sql += "publish_current >= '" + search.getBegin_time() + "' and ";
+                    break;
             }
         }
         if (search.getEnd_time() != 0) {
@@ -209,6 +212,9 @@ public class ProjectService {
                     break;
                 case 3:
                     sql += "exit_current <= '" + search.getEnd_time() + "' and ";
+                    break;
+                case 4:
+                    sql += "publish_current <= '" + search.getEnd_time() + "' and ";
                     break;
             }
 
