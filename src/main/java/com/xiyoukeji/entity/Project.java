@@ -75,10 +75,10 @@ public class Project {
     private String enjoyor;
     private String investment_enjoyor;
     private String share_enjoyor;
-    private String other;
-    private String investment_other;
-    private String share_other;
 
+    @OneToMany
+    @Cascade(CascadeType.ALL)
+    private List<InvestmentOther> investment_others = new ArrayList<>();
     private int project_schedule;
     @OneToMany(orphanRemoval = true)
     @Cascade(CascadeType.ALL)
@@ -94,6 +94,14 @@ public class Project {
     private ProjectFile projectFile;
 //    @JoinTable(name = "project_projectFile", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "projectFile_id")})
 
+
+    public List<InvestmentOther> getInvestment_others() {
+        return investment_others;
+    }
+
+    public void setInvestment_others(List<InvestmentOther> investment_others) {
+        this.investment_others = investment_others;
+    }
 
     public String getProject_evaluates() {
         return project_evaluates;
@@ -481,29 +489,6 @@ public class Project {
         this.share_enjoyor = share_enjoyor;
     }
 
-    public String getOther() {
-        return other;
-    }
-
-    public void setOther(String other) {
-        this.other = other;
-    }
-
-    public String getInvestment_other() {
-        return investment_other;
-    }
-
-    public void setInvestment_other(String investment_other) {
-        this.investment_other = investment_other;
-    }
-
-    public String getShare_other() {
-        return share_other;
-    }
-
-    public void setShare_other(String share_other) {
-        this.share_other = share_other;
-    }
 
     public int getProject_schedule() {
         return project_schedule;

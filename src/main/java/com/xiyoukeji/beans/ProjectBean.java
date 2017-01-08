@@ -2,6 +2,7 @@ package com.xiyoukeji.beans;
 
 import com.xiyoukeji.entity.EvaluateAvg;
 import com.xiyoukeji.entity.FileEvaluate;
+import com.xiyoukeji.entity.InvestmentOther;
 import com.xiyoukeji.utils.AssignType;
 
 import java.util.ArrayList;
@@ -61,11 +62,19 @@ public class ProjectBean {
     private String other;
     private String investment_other;
     private String share_other;
-
+    private List<InvestmentOtherBean> investment_others;
     private int project_schedule;
-//    private List<NoteBean> project_notes = new ArrayList<>();
+    //    private List<NoteBean> project_notes = new ArrayList<>();
 //    private List<EvaluateBean> project_evaluate = new ArrayList<>();
     private FileBean video;
+
+    public List<InvestmentOtherBean> getInvestment_others() {
+        return investment_others;
+    }
+
+    public void setInvestment_others(List<InvestmentOtherBean> investment_others) {
+        this.investment_others = investment_others;
+    }
 
     public Integer getId() {
         return id;

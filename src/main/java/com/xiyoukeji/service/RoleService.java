@@ -44,6 +44,6 @@ public class RoleService {
 
     @Transactional
     public List<Role> getRoleList() {
-        return baseDao.find("from Role order by type");
+        return baseDao.find("from Role where type != 2 order by type");
     }
 }

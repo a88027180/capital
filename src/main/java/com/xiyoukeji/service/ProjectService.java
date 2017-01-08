@@ -92,9 +92,8 @@ public class ProjectService {
                     project1.setEnjoyor(project.getEnjoyor());
                     project1.setInvestment_enjoyor(project.getInvestment_enjoyor());
                     project1.setShare_enjoyor(project.getShare_enjoyor());
-                    project1.setOther(project.getOther());
-                    project1.setInvestment_other(project.getInvestment_other());
-                    project1.setShare_other(project.getShare_other());
+                    project1.setInvestment_others(project.getInvestment_others());
+
                     break;
                 case 2:
                     project1.setProject_schedule(project.getProject_schedule());

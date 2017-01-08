@@ -1,5 +1,6 @@
 package com.xiyoukeji.service;
 
+import com.xiyoukeji.entity.Role;
 import com.xiyoukeji.entity.User;
 import com.xiyoukeji.tools.BaseDao;
 import com.xiyoukeji.tools.MapTool;
@@ -22,10 +23,14 @@ public class UserService {
     BaseDao<User> baseDao;
     @Resource
     HttpSession session;
+    @Resource
+    BaseDao<Role> roleBaseDao;
 
     @Transactional
     public Map saveorupdateUser(User user) {
         Map map = new HashMap<>();
+        Role role = roleBaseDao.get(Role.class, user.getRole().getId());
+        user.setRole(role);
         baseDao.saveOrUpdate(user);
         map.put("userId", user.getId());
         return map;
