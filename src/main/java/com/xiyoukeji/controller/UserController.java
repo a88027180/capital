@@ -41,7 +41,7 @@ public class UserController {
     @RequestMapping(value = "/saveorupdateUser")
     @ResponseBody
     public Map saveorupdateUser(User user) {
-        User user1 = (User)session.getAttribute("user");
+        User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else if (user1.getRole().getType() != 2) {
@@ -56,7 +56,7 @@ public class UserController {
     @RequestMapping(value = "/getUserList")
     @ResponseBody
     public Map getUserList(int type) {
-        User user1 = (User)session.getAttribute("user");
+        User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
@@ -80,7 +80,7 @@ public class UserController {
     @RequestMapping(value = "/getUser")
     @ResponseBody
     public Map getUser() {
-        User user1 = (User)session.getAttribute("user");
+        User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
@@ -99,7 +99,7 @@ public class UserController {
     @RequestMapping(value = "/deleteUser")
     @ResponseBody
     public Map deleteUser(Integer id) {
-        User user1 = (User)session.getAttribute("user");
+        User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else if (user1.getRole().getType() != 2) {
@@ -113,8 +113,7 @@ public class UserController {
     @RequestMapping(value = "/login")
     @ResponseBody
     public Map login(User user) {
-        int flag = userService.login(user);
-        return MapTool.Mapok().put("data", MapTool.Map().put("userId", flag));
+        return userService.login(user);
     }
 
     /*注销*/

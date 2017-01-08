@@ -2,6 +2,7 @@ package com.xiyoukeji.service;
 
 import com.xiyoukeji.entity.User;
 import com.xiyoukeji.tools.BaseDao;
+import com.xiyoukeji.tools.MapTool;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -84,17 +85,17 @@ public class UserService {
     }
 
     @Transactional
-    public int login(User user) {
+    public Map login(User user) {
         List<User> list = new ArrayList<>();
         Map map = new HashMap<>();
         map.put("userName", user.getUserName());
         map.put("password", user.getPassword());
         list = baseDao.find("from User where userName = :userName and password = :password", map);
-        if (list.size() == 0) {
-            return 0;
-        } else {
+        if (list.size() != 0) {
             session.setAttribute("user", list.get(0));
-            return list.get(0).getId();
+            return MapTool.Mapok().put("userId", list.get(0).getId());
+        } else {
+            return MapTool.Map().put("code", "1").put("msg", "用户名或密码错误!");
         }
 
     }
