@@ -49,7 +49,7 @@ public class UserService {
                 list = baseDao.find("from User where available = 1 and role.type = 1");
                 break;
             case 2:
-                list = baseDao.find("from User where available = 1 order by role.type");
+                list = baseDao.find("from User where available = 1 and role.type != 2 order by role.type");
                 break;
             case 3:
                 list = baseDao.find("from User where available = 1 and role.type = 0");
