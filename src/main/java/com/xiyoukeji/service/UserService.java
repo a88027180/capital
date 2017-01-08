@@ -26,17 +26,8 @@ public class UserService {
     @Transactional
     public Map saveorupdateUser(User user) {
         Map map = new HashMap<>();
-//        if (session.getAttribute("userId") == null) {
-//            map.put("exception", 0);
-//        } else if ((int) session.getAttribute("roleId") != 1) {
-//            map.put("exception", 1);
-//        } else {
-        if (user.getId() == null) {
-
-        }
         baseDao.saveOrUpdate(user);
         map.put("userId", user.getId());
-//        }
         return map;
 
     }
@@ -70,17 +61,10 @@ public class UserService {
     @Transactional
     public Map deleteUser(Integer id) {
         Map map = new HashMap<>();
-//        if (session.getAttribute("userId") == null) {
-//            map.put("exception", 0);
-//        } else if ((int) session.getAttribute("roleId") != 1) {
-//            map.put("exception", 1);
-//        } else {
-
         User user = baseDao.get(User.class, id);
         user.setAvailable(0);
         baseDao.update(user);
         map.put("userId", user.getId());
-//        }
         return map;
     }
 
@@ -95,7 +79,7 @@ public class UserService {
             session.setAttribute("user", list.get(0));
             return MapTool.Mapok().put("userId", list.get(0).getId());
         } else {
-            return MapTool.Map().put("code", "1").put("msg", "用户名或密码错误!");
+            return MapTool.Mapok().put("userId", 0);
         }
 
     }

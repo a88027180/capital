@@ -1,6 +1,8 @@
 package com.xiyoukeji.controller;
 
+import com.google.gson.Gson;
 import com.xiyoukeji.beans.RoleBean;
+import com.xiyoukeji.entity.Project;
 import com.xiyoukeji.entity.Role;
 import com.xiyoukeji.entity.User;
 import com.xiyoukeji.service.RoleService;
@@ -37,13 +39,14 @@ public class RoleController {
     /*创建或编辑角色 管理员权限*/
     @RequestMapping(value = "/saveorupdateRole")
     @ResponseBody
-    public Map saveorupdateRole(Role role) {
+    public Map saveorupdateRole(String strRole) {
         User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else if (user1.getRole().getType() != 2) {
             return MapTool.Map().put("code", 3);
         } else {
+            Role role = new Gson().fromJson(strRole, Role.class);
             return MapTool.Mapok().put("data", roleService.saveorupdateRole(role));
         }
     }
