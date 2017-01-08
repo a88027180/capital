@@ -101,6 +101,9 @@ public class ProjectService {
                     if (project.getProject_schedule() == 8) {
                         project1.setExitState(1);
                         project1.setExit_current(System.currentTimeMillis());
+                    } else {
+                        project1.setExitState(0);
+                        project1.setExit_current(0);
                     }
                     break;
                 case 3:

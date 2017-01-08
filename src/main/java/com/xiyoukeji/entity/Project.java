@@ -44,9 +44,9 @@ public class Project {
     @ElementCollection
     private List<String> tab = new ArrayList<>();
     @ManyToMany
-    @JoinTable(name = "user_project", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "user_id")})
     private List<User> project_member = new ArrayList<>();
     @ManyToOne
+    @JoinTable(name = "user_project", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "user_id")})
     private User createUser;
     private String project_reason;
     private String company_name;
