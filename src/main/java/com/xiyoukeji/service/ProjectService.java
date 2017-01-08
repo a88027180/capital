@@ -66,14 +66,14 @@ public class ProjectService {
                     /*取消投资*/
                     if (project1.getFoundation() != null && project.getFoundation() == null) {
                         project1.setState(1);
+                        project1.setInvest_current(0);
                     }
-
-                    project1.setFoundation(project.getFoundation());
                     /*如果不是草稿状态选择基金保存 都是投资*/
-                    if (project1.getState() != 0) {
+                    if (project1.getState() != 0 && project.getFoundation() != null) {
                         project1.setInvest_current(System.currentTimeMillis());
                         project1.setState(2);
                     }
+                    project1.setFoundation(project.getFoundation());
 
                     project1.setMoney_thisTime(project.getMoney_thisTime());
                     project1.setMoney_totalShare(project.getMoney_totalShare());
