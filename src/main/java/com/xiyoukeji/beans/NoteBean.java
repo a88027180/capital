@@ -1,5 +1,6 @@
 package com.xiyoukeji.beans;
 
+import com.xiyoukeji.entity.Project;
 import com.xiyoukeji.entity.User;
 import com.xiyoukeji.utils.AssignType;
 
@@ -16,7 +17,16 @@ public class NoteBean {
     private String member;
     private String object;
     private EvaluateUserBean user;
+    private EvaluateProjectBean project;
     private String create_time;
+
+    public EvaluateProjectBean getProject() {
+        return project;
+    }
+
+    public void setProject(EvaluateProjectBean project) {
+        this.project = project;
+    }
 
     public EvaluateUserBean getUser() {
         return user;
