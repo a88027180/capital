@@ -110,13 +110,13 @@ public class EvaluateController {
     /*获取主页项目评级5条*/
     @RequestMapping(value = "/getEvaluateRecordList")
     @ResponseBody
-    public Map getEvaluateRecordList(int number) {
+    public Map getEvaluateRecordList(Integer projectId, Integer userId, int number) {
         User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
             List<EvaluateRecordBean> list = new ArrayList<>();
-            List<EvaluateRecord> evaluateRecords = evaluateService.getEvaluateRecordList(number);
+            List<EvaluateRecord> evaluateRecords = evaluateService.getEvaluateRecordList(projectId, userId, number);
             for (int i = 0; i < evaluateRecords.size(); i++) {
                 EvaluateRecordBean evaluateRecordBean = new EvaluateRecordBean();
                 Core.assignDest(evaluateRecordBean, evaluateRecords.get(i));

@@ -76,8 +76,13 @@ public class EvaluateService {
     }
 
     @Transactional
-    public List<EvaluateRecord> getEvaluateRecordList(int number) {
-        return evaluateRecordBaseDao.find(" from EvaluateRecord order by updateTime desc", 1, number, null);
+    public List<EvaluateRecord> getEvaluateRecordList(Integer projectId, Integer userId, int number) {
+        if (number == 0) {
+            return evaluateRecordBaseDao.find(" from EvaluateRecord where project.id = " + projectId + " and user.id = " + userId + "order by updateTime desc", null);
+        } else {
+            return evaluateRecordBaseDao.find(" from EvaluateRecord where project.id = " + projectId + " and user.id = " + userId + "order by updateTime desc", 1, number, null);
+        }
+
     }
 
     @Transactional
