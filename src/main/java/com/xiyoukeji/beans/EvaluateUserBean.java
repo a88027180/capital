@@ -18,8 +18,17 @@ public class EvaluateUserBean {
     private String position;
     private String address;
     private String phone;
+    private String remark;
     private int available;
     private int isBand;
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
     public FileBean getPhoto() {
         return photo;

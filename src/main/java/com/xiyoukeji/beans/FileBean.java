@@ -18,6 +18,15 @@ public class FileBean {
     private Integer id;
     private String fileName;
     private String url;
+    private long update_current;
+
+    public long getUpdate_current() {
+        return update_current;
+    }
+
+    public void setUpdate_current(long update_current) {
+        this.update_current = update_current;
+    }
 
     public String getFileName() {
         return fileName;

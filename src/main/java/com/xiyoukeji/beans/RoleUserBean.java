@@ -24,9 +24,19 @@ public class RoleUserBean {
     private String position;
     private String address;
     private String phone;
+    private String remark;
     private int isBand;
     private int available;
+
     private List<UserProjectBean> list_project = new ArrayList<>();
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
     public List<UserProjectBean> getList_project() {
         return list_project;

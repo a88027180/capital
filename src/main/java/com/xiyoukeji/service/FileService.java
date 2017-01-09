@@ -66,6 +66,7 @@ public class FileService {
         File file1 = new File();
         file1.setUrl(url);
         file1.setFileName(file.getOriginalFilename());
+        file1.setUpdate_current(System.currentTimeMillis());
         java.io.File dir = new java.io.File(path);
         if (!dir.exists()) dir.mkdir();
         String all_name = path + file_name;

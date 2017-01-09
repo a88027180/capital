@@ -62,6 +62,25 @@ public class ProjectController {
         }
     }
 
+    /*获取主页项目列表*/
+    @RequestMapping(value = "/getMainProjectList")
+    @ResponseBody
+    public Map getMainProjectList() {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else {
+            List<Project> projects = projectService.getMainProjectList();
+            List<ProjectBean> list = new ArrayList<>();
+            for (int i = 0; i < projects.size(); i++) {
+                ProjectBean projectBean = new ProjectBean();
+                Core.assignDest(projectBean, projects.get(i));
+                list.add(projectBean);
+            }
+            return MapTool.Mapok().put("list", list);
+        }
+    }
+
     /*获取项目列表*/
     @RequestMapping(value = "/getProjectList")
     @ResponseBody

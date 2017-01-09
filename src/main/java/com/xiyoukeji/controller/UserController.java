@@ -62,7 +62,7 @@ public class UserController {
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
-            return userService.updatePassword( prePass, password);
+            return userService.updatePassword(prePass, password);
         }
 
     }

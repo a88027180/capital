@@ -32,6 +32,7 @@ public class User {
     private String position;
     private String address;
     private String phone;
+    private String remark;
     private int isBand = 0;
     private int available = 1;
     @ManyToMany
@@ -40,6 +41,14 @@ public class User {
     @OneToMany
     @JoinTable(name = "user_project", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "project_id")})
     private List<Project> list_project = new ArrayList<>();
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
     public File getPhoto() {
         return photo;

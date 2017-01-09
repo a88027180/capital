@@ -26,8 +26,17 @@ public class ProjectUserBean {
     private String position;
     private String address;
     private String phone;
+    private String remark;
     private int isBand;
     private int available;
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
     public FileBean getPhoto() {
         return photo;

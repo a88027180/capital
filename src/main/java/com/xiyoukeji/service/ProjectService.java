@@ -118,6 +118,7 @@ public class ProjectService {
                     File file = new File();
                     file.setFileName("video");
                     file.setUrl(project.getVideo().getUrl());
+                    file.setUpdate_current(System.currentTimeMillis());
                     fileBaseDao.saveOrUpdate(file);
                     project1.setVideo(file);
                     break;
@@ -150,6 +151,11 @@ public class ProjectService {
     public Map deleteProject(Integer projectId) {
         projectBaseDao.delete(projectBaseDao.get(Project.class, projectId));
         return MapTool.Map().put("code", 0);
+    }
+
+    @Transactional
+    public List<Project> getMainProjectList() {
+        return projectBaseDao.find("from Project where state = 2 and exitState = 0 order by invest_current desc");
     }
 
     @Transactional
