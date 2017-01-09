@@ -34,16 +34,21 @@ public class UserService {
     @Transactional
     public Map saveorupdateUser(User user) {
         Map map = new HashMap<>();
-        User user1 = baseDao.get(User.class, user.getId());
-        user1.setPassword(user.getPassword());
-        user1.setRole(user.getRole());
-        user1.setName(user.getName());
-        user1.setAddress(user.getAddress());
-        user1.setPhone(user.getPhone());
-        user1.setPosition(user.getPosition());
-        user1.setUserName(user.getUserName());
-        user1.setPhoto(user.getPhoto());
-        baseDao.saveOrUpdate(user);
+        User user1 = null;
+        if (user.getId() == null) {
+            user1 = user;
+        } else {
+            user1 = baseDao.get(User.class, user.getId());
+            user1.setPassword(user.getPassword());
+            user1.setRole(user.getRole());
+            user1.setName(user.getName());
+            user1.setAddress(user.getAddress());
+            user1.setPhone(user.getPhone());
+            user1.setPosition(user.getPosition());
+            user1.setUserName(user.getUserName());
+            user1.setPhoto(user.getPhoto());
+        }
+        baseDao.saveOrUpdate(user1);
         map.put("userId", user.getId());
         return map;
 
