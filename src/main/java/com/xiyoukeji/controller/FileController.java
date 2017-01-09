@@ -58,12 +58,12 @@ public class FileController {
     /*上传项目评级文件  管理员权限*/
     @RequestMapping(value = "/uploadEvaluateFile")
     @ResponseBody
-    public Map saveorupdateEvaluate(MultipartFile file) {
+    public Map saveorupdateEvaluate(MultipartFile file,Integer fileId) {
         User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
-            return MapTool.Mapok().put("data", fileService.saveorupdateEvaluate(file));
+            return MapTool.Mapok().put("data", fileService.saveorupdateEvaluate(file,fileId));
         }
     }
 

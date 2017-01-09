@@ -87,9 +87,9 @@ public class FileService {
     }
 
     @Transactional
-    public Map saveorupdateEvaluate(MultipartFile file) {
+    public Map saveorupdateEvaluate(MultipartFile file, Integer fileId) {
         Map map = new HashMap<>();
-        FileEvaluate file1 = uploadEvaluate(file);
+        FileEvaluate file1 = uploadEvaluate(file, fileId);
         fileEvaluateBaseDao.save(file1);
         map.put("fileId", file1.getId());
         map.put("fileUrl", file1.getUrl());
@@ -97,21 +97,28 @@ public class FileService {
         return map;
     }
 
-    public FileEvaluate uploadEvaluate(MultipartFile file) {
+    public FileEvaluate uploadEvaluate(MultipartFile file, Integer fileId) {
         if (mimeType.containsKey(file.getContentType())) {
             String path = servletContext.getRealPath("/") + "Evaluates/", suffix = "." + mimeType.get(file.getContentType());
             String file_name = UUID.randomUUID().toString() + suffix;
             String url = "/Evaluates/" + file_name;
 
-            return saveToEvaluateFile(file, path, file_name, url);
+
+            return saveToEvaluateFile(file, path, file_name, url, fileId);
         } else
             throw new MultipartException("type error");
     }
 
-    private FileEvaluate saveToEvaluateFile(MultipartFile file, String path, String file_name, String url) {
-        FileEvaluate file1 = new FileEvaluate();
+    private FileEvaluate saveToEvaluateFile(MultipartFile file, String path, String file_name, String url, Integer fileId) {
+        FileEvaluate file1 = null;
+        if (fileId == null) {
+            file1 = new FileEvaluate();
+        } else {
+            file1 = fileEvaluateBaseDao.get(FileEvaluate.class, fileId);
+        }
         file1.setUrl(url);
         file1.setFileName(file.getOriginalFilename());
+
         java.io.File dir = new java.io.File(path);
         if (!dir.exists()) dir.mkdir();
         String all_name = path + file_name;
