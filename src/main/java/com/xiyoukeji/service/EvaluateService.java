@@ -80,7 +80,7 @@ public class EvaluateService {
         if (number == 0) {
             return evaluateRecordBaseDao.find(" from EvaluateRecord where project.id = " + projectId + " and user.id = " + userId + "order by updateTime desc", null);
         } else {
-            return evaluateRecordBaseDao.find(" from EvaluateRecord where project.id = " + projectId + " and user.id = " + userId + "order by updateTime desc", 1, number, null);
+            return evaluateRecordBaseDao.find(" from EvaluateRecord order by updateTime desc", 1, number, null);
         }
 
     }
