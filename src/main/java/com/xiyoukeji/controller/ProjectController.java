@@ -41,7 +41,7 @@ public class ProjectController {
     @RequestMapping(value = "/saveorupdateProject")
     @ResponseBody
     public Map saveorupdateProject(String strProject, int type) {
-        User user1 = (User)session.getAttribute("user");
+        User user1 = (User) session.getAttribute("user");
         Project project = new Gson().fromJson(strProject, Project.class);
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
@@ -50,11 +50,23 @@ public class ProjectController {
         }
     }
 
+    /*删除项目*/
+    @RequestMapping(value = "/deleteProject")
+    @ResponseBody
+    public Map deleteProject(Integer projectId) {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else {
+            return projectService.deleteProject(projectId);
+        }
+    }
+
     /*获取项目列表*/
     @RequestMapping(value = "/getProjectList")
     @ResponseBody
     public Map getProjectList(Search search) {
-        User user1 = (User)session.getAttribute("user");
+        User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
@@ -75,7 +87,7 @@ public class ProjectController {
     @RequestMapping(value = "/getProject")
     @ResponseBody
     public Map getProject(Integer id) {
-        User user1 = (User)session.getAttribute("user");
+        User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
@@ -90,7 +102,7 @@ public class ProjectController {
     @RequestMapping(value = "/addordeleteProjectTab")
     @ResponseBody
     public Map addordeleteProjectTab(int type, Integer projectId, String tab) {
-        User user1 = (User)session.getAttribute("user");
+        User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
@@ -102,7 +114,7 @@ public class ProjectController {
     @RequestMapping(value = "/addordeleteProjectMember")
     @ResponseBody
     public Map addordeleteProjectMember(int type, Integer projectId, Integer userId) {
-        User user1 = (User)session.getAttribute("user");
+        User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {

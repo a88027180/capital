@@ -28,14 +28,33 @@ public class UserService {
     BaseDao<Role> roleBaseDao;
     @Resource
     BaseDao<Foundation> foundationBaseDao;
+    @Resource
+    BaseDao<User> userBaseDao;
 
     @Transactional
     public Map saveorupdateUser(User user) {
         Map map = new HashMap<>();
+        User user1 = baseDao.get(User.class, user.getId());
+        user1.setPassword(user.getPassword());
+        user1.setRole(user.getRole());
+        user1.setName(user.getName());
+        user1.setAddress(user.getAddress());
+        user1.setPhone(user.getPhone());
+        user1.setPosition(user.getPosition());
+        user1.setUserName(user.getUserName());
+        user1.setPhoto(user.getPhoto());
         baseDao.saveOrUpdate(user);
         map.put("userId", user.getId());
         return map;
 
+    }
+
+    @Transactional
+    public Map updatePassword(Integer userId, String password) {
+        User user = userBaseDao.get(User.class, userId);
+        user.setPassword(password);
+        userBaseDao.saveOrUpdate(user);
+        return MapTool.Map().put("code", 0);
     }
 
     @Transactional

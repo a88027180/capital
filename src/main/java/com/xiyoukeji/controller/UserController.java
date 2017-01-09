@@ -52,6 +52,20 @@ public class UserController {
             User user = new Gson().fromJson(strUser, User.class);
             return MapTool.Mapok().put("data", userService.saveorupdateUser(user));
         }
+    }
+
+    /*修改密码 管理员权限*/
+    @RequestMapping(value = "/updatePassword")
+    @ResponseBody
+    public Map updatePassword(Integer userId, String password) {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else if (user1.getRole().getType() != 2) {
+            return MapTool.Map().put("code", 3);
+        } else {
+            return userService.updatePassword(userId, password);
+        }
 
     }
 

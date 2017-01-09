@@ -3,6 +3,7 @@ package com.xiyoukeji.service;
 import com.xiyoukeji.beans.Search;
 import com.xiyoukeji.entity.*;
 import com.xiyoukeji.tools.BaseDao;
+import com.xiyoukeji.tools.MapTool;
 import com.xiyoukeji.tools.Utils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -145,6 +146,11 @@ public class ProjectService {
         return map;
     }
 
+    @Transactional
+    public Map deleteProject(Integer projectId) {
+        projectBaseDao.delete(projectBaseDao.get(Project.class, projectId));
+        return MapTool.Map().put("code", 0);
+    }
 
     @Transactional
     public Map getProjecList(Search search) {
