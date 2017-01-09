@@ -57,10 +57,24 @@ public class UserService {
     }
 
     @Transactional
-    public Map updatePassword(Integer userId, String password) {
-        User user = userBaseDao.get(User.class, userId);
-        user.setPassword(password);
-        userBaseDao.saveOrUpdate(user);
+    public Map updatePassword(Integer userId, String prePass, String password) {
+        Map map = new HashMap<>();
+        User user = (User) session.getAttribute("user");
+        User user1 = null;
+        /*管理员*/
+        if (user.getRole().getType() == 2) {
+            user1 = userBaseDao.get(User.class, userId);
+            user1.setPassword(password);
+        } else {
+            /*个人中心*/
+            if (!prePass.equals(user.getPassword())) {
+                map.put("code", 1);
+                return map;
+            }
+            user1 = userBaseDao.get(User.class, user.getId());
+            user1.setPassword(password);
+        }
+        userBaseDao.saveOrUpdate(user1);
         return MapTool.Map().put("code", 0);
     }
 
