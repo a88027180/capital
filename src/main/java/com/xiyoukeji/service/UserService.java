@@ -46,7 +46,9 @@ public class UserService {
             user1.setPhone(user.getPhone());
             user1.setPosition(user.getPosition());
             user1.setUserName(user.getUserName());
-            user1.setPhoto(user.getPhoto());
+            if (user.getPhoto() != null) {
+                user1.setPhoto(user.getPhoto());
+            }
         }
         baseDao.saveOrUpdate(user1);
         map.put("userId", user.getId());

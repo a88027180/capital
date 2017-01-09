@@ -64,6 +64,9 @@ public class ProjectBean {
     private String share_other;
     private List<InvestmentOtherBean> investment_others = new ArrayList<>();
     private int project_schedule;
+    private String sign_date;
+    private String pay_date;
+    private String pay_money;
     //    private List<NoteBean> project_notes = new ArrayList<>();
 //    private List<EvaluateBean> project_evaluate = new ArrayList<>();
     private FileBean video;
@@ -74,6 +77,30 @@ public class ProjectBean {
 
     public void setInvestment_others(List<InvestmentOtherBean> investment_others) {
         this.investment_others = investment_others;
+    }
+
+    public String getSign_date() {
+        return sign_date;
+    }
+
+    public void setSign_date(String sign_date) {
+        this.sign_date = sign_date;
+    }
+
+    public String getPay_date() {
+        return pay_date;
+    }
+
+    public void setPay_date(String pay_date) {
+        this.pay_date = pay_date;
+    }
+
+    public String getPay_money() {
+        return pay_money;
+    }
+
+    public void setPay_money(String pay_money) {
+        this.pay_money = pay_money;
     }
 
     public Integer getId() {

@@ -51,7 +51,7 @@ public class ProjectFileController {
     /*新增或编辑项目文件列表*/
     @RequestMapping(value = "/saveorupdateProjectFile")
     @ResponseBody
-    public Map saveorupdateProjectFile(String strProjectFile) {
+    public Map saveorupdateProjectFile(String strProjectFile, String signDate, String payDate, String payMoney) {
         ProjectFile projectFile = new Gson().fromJson(strProjectFile, ProjectFile.class);
         User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
@@ -59,7 +59,8 @@ public class ProjectFileController {
         } else if (user1.getRole().getType() != 2) {
             return MapTool.Map().put("code", 3);
         } else {
-            return MapTool.Mapok().put("data", MapTool.Map().put("projectId", projectFileService.saveorupdateProjectFile(projectFile)));
+
+            return MapTool.Mapok().put("data", MapTool.Map().put("projectId", projectFileService.saveorupdateProjectFile(projectFile, signDate, payDate, payMoney)));
         }
     }
 

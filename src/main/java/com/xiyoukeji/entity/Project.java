@@ -80,6 +80,9 @@ public class Project {
     @Cascade(CascadeType.ALL)
     private List<InvestmentOther> investment_others = new ArrayList<>();
     private int project_schedule;
+    private String sign_date;
+    private String pay_date;
+    private String pay_money;
     @OneToMany(orphanRemoval = true)
     @Cascade(CascadeType.ALL)
     @JoinTable(name = "project_note", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "note_id")})
@@ -101,6 +104,30 @@ public class Project {
 
     public void setInvestment_others(List<InvestmentOther> investment_others) {
         this.investment_others = investment_others;
+    }
+
+    public String getSign_date() {
+        return sign_date;
+    }
+
+    public void setSign_date(String sign_date) {
+        this.sign_date = sign_date;
+    }
+
+    public String getPay_date() {
+        return pay_date;
+    }
+
+    public void setPay_date(String pay_date) {
+        this.pay_date = pay_date;
+    }
+
+    public String getPay_money() {
+        return pay_money;
+    }
+
+    public void setPay_money(String pay_money) {
+        this.pay_money = pay_money;
     }
 
     public String getProject_evaluates() {

@@ -24,7 +24,13 @@ public class ProjectFileService {
     }
 
     @Transactional
-    public Integer saveorupdateProjectFile(ProjectFile projectFile) {
+    public Integer saveorupdateProjectFile(ProjectFile projectFile, String signDate, String payDate, String payMoney) {
+        Project project = projectBaseDao.get(Project.class, projectFile.getProject().getId());
+        project.setSign_date(signDate);
+        project.setPay_date(payDate);
+        project.setPay_money(payMoney);
+        projectBaseDao.saveOrUpdate(project);
+
         ProjectFile projectFile1 = null;
         projectFile1 = projectFileBaseDao.get("from ProjectFile where project.id = " + projectFile.getProject().getId());
         if (projectFile1 != null) {
