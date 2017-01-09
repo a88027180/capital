@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -23,6 +24,8 @@ public class FoundationService {
     BaseDao<User> userBaseDao;
     @Resource
     BaseDao<Project> projectBaseDao;
+    @Resource
+    HttpSession session;
 
     @Transactional
     public Integer saveorupdateFoundation(Foundation foundation) {
@@ -33,7 +36,13 @@ public class FoundationService {
 
     @Transactional
     public List<Foundation> getFoundationList() {
-        return foundationBaseDao.find("from Foundation");
+        User user1 = (User) session.getAttribute("user");
+        if (user1.getRole().getType() == 1) {
+            return userBaseDao.get(User.class, user1.getId()).getList_foundation();
+        } else {
+            return foundationBaseDao.find("from Foundation");
+        }
+
     }
 
     @Transactional
