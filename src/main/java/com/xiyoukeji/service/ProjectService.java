@@ -129,7 +129,7 @@ public class ProjectService {
                         project1.setState(2);
                         project1.setInvest_current(System.currentTimeMillis());
                     }
-                    project.setPublish_current(System.currentTimeMillis());
+                    project1.setPublish_current(System.currentTimeMillis());
                     break;
             }
         } else {
@@ -155,7 +155,8 @@ public class ProjectService {
 
     @Transactional
     public List<Project> getMainProjectList() {
-        return projectBaseDao.find("from Project where state = 2 and exitState = 0 order by invest_current desc");
+//        return projectBaseDao.find("from Project where state = 2 and exitState = 0 order by invest_current desc");
+        return projectBaseDao.find("from Project where state = 2 order by invest_current desc");
     }
 
     @Transactional
@@ -195,6 +196,10 @@ public class ProjectService {
                     /*我的项目(包含已发布和已投)*/
                     sql += "state != 0 and createUser.id = " + user1.getId() + " and ";
                     break;
+                case 5:
+                    /*基金下项目列表查询  默认全部*/
+                    sql += "state = 2 and ";
+                    break;
             }
 
         }
@@ -216,6 +221,9 @@ public class ProjectService {
                 case 4:
                     sql += "publish_current >= '" + search.getBegin_time() + "' and ";
                     break;
+                case 5:
+                    sql += "invest_current >= '" + search.getBegin_time() + "' and ";
+                    break;
             }
         }
         if (search.getEnd_time() != 0) {
@@ -234,6 +242,9 @@ public class ProjectService {
                     break;
                 case 4:
                     sql += "publish_current <= '" + search.getEnd_time() + "' and ";
+                    break;
+                case 5:
+                    sql += "invest_current <= '" + search.getEnd_time() + "' and ";
                     break;
             }
 
