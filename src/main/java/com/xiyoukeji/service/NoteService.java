@@ -24,9 +24,9 @@ public class NoteService {
             return baseDao.find("from Note order by create_time desc", 1, number, null);
         } else {
             if (number != 0) {
-                return baseDao.find("from Note where project.id = " + projectId + " order by create_time desc", 1, number, null);
-            }else {
-                return baseDao.find("from Note where project.id = " + projectId + " order by create_time desc");
+                return baseDao.find("from Note where project.id = " + projectId + " order by commentTab.id asc, create_time desc", 1, number, null);
+            } else {
+                return baseDao.find("from Note where project.id = " + projectId + " order by commentTab.id asc, create_time desc");
             }
         }
 
