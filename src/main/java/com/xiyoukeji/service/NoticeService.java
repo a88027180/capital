@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -50,14 +51,14 @@ public class NoticeService {
             sql_list += " and notice_time < " + searchNotice.getEnd_time();
             sql_count += " and notice_time < " + searchNotice.getEnd_time();
         }
-        sql_list += ")AS a ORDER by a.`publish_time` DESC";
+        sql_list += ")AS a ORDER by a.`publish_time` DESC ";
         sql_list += "LIMIT " + (searchNotice.getPage() - 1) * searchNotice.getLine() + "," + searchNotice.getPage() * searchNotice.getLine();
         System.out.print(sql_list);
         SQLQuery sqlList = sessionFactory.getCurrentSession().createSQLQuery(sql_list);
         SQLQuery sqlCount = sessionFactory.getCurrentSession().createSQLQuery(sql_count);
 //        SQLQuery sqlQuery = sessionFactory.getCurrentSession().createSQLQuery("SELECT * FROM (SELECT * from `notice` LEFT OUTER JOIN `user_notice` on notice.id = user_notice.notice_id WHERE `user_id`= " + user.getId() + ")AS a ORDER by a.`publish_time` DESC");
-        List<Object[]> list1 = sqlCount.list();
-        Long count = (Long) list1.get(0)[0];
+        List<BigInteger> list1 = sqlCount.list();
+        long count = list1.get(0).longValue();
         List<Notice> list = sqlList.addEntity(Notice.class).list();
         return MapTool.Map().put("list", list).put("count", count);
     }

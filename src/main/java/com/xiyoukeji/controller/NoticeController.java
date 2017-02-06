@@ -62,13 +62,14 @@ public class NoticeController {
             return MapTool.Map().put("code", 2);
         } else {
             List<NoticeBean> list = new ArrayList<>();
-            List<Notice> notices = (List<Notice>) noticeService.getNoticeList(searchNotice).get("list");
+            Map map = noticeService.getNoticeList(searchNotice);
+            List<Notice> notices = (List<Notice>) map.get("list");
             for (int i = 0; i < notices.size(); i++) {
                 NoticeBean noticeBean = new NoticeBean();
                 Core.assignDest(noticeBean, notices.get(i));
                 list.add(noticeBean);
             }
-            return MapTool.Mapok().put("noticeList", list);
+            return MapTool.Mapok().put("noticeList", list).put("count", map.get("count"));
         }
     }
 
