@@ -32,6 +32,15 @@ public class Notice {
     private Project project;
     @OneToMany
     private List<File> files;
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public long getNotice_time() {
         return notice_time;

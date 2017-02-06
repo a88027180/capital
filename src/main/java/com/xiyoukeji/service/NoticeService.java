@@ -34,6 +34,7 @@ public class NoticeService {
     public Integer saveorupdateNotice(Notice notice) {
         notice.setPublish_time(System.currentTimeMillis());
         notice.setSend_user((User) session.getAttribute("user"));
+        notice.setType("公告");
         baseDao.saveOrUpdate(notice);
         return notice.getId();
     }

@@ -63,6 +63,7 @@ public class NoteService {
             list.add(project.getCreateUser());
             notice.setRequest_users(list);
             notice.setTitle(commentTab.getNotice_text());
+            notice.setType("通知");
             noticeBaseDao.saveOrUpdate(notice);
         }
         return note.getProject().getId();

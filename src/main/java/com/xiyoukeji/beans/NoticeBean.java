@@ -23,8 +23,17 @@ public class NoticeBean {
     private String content;
     private long publish_time;
     private long notice_time;
+    private String type;
     private EvaluateProjectBean project;
     private List<FileBean> files = new ArrayList<>();
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public long getNotice_time() {
         return notice_time;
