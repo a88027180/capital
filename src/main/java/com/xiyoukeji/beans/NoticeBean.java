@@ -22,8 +22,17 @@ public class NoticeBean {
     private String title;
     private String content;
     private long publish_time;
+    private long notice_time;
     private EvaluateProjectBean project;
     private List<FileBean> files = new ArrayList<>();
+
+    public long getNotice_time() {
+        return notice_time;
+    }
+
+    public void setNotice_time(long notice_time) {
+        this.notice_time = notice_time;
+    }
 
     public Integer getId() {
         return id;

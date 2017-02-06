@@ -27,10 +27,19 @@ public class Notice {
     private String title;
     private String content;
     private long publish_time;
+    private long notice_time;
     @ManyToOne
     private Project project;
     @OneToMany
     private List<File> files;
+
+    public long getNotice_time() {
+        return notice_time;
+    }
+
+    public void setNotice_time(long notice_time) {
+        this.notice_time = notice_time;
+    }
 
     public Project getProject() {
         return project;

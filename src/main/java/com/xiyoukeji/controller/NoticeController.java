@@ -2,6 +2,7 @@ package com.xiyoukeji.controller;
 
 import com.google.gson.Gson;
 import com.xiyoukeji.beans.NoticeBean;
+import com.xiyoukeji.beans.SearchNotice;
 import com.xiyoukeji.entity.CommentTab;
 import com.xiyoukeji.entity.Notice;
 import com.xiyoukeji.entity.Project;
@@ -55,13 +56,13 @@ public class NoticeController {
     /*公告列表*/
     @RequestMapping(value = "/getNoticeList")
     @ResponseBody
-    public Map getNoticeList() {
+    public Map getNoticeList(SearchNotice searchNotice) {
         User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
             List<NoticeBean> list = new ArrayList<>();
-            List<Notice> notices = noticeService.getNoticeList();
+            List<Notice> notices = (List<Notice>) noticeService.getNoticeList(searchNotice).get("list");
             for (int i = 0; i < notices.size(); i++) {
                 NoticeBean noticeBean = new NoticeBean();
                 Core.assignDest(noticeBean, notices.get(i));
