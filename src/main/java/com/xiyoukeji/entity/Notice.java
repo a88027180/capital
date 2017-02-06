@@ -25,7 +25,7 @@ public class Notice {
     @JoinTable(name = "user_notice", joinColumns = {@JoinColumn(name = "notice_id")}, inverseJoinColumns = {@JoinColumn(name = "user_id")})
     private List<User> request_users;
     private String title;
-    private String Content;
+    private String content;
     private long publish_time;
     @ManyToOne
     private Project project;
@@ -81,11 +81,11 @@ public class Notice {
     }
 
     public String getContent() {
-        return Content;
+        return content;
     }
 
     public void setContent(String content) {
-        Content = content;
+        this.content = content;
     }
 
     public long getPublish_time() {

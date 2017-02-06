@@ -20,7 +20,7 @@ public class NoticeBean {
     private NoticeUserBean send_user;
     private List<NoticeUserBean> request_users = new ArrayList<>();
     private String title;
-    private String Content;
+    private String content;
     private long publish_time;
     private EvaluateProjectBean project;
     private List<FileBean> files = new ArrayList<>();
@@ -74,11 +74,11 @@ public class NoticeBean {
     }
 
     public String getContent() {
-        return Content;
+        return content;
     }
 
     public void setContent(String content) {
-        Content = content;
+        this.content = content;
     }
 
     public long getPublish_time() {
