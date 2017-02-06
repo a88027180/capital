@@ -67,6 +67,30 @@ public class UserController {
 
     }
 
+    /*通过角色id获取用户列表*/
+    @RequestMapping(value = "/getUserListByRole")
+    @ResponseBody
+    public Map getUserListByRole(int roleId) {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else {
+            List<UserBean> list = new ArrayList<>();
+            List<User> users = userService.getUserListByRole(roleId);
+            for (int i = 0; i < users.size(); i++) {
+                UserBean user = new UserBean();
+                try {
+                    Core.assignDest(user, users.get(i));
+                    list.add(user);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+            return MapTool.Mapok().put("data", MapTool.Map().put("list", list));
+        }
+
+    }
+
     /*获取用户列表*/
     @RequestMapping(value = "/getUserList")
     @ResponseBody

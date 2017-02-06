@@ -74,6 +74,14 @@ public class UserService {
     }
 
     @Transactional
+    public List<User> getUserListByRole(int roleId) {
+        List<User> list = new ArrayList<>();
+        list = baseDao.find("from User where available = 1 and role.id = " + roleId);
+        return list;
+
+    }
+
+    @Transactional
     public List<User> getUserList(int type) {
         List<User> list = new ArrayList<>();
         switch (type) {
