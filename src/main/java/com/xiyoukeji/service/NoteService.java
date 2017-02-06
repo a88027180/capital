@@ -48,7 +48,7 @@ public class NoteService {
 
     @Transactional
     public Integer saveorupdateNote(Note note) {
-        note.setCreate_time(System.currentTimeMillis());
+        note.setCreate_time(Utils.getTime());
         baseDao.saveOrUpdate(note);
         /*给项目创建者发送公告*/
         CommentTab commentTab = commentTabBaseDao.get(CommentTab.class, note.getCommentTab().getId());
