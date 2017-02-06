@@ -42,6 +42,18 @@ public class User {
     @JoinTable(name = "user_project", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "project_id")})
     private List<Project> list_project = new ArrayList<>();
 
+    @ManyToMany
+    @JoinTable(name = "user_notice", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "notice_id")})
+    private List<Notice> list_notice = new ArrayList<>();
+
+    public List<Notice> getList_notice() {
+        return list_notice;
+    }
+
+    public void setList_notice(List<Notice> list_notice) {
+        this.list_notice = list_notice;
+    }
+
     public String getRemark() {
         return remark;
     }

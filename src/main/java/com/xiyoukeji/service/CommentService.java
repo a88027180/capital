@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,31 +24,62 @@ public class CommentService {
     HttpSession session;
 
     @Transactional
-    public Map saveorupdateCommentTab(CommentTab commentTab) {
-
-
-        Map map = new HashMap<>();
+    public Integer saveorupdateCommentTab(CommentTab commentTab) {
         baseDao.saveOrUpdate(commentTab);
-        map.put("commentId", commentTab.getId());
-        return map;
+        return commentTab.getId();
     }
 
+
     @Transactional
-    public Map deleteCommentTab(Integer id) {
+    public Integer deleteCommentTab(Integer id) {
         /*标签被删除,状态设置成0*/
-        Map map = new HashMap<>();
         CommentTab commentTab = baseDao.get(CommentTab.class, id);
         commentTab.setState(0);
         baseDao.update(commentTab);
-        map.put("commentId", commentTab.getId());
-        return map;
+        return commentTab.getId();
 
 
     }
 
     @Transactional
-    public List<CommentTab> getCommentTabList() {
+    public Integer saveorupdateNoticeTab(Integer commentId, String commentText) {
+        CommentTab commentTab = baseDao.get(CommentTab.class, commentId);
+        commentTab.setNotice(1);
+        if (!commentText.equals(""))
+            commentTab.setNotice_text(commentText);
+        baseDao.saveOrUpdate(commentTab);
+        return commentTab.getId();
+    }
+
+    @Transactional
+    public Integer deleteNoticeTab(Integer id) {
+        /*标签被删除,notice设置成0*/
+        CommentTab commentTab = baseDao.get(CommentTab.class, id);
+        commentTab.setNotice(0);
+        baseDao.update(commentTab);
+        return commentTab.getId();
+
+
+    }
+
+    @Transactional
+    public List<CommentTab> getCommentTabList(int type) {
         /*返回状态为0的标签*/
-        return baseDao.find("from CommentTab where state = 1");
+        List<CommentTab> list = new ArrayList<>();
+        switch (type) {
+            /*全部:标签列表*/
+            case 0:
+                list = baseDao.find("from CommentTab where state = 1");
+                break;
+            /*通知标签:notice=1*/
+            case 1:
+                list = baseDao.find("from CommentTab where state = 1 and notice = 1");
+                break;
+            /*待设置通知标签:notice=0*/
+            case 2:
+                list = baseDao.find("from CommentTab where state = 1 and notice = 0");
+                break;
+        }
+        return list;
     }
 }

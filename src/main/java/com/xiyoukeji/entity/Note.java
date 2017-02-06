@@ -20,7 +20,7 @@ public class Note {
     private Integer id;
     @ManyToOne
     private User user;
-    private String create_time;
+    private long create_time;
     @OneToOne
     private CommentTab commentTab;
     @ManyToOne
@@ -40,11 +40,11 @@ public class Note {
         this.user = user;
     }
 
-    public String getCreate_time() {
+    public long getCreate_time() {
         return create_time;
     }
 
-    public void setCreate_time(String create_time) {
+    public void setCreate_time(long create_time) {
         this.create_time = create_time;
     }
 

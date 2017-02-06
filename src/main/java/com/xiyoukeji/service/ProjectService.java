@@ -142,7 +142,7 @@ public class ProjectService {
         }
 
         projectBaseDao.saveOrUpdate(project1);
-        project1.setProject_code(String.valueOf(project1.getCreate_current()));
+        project1.setProject_code(Utils.getCode(project1.getCreate_current()));
         map.put("projectId", project1.getId());
         return map;
     }

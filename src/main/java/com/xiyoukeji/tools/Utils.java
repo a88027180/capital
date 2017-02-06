@@ -137,18 +137,24 @@ public class Utils {
         return time;
     }
 
-    public static String getCode(String time) {
-        Date date = new Date();
-        String result = "";
-        DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        try {
-            Date date1 = format1.parse(time);
-            DateFormat format = new SimpleDateFormat("yyyyMMdd");
-            result = format.format(date1);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
+    public static String getCode(long current) {
+
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String d = format.format(current);
+        return d.replace("-", "").replace(" ", "").replace(":", "");
+
+//
+//        Date date = new Date();
+//        String result = "";
+//        DateFormat format1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        try {
+//            Date date1 = format1.parse(time);
+//            DateFormat format = new SimpleDateFormat("yyyyMMdd");
+//            result = format.format(date1);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//        return result;
     }
 
 

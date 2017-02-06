@@ -23,6 +23,28 @@ public class CommentTab {
     private String name;
     private int type;
     private int state = 1;
+    private int notice = 0;
+    private String notice_text;
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public int getNotice() {
+        return notice;
+    }
+
+    public void setNotice(int notice) {
+        this.notice = notice;
+    }
+
+    public String getNotice_text() {
+        return notice_text;
+    }
+
+    public void setNotice_text(String notice_text) {
+        this.notice_text = notice_text;
+    }
 
     public int getId() {
         return id;

@@ -10,6 +10,7 @@ import com.xiyoukeji.tools.MapTool;
 import com.xiyoukeji.utils.Core;
 import org.apache.tools.ant.taskdefs.condition.Http;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -31,6 +32,11 @@ public class NoteController {
     @Resource
     HttpSession session;
 
+    @ExceptionHandler
+    @ResponseBody
+    public Map exception(RuntimeException runtimeException) {
+        return MapTool.Map().put("code", "1").put("msg", runtimeException.getMessage());
+    }
 
     /*新建项目笔记*/
     @RequestMapping(value = "/saveorupdateNote")
@@ -71,6 +77,20 @@ public class NoteController {
             map.put("type0", list0);
             map.put("type1", list1);
             return MapTool.Mapok().put("data", map);
+        }
+    }
+
+    /*删除项目笔记,管理员权限*/
+    @RequestMapping(value = "/deleteNote")
+    @ResponseBody
+    public Map deleteNote(Integer noteId) {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else if (user1.getRole().getType() != 2) {
+            return MapTool.Map().put("code", 3);
+        } else {
+            return noteService.deleteNote(noteId);
         }
     }
 }

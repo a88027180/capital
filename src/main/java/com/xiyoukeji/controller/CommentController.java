@@ -39,14 +39,14 @@ public class CommentController {
     /*新增或编辑评论标签 管理员权限*/
     @RequestMapping(value = "/saveorupdateCommentTab")
     @ResponseBody
-    public Map addCommentTab(CommentTab commentTab) {
-        User user1 = (User)session.getAttribute("user");
+    public Map saveorupdateCommentTab(CommentTab commentTab) {
+        User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else if (user1.getRole().getType() != 2) {
             return MapTool.Map().put("code", 3);
         } else {
-            return MapTool.Mapok().put("data", commentService.saveorupdateCommentTab(commentTab));
+            return MapTool.Mapok().put("commentTabId", commentService.saveorupdateCommentTab(commentTab));
         }
     }
 
@@ -54,28 +54,57 @@ public class CommentController {
     @RequestMapping(value = "/deleteCommentTab")
     @ResponseBody
     public Map deleteCommentTab(Integer id) {
-        User user1 = (User)session.getAttribute("user");
+        User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else if (user1.getRole().getType() != 2) {
             return MapTool.Map().put("code", 3);
         } else {
-            return MapTool.Mapok().put("data", commentService.deleteCommentTab(id));
+            return MapTool.Mapok().put("CommentTabId", commentService.deleteCommentTab(id));
         }
     }
+
+    /*新增或编辑通知标签 管理员权限*/
+    @RequestMapping(value = "/saveorupdateNoticeTab")
+    @ResponseBody
+    public Map saveorupdateNoticeTab(Integer commentId, String commentText) {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else if (user1.getRole().getType() != 2) {
+            return MapTool.Map().put("code", 3);
+        } else {
+            return MapTool.Mapok().put("noticeTabId", commentService.saveorupdateNoticeTab(commentId, commentText));
+        }
+    }
+
+    /*删除通知标签 管理员权限*/
+    @RequestMapping(value = "/deleteNoticeTab")
+    @ResponseBody
+    public Map deleteNoticeTab(Integer id) {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else if (user1.getRole().getType() != 2) {
+            return MapTool.Map().put("code", 3);
+        } else {
+            return MapTool.Mapok().put("NoticeTabId", commentService.deleteNoticeTab(id));
+        }
+    }
+
 
     /*获取评论标签 管理员权限*/
     @RequestMapping(value = "/getCommentTabList")
     @ResponseBody
-    public Map getCommentTabList() {
-        User user1 = (User)session.getAttribute("user");
+    public Map getCommentTabList(int type) {
+        User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else if (user1.getRole().getType() != 2) {
             return MapTool.Map().put("code", 3);
         } else {
             List<CommentTabBean> list = new ArrayList<>();
-            List<CommentTab> commentTabs = commentService.getCommentTabList();
+            List<CommentTab> commentTabs = commentService.getCommentTabList(type);
             for (int i = 0; i < commentTabs.size(); i++) {
                 CommentTabBean commentTabBean = new CommentTabBean();
                 Core.assignDest(commentTabBean, commentTabs.get(i));
