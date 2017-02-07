@@ -57,6 +57,7 @@ public class NoteService {
             Notice notice = new Notice();
             notice.setSend_user((User) session.getAttribute("user"));
             notice.setPublish_time(System.currentTimeMillis());
+            notice.setNotice_time(System.currentTimeMillis());
             notice.setContent(commentTab.getNotice_text());
             notice.setProject(project);
             List<User> list = new ArrayList<>();
