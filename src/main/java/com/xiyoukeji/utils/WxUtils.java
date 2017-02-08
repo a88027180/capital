@@ -32,7 +32,8 @@ public class WxUtils {
         if (testingStr.equalsIgnoreCase(signature.toUpperCase())) {
             return true;
         }
-        return false;
+        else
+            return false;
     }
 
     // 将字节数组转换为十六进制字符串

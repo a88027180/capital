@@ -31,16 +31,19 @@ public class WxController {
     /*上传文件*/
     @RequestMapping(value = "/signature")
     @ResponseBody
-    public boolean signature(String signature, String timestamp, String nonce, String echostr) {
+    public String signature(String signature, String timestamp, String nonce, String echostr) {
         boolean b = false;
         try {
             String token = "abcdefg";
             b = WxUtils.checkSingature(signature, timestamp, nonce, token);
+
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-
-        return b;
+        if (b == true) {
+            return echostr;
+        } else
+            return "";
     }
 
 
