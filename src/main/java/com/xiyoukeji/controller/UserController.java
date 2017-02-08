@@ -50,7 +50,7 @@ public class UserController {
             return MapTool.Map().put("code", 3);
         } else {
             User user = new Gson().fromJson(strUser, User.class);
-            return MapTool.Mapok().put("data", userService.saveorupdateUser(user));
+            return userService.saveorupdateUser(user);
         }
     }
 

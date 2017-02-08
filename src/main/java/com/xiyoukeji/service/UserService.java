@@ -36,7 +36,17 @@ public class UserService {
         Map map = new HashMap<>();
         User user1 = null;
         if (user.getId() == null) {
-            user1 = user;
+            /*新建*/
+            User user2 = userBaseDao.get("from User wnere userName = '" + user.getUserName() + "'");
+            if (user2 == null) {
+                user1 = user;
+                baseDao.saveOrUpdate(user1);
+                map.put("userId", user.getId());
+                return MapTool.Mapok().put("data", map);
+            } else {
+                return MapTool.Map().put("code", 4);
+            }
+
         } else {
             user1 = baseDao.get(User.class, user.getId());
             user1.setPassword(user.getPassword());
@@ -50,10 +60,11 @@ public class UserService {
             if (user.getPhoto() != null) {
                 user1.setPhoto(user.getPhoto());
             }
+            baseDao.saveOrUpdate(user1);
+            map.put("userId", user.getId());
+            return MapTool.Mapok().put("data", map);
         }
-        baseDao.saveOrUpdate(user1);
-        map.put("userId", user.getId());
-        return map;
+
 
     }
 

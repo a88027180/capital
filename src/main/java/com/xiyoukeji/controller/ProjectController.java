@@ -46,7 +46,7 @@ public class ProjectController {
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
-            return MapTool.Mapok().put("data", projectService.saveorupdateProject(project, type));
+            return projectService.saveorupdateProject(project, type);
         }
     }
 
