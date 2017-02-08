@@ -22,19 +22,20 @@ import java.util.Map;
 public class WxController {
 
 
-    @ExceptionHandler
-    @ResponseBody
-    public Map exception(RuntimeException runtimeException) {
-        return MapTool.Map().put("code", "1").put("msg", runtimeException.getMessage());
-    }
+//    @ExceptionHandler
+//    @ResponseBody
+//    public Map exception(RuntimeException runtimeException) {
+//        return MapTool.Map().put("code", "1").put("msg", runtimeException.getMessage());
+//    }
 
     /*上传文件*/
     @RequestMapping(value = "/signature")
     @ResponseBody
-    public boolean signature(String signature, String... paraStr) {
+    public boolean signature(String signature, String timestamp, String nonce, String echostr) {
         boolean b = false;
         try {
-            b = WxUtils.checkSingature(signature, paraStr);
+            String token = "abcdefg";
+            b = WxUtils.checkSingature(signature, timestamp, nonce, token);
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
