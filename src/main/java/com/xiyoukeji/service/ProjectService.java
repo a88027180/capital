@@ -85,6 +85,8 @@ public class ProjectService {
                     project1.setSubscription_money(project.getSubscription_money());
                     project1.setProject_resource(project.getProject_resource());
                     project1.setProject_address(project.getProject_address());
+                    project1.setProvince_id(project.getProvince_id());
+                    project1.setCity_id(project.getCity_id());
                     project1.setProject_introducer(project.getProject_introducer());
                     project1.setValuation_afterInvest(project.getValuation_afterInvest());
                     project1.setValuation_state(project.getValuation_state());

@@ -49,6 +49,8 @@ public class ProjectBean {
     private String project_resource;
     private String project_evaluates;
     private String project_address;
+    private Integer province_id;
+    private Integer city_id;
     private String project_introducer;
     private String project_introducer_tel;
     private String valuation_afterInvest;
@@ -70,6 +72,22 @@ public class ProjectBean {
     //    private List<NoteBean> project_notes = new ArrayList<>();
 //    private List<EvaluateBean> project_evaluate = new ArrayList<>();
     private FileBean video;
+
+    public Integer getProvince_id() {
+        return province_id;
+    }
+
+    public void setProvince_id(Integer province_id) {
+        this.province_id = province_id;
+    }
+
+    public Integer getCity_id() {
+        return city_id;
+    }
+
+    public void setCity_id(Integer city_id) {
+        this.city_id = city_id;
+    }
 
     public List<InvestmentOtherBean> getInvestment_others() {
         return investment_others;

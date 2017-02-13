@@ -64,6 +64,8 @@ public class Project {
     private String subscription_money;
     private String project_resource;
     private String project_address;
+    private Integer province_id;
+    private Integer city_id;
     private String project_evaluates;
     private String project_introducer;
     private String project_introducer_tel;
@@ -104,6 +106,22 @@ public class Project {
 
     public void setInvestment_others(List<InvestmentOther> investment_others) {
         this.investment_others = investment_others;
+    }
+
+    public Integer getProvince_id() {
+        return province_id;
+    }
+
+    public void setProvince_id(Integer province_id) {
+        this.province_id = province_id;
+    }
+
+    public Integer getCity_id() {
+        return city_id;
+    }
+
+    public void setCity_id(Integer city_id) {
+        this.city_id = city_id;
     }
 
     public String getSign_date() {

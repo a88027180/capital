@@ -35,6 +35,8 @@ public class UserProjectBean {
     private String subscription_money;
     private String project_resource;
     private String project_address;
+    private Integer province_id;
+    private Integer city_id;
     private String project_introducer;
     private String valuation_afterInvest;
     private String valuation_state;
@@ -49,6 +51,54 @@ public class UserProjectBean {
     private String share_other;
 
     private int project_schedule;
+
+    public long getCreate_current() {
+        return create_current;
+    }
+
+    public void setCreate_current(long create_current) {
+        this.create_current = create_current;
+    }
+
+    public long getPublish_current() {
+        return publish_current;
+    }
+
+    public void setPublish_current(long publish_current) {
+        this.publish_current = publish_current;
+    }
+
+    public long getInvest_current() {
+        return invest_current;
+    }
+
+    public void setInvest_current(long invest_current) {
+        this.invest_current = invest_current;
+    }
+
+    public long getExit_current() {
+        return exit_current;
+    }
+
+    public void setExit_current(long exit_current) {
+        this.exit_current = exit_current;
+    }
+
+    public Integer getProvince_id() {
+        return province_id;
+    }
+
+    public void setProvince_id(Integer province_id) {
+        this.province_id = province_id;
+    }
+
+    public Integer getCity_id() {
+        return city_id;
+    }
+
+    public void setCity_id(Integer city_id) {
+        this.city_id = city_id;
+    }
 
     public int getState() {
         return state;
