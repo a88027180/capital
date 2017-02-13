@@ -91,6 +91,7 @@ public class ProjectService {
                     project1.setProvince_id(project.getProvince_id());
                     project1.setCity_id(project.getCity_id());
                     project1.setCity_name(project.getCity_name());
+                    project1.setProvince_name(project.getProvince_name());
                     project1.setProject_name(project.getProject_name());
                     project1.setProject_introducer(project.getProject_introducer());
                     project1.setValuation_afterInvest(project.getValuation_afterInvest());
