@@ -52,7 +52,7 @@ public class ProjectBean {
     private Integer province_id;
     private Integer city_id;
     private String city_name;
-    private Integer province_name;
+    private String province_name;
     private String project_introducer;
     private String project_introducer_tel;
     private String valuation_afterInvest;
@@ -81,14 +81,6 @@ public class ProjectBean {
 
     public String getCity_name() {
         return city_name;
-    }
-
-    public Integer getProvince_name() {
-        return province_name;
-    }
-
-    public void setProvince_name(Integer province_name) {
-        this.province_name = province_name;
     }
 
     public void setCity_name(String city_name) {
@@ -546,5 +538,13 @@ public class ProjectBean {
 
     public void setVideo(FileBean video) {
         this.video = video;
+    }
+
+    public String getProvince_name() {
+        return province_name;
+    }
+
+    public void setProvince_name(String province_name) {
+        this.province_name = province_name;
     }
 }
