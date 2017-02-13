@@ -30,7 +30,8 @@ public class ProjectService {
     HttpSession session;
     @Resource
     BaseDao<InvestmentOther> investmentOtherBaseDao;
-
+    @Resource
+    BaseDao<SearchCities> searchCitiesBaseDao;
 
     @Transactional
     public Map saveorupdateProject(Project project, int type) {
@@ -62,9 +63,11 @@ public class ProjectService {
                     project1.setCompany_tel(project.getCompany_tel());
                     project1.setCompany_contact(project.getCompany_contact());
                     project1.setContact_phone(project.getContact_phone());
+
+                    projectBaseDao.saveOrUpdate(project1);
                     break;
                 case 1:
-
+                    String oldCity = project1.getCity_name();
                     project1.setFinance_record(project.getFinance_record());
                     /*取消投资*/
                     if (project1.getFoundation() != null && project.getFoundation() == null) {
@@ -87,6 +90,8 @@ public class ProjectService {
                     project1.setProject_address(project.getProject_address());
                     project1.setProvince_id(project.getProvince_id());
                     project1.setCity_id(project.getCity_id());
+                    project1.setCity_name(project.getCity_name());
+                    project1.setProject_name(project.getProject_name());
                     project1.setProject_introducer(project.getProject_introducer());
                     project1.setValuation_afterInvest(project.getValuation_afterInvest());
                     project1.setValuation_state(project.getValuation_state());
@@ -104,6 +109,29 @@ public class ProjectService {
                         }
                     }
                     project1.setInvestment_others(project.getInvestment_others());
+                    projectBaseDao.saveOrUpdate(project1);
+
+                    String cityName = project.getCity_name();
+                    if (!cityName.equals("")) {
+                        /*新建或更新*/
+                        SearchCities searchCities = searchCitiesBaseDao.get("from SearchCities where city = '" + cityName + "'");
+                        if (searchCities == null) {
+
+                            SearchCities searchCities1 = new SearchCities();
+                            searchCities1.setCity(cityName);
+                            searchCitiesBaseDao.save(searchCities1);
+                        }
+                    }
+                    if (!oldCity.equals("")) {
+                        Project project2 = projectBaseDao.get("from Project where city_name = '" + oldCity + "'");
+                        if (project2 == null) {
+                            SearchCities searchCities = searchCitiesBaseDao.get("from SearchCities where city = '" + oldCity + "'");
+                            if (searchCities == null) {
+                                searchCitiesBaseDao.delete(searchCities);
+                            }
+                        }
+                    }
+
 
                     break;
                 case 2:
@@ -115,6 +143,7 @@ public class ProjectService {
                         project1.setExitState(0);
                         project1.setExit_current(0);
                     }
+                    projectBaseDao.saveOrUpdate(project1);
                     break;
                 case 3:
                     File file = new File();
@@ -123,6 +152,7 @@ public class ProjectService {
                     file.setUpdate_current(System.currentTimeMillis());
                     fileBaseDao.saveOrUpdate(file);
                     project1.setVideo(file);
+                    projectBaseDao.saveOrUpdate(project1);
                     break;
                 case 4:
                     if (project1.getFoundation() == null) {
@@ -132,10 +162,12 @@ public class ProjectService {
                         project1.setInvest_current(System.currentTimeMillis());
                     }
                     project1.setPublish_current(System.currentTimeMillis());
+
+                    projectBaseDao.saveOrUpdate(project1);
                     break;
             }
 
-            projectBaseDao.saveOrUpdate(project1);
+
             project1.setProject_code(Utils.getCode(project1.getCreate_current()));
             map.put("projectId", project1.getId());
 
@@ -274,7 +306,8 @@ public class ProjectService {
         }
 
         if (search.getAddress() != null) {
-            sql += "project_address like '%" + search.getAddress() + "%' and ";
+            sql += "city_name = '" + search.getAddress() + "' and ";
+//            sql += "project_address like '%" + search.getAddress() + "%' and ";
         }
         if (search.getResource() != null) {
             sql += "project_resource = '" + search.getResource() + "' and ";

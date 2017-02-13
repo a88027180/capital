@@ -66,6 +66,8 @@ public class Project {
     private String project_address;
     private Integer province_id;
     private Integer city_id;
+    private String province_name;
+    private String city_name;
     private String project_evaluates;
     private String project_introducer;
     private String project_introducer_tel;
@@ -99,6 +101,14 @@ public class Project {
     private ProjectFile projectFile;
 //    @JoinTable(name = "project_projectFile", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "projectFile_id")})
 
+
+    public String getCity_name() {
+        return city_name;
+    }
+
+    public void setCity_name(String city_name) {
+        this.city_name = city_name;
+    }
 
     public List<InvestmentOther> getInvestment_others() {
         return investment_others;
@@ -162,6 +172,14 @@ public class Project {
 
     public void setProject_introducer_tel(String project_introducer_tel) {
         this.project_introducer_tel = project_introducer_tel;
+    }
+
+    public String getProvince_name() {
+        return province_name;
+    }
+
+    public void setProvince_name(String province_name) {
+        this.province_name = province_name;
     }
 
     public long getCreate_current() {

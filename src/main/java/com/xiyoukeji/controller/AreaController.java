@@ -43,5 +43,9 @@ public class AreaController {
         return MapTool.Mapok().put("cities", areaService.getCityList(provinceid));
     }
 
-
+    @RequestMapping(value = "/getSearchCityList")
+    @ResponseBody
+    public Map getSearchCityList() {
+        return MapTool.Mapok().put("cities", areaService.getSearchCityList());
+    }
 }
