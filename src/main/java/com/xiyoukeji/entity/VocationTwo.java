@@ -21,6 +21,15 @@ public class VocationTwo {
     private String name;
     @ManyToOne
     private VocationOne vocationOne;
+    private Integer type = 1;
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
 
     public Integer getId() {
         return id;

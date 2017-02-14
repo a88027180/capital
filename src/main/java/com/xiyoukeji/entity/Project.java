@@ -110,6 +110,30 @@ public class Project {
 //    @JoinTable(name = "project_projectFile", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "projectFile_id")})
 
 
+    public List<VocationOne> getVocationOnes() {
+        return vocationOnes;
+    }
+
+    public void setVocationOnes(List<VocationOne> vocationOnes) {
+        this.vocationOnes = vocationOnes;
+    }
+
+    public List<VocationTwo> getVocationTwos() {
+        return vocationTwos;
+    }
+
+    public void setVocationTwos(List<VocationTwo> vocationTwos) {
+        this.vocationTwos = vocationTwos;
+    }
+
+    public List<VocationThree> getVocationThrees() {
+        return vocationThrees;
+    }
+
+    public void setVocationThrees(List<VocationThree> vocationThrees) {
+        this.vocationThrees = vocationThrees;
+    }
+
     public String getCity_name() {
         return city_name;
     }

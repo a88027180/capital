@@ -21,6 +21,15 @@ public class VocationOne {
     @GenericGenerator(name = "native", strategy = "native")
     private Integer id;
     private String name;
+    private Integer type = 0;
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
 
     public Integer getId() {
         return id;

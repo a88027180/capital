@@ -63,6 +63,9 @@ public class ProjectService {
                     project1.setCompany_tel(project.getCompany_tel());
                     project1.setCompany_contact(project.getCompany_contact());
                     project1.setContact_phone(project.getContact_phone());
+                    project1.setVocationOnes(project.getVocationOnes());
+                    project1.setVocationTwos(project.getVocationTwos());
+                    project1.setVocationThrees(project.getVocationThrees());
 
                     break;
                 case 1:
@@ -109,26 +112,6 @@ public class ProjectService {
                     project1.setInvestment_others(project.getInvestment_others());
 
 
-//                    String cityName = project.getCity_name();
-//                    if (!cityName.equals("") && cityName != null) {
-//                        /*新建或更新*/
-//                        SearchCities searchCities = searchCitiesBaseDao.get("from SearchCities where city = '" + cityName + "'");
-//                        if (searchCities == null) {
-//
-//                            SearchCities searchCities1 = new SearchCities();
-//                            searchCities1.setCity(cityName);
-//                            searchCitiesBaseDao.save(searchCities1);
-//                        }
-//                    }
-//                    if (oldCity != null && !oldCity.equals("")) {
-//                        Project project2 = projectBaseDao.get("from Project where city_name = '" + oldCity + "'");
-//                        if (project2 == null) {
-//                            SearchCities searchCities = searchCitiesBaseDao.get("from SearchCities where city = '" + oldCity + "'");
-//                            if (searchCities != null) {
-//                                searchCitiesBaseDao.delete(searchCities);
-//                            }
-//                        }
-//                    }
 
 
                     break;
