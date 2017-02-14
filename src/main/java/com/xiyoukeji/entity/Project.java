@@ -99,6 +99,14 @@ public class Project {
     private File video;
     @OneToOne
     private ProjectFile projectFile;
+
+    @ManyToMany
+    private List<VocationOne> vocationOnes = new ArrayList<>();
+    @ManyToMany
+    private List<VocationTwo> vocationTwos = new ArrayList<>();
+    @ManyToMany
+    private List<VocationThree> vocationThrees = new ArrayList<>();
+
 //    @JoinTable(name = "project_projectFile", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "projectFile_id")})
 
 

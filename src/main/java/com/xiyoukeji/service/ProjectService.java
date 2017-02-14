@@ -66,7 +66,6 @@ public class ProjectService {
 
                     break;
                 case 1:
-                    String oldCity = project1.getCity_name();
                     project1.setFinance_record(project.getFinance_record());
                     /*取消投资*/
                     if (project1.getFoundation() != null && project.getFoundation() == null) {
@@ -91,7 +90,6 @@ public class ProjectService {
                     project1.setCity_id(project.getCity_id());
                     project1.setCity_name(project.getCity_name());
                     project1.setProvince_name(project.getProvince_name());
-                    project1.setProject_name(project.getProject_name());
                     project1.setProject_introducer(project.getProject_introducer());
                     project1.setValuation_afterInvest(project.getValuation_afterInvest());
                     project1.setValuation_state(project.getValuation_state());
