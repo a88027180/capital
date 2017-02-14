@@ -1,5 +1,6 @@
 package com.xiyoukeji.controller;
 
+import com.xiyoukeji.entity.User;
 import com.xiyoukeji.service.StatisticsService;
 import com.xiyoukeji.service.VocationService;
 import com.xiyoukeji.tools.MapTool;
@@ -29,12 +30,48 @@ public class StatisticsController {
         return MapTool.Map().put("code", "1").put("msg", runtimeException.getMessage());
     }
 
-//    /*获取省列表*/
-//    @RequestMapping(value = "/saveorupdate_vocationOne")
-//    @ResponseBody
-//    public Map saveorupdate_vocationOne() {
-//        return MapTool.Mapok().put("provinces", areaService.getProvinceList());
-//    }
-//
+    /*已投资项目信息*/
+    @RequestMapping(value = "/getType0")
+    @ResponseBody
+    public Map getType0() {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else
+            return MapTool.Mapok().put("data", statisticsService.getType0());
+    }
+
+    /*已退出投资项目信息*/
+    @RequestMapping(value = "/getType1")
+    @ResponseBody
+    public Map getType1() {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else
+            return MapTool.Mapok().put("data", statisticsService.getType1());
+    }
+
+    /*未投项目统计*/
+    @RequestMapping(value = "/getType2")
+    @ResponseBody
+    public Map getType2() {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else
+            return MapTool.Mapok().put("data", statisticsService.getType2());
+    }
+
+    /*新增项目统计*/
+    @RequestMapping(value = "/getType3")
+    @ResponseBody
+    public Map getType3() {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else
+            return MapTool.Mapok().put("data", statisticsService.getType3());
+    }
 
 }
