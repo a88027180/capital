@@ -33,12 +33,41 @@ public class VocationController {
         return MapTool.Map().put("code", "1").put("msg", runtimeException.getMessage());
     }
 
-//    /*获取省列表*/
-//    @RequestMapping(value = "/saveorupdate_vocationOne")
-//    @ResponseBody
-//    public Map saveorupdate_vocationOne() {
-//        return MapTool.Mapok().put("provinces", areaService.getProvinceList());
-//    }
+    /*获取一级标签列表*/
+    @RequestMapping(value = "/vocationOneList")
+    @ResponseBody
+    public Map vocationOneList() {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else {
+            return MapTool.Mapok().put("vocationOneList", vocationService.vocationOneList());
+        }
+    }
+
+    /*获取二级标签列表*/
+    @RequestMapping(value = "/vocationTwoList")
+    @ResponseBody
+    public Map vocationOneList(Integer vocationOneId) {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else {
+            return MapTool.Mapok().put("vocationTwoList", vocationService.vocationTwoList(vocationOneId));
+        }
+    }
+
+    /*获取三级标签列表*/
+    @RequestMapping(value = "/vocationThreeList")
+    @ResponseBody
+    public Map vocationThreeList(Integer vocationTwoId) {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else {
+            return MapTool.Mapok().put("vocationThreeList", vocationService.vocationThreeList(vocationTwoId));
+        }
+    }
 
 
 }

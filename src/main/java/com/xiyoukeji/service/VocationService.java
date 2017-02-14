@@ -15,13 +15,28 @@ import java.util.List;
  */
 @Service
 public class VocationService {
+    @Resource
+    BaseDao<VocationOne> vocationOneBaseDao;
+    @Resource
+    BaseDao<VocationTwo> vocationTwoBaseDao;
+    @Resource
+    BaseDao<VocationThree> vocationThreeBaseDao;
 
 
-//
-//    @Transactional
-//    public List<Provinces> getProvinceList() {
-//        return provincesBaseDao.find("from Provinces");
-//    }
+    @Transactional
+    public List<VocationOne> vocationOneList() {
+        return vocationOneBaseDao.find("from VocationOne");
+    }
+
+    @Transactional
+    public List<VocationTwo> vocationTwoList(Integer vocationOneId) {
+        return vocationTwoBaseDao.find("from VocationTwo where vocationOne.id = " + vocationOneId);
+    }
+
+    @Transactional
+    public List<VocationThree> vocationThreeList(Integer vocationTwoId) {
+        return vocationThreeBaseDao.find("from VocationThree where vocationTwo.id = " + vocationTwoId);
+    }
 
 
 }
