@@ -1,10 +1,8 @@
 package com.xiyoukeji.service;
 
-import com.xiyoukeji.entity.Cities;
-import com.xiyoukeji.entity.CommentTab;
-import com.xiyoukeji.entity.Provinces;
-import com.xiyoukeji.entity.SearchCities;
+import com.xiyoukeji.entity.*;
 import com.xiyoukeji.tools.BaseDao;
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +24,10 @@ public class AreaService {
     HttpSession session;
     @Resource
     BaseDao<SearchCities> searchCitiesBaseDao;
+    @Resource
+    BaseDao<Project> projectBaseDao;
+    @Resource
+    SessionFactory sessionFactory;
 
     @Transactional
     public List<Provinces> getProvinceList() {
@@ -38,8 +40,29 @@ public class AreaService {
     }
 
     @Transactional
-    public List<SearchCities> getSearchCityList() {
-        return searchCitiesBaseDao.find("from SearchCities");
+    public List getSearchCityList(int type, Integer foundationId) {
+        User user1 = (User) session.getAttribute("user");
+
+        String sql = "select distinct city_name from Project WHERE 1=1 ";
+        switch (type) {
+            /*我的项目(草稿箱)*/
+            case 0:
+                sql += "and state = 0 and createUser.id = " + user1.getId();
+                break;
+            /*我的项目(已发布和已投)*/
+            case 1:
+                sql += "and state != 0 and createUser.id = " + user1.getId();
+                break;
+            /*已发布的项目(未投)*/
+            case 2:
+                sql += "and state = 1 ";
+                break;
+            /*已投项目和已退出项目,需要基金Id*/
+            case 3:
+                sql += "and state = 2 and foundation.id = " + foundationId;
+                break;
+        }
+        return sessionFactory.getCurrentSession().createQuery(sql).list();
     }
 
 

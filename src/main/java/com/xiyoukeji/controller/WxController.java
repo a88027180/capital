@@ -1,6 +1,5 @@
 package com.xiyoukeji.controller;
 
-import com.xiyoukeji.beans.AccessToken;
 import com.xiyoukeji.utils.Constant;
 import com.xiyoukeji.utils.WxUtils;
 import org.apache.http.HttpEntity;
