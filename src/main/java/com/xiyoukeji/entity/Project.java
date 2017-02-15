@@ -30,6 +30,7 @@ public class Project {
     @ManyToOne
     @JoinTable(name = "project_foundation", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "foundation_id")})
     private Foundation foundation;
+    private String evaluate;
     private String project_name;
     private long create_current;
     private long publish_current;
@@ -103,6 +104,14 @@ public class Project {
     @ManyToMany
     private List<Vocation> vocations = new ArrayList<>();
 
+
+    public String getEvaluate() {
+        return evaluate;
+    }
+
+    public void setEvaluate(String evaluate) {
+        this.evaluate = evaluate;
+    }
 
     public List<Vocation> getVocations() {
         return vocations;

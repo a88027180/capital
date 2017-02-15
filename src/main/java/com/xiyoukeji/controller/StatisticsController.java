@@ -107,14 +107,31 @@ public class StatisticsController {
     }
 
     /*地区与项目数量的关系*/
-    @RequestMapping(value = "/area_project")
+    @RequestMapping(value = "/statistics_project")
     @ResponseBody
-    public Map area_project() {
+    public Map statistics_project(int type, SearchStatistic searchStatistic) {
+        if (searchStatistic == null) {
+            searchStatistic = new SearchStatistic();
+        }
         User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
-        } else
-            return statisticsService.area_project();
+        } else if (user1.getRole().getType() == 1) {
+            /*外部角色*/
+            StringBuffer buffer = new StringBuffer();
+            List<Foundation> list = user1.getList_foundation();
+            for (int i = 0; i < list.size(); i++) {
+                buffer.append(list.get(i).getId());
+                if (i != list.size() - 1) {
+                    buffer.append(",");
+                }
+            }
+            searchStatistic.setFoundationList(buffer.toString());
+            return statisticsService.statistics_project(type, searchStatistic);
+
+        } else {
+            return statisticsService.statistics_project(type, searchStatistic);
+        }
     }
 
 }

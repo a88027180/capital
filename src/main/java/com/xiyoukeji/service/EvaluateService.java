@@ -180,11 +180,13 @@ public class EvaluateService {
             case 110:
             case 100:
                 fileEvaluate = fileEvaluateBaseDao.get(FileEvaluate.class, 1);
+                project.setEvaluate("S+");
                 break;
             case 99:
             case 98:
             case 97:
                 fileEvaluate = fileEvaluateBaseDao.get(FileEvaluate.class, 2);
+                project.setEvaluate("S");
                 break;
             case 96:
             case 95:
@@ -194,11 +196,13 @@ public class EvaluateService {
             case 91:
             case 90:
                 fileEvaluate = fileEvaluateBaseDao.get(FileEvaluate.class, 3);
+                project.setEvaluate("S-");
                 break;
             case 89:
             case 88:
             case 87:
                 fileEvaluate = fileEvaluateBaseDao.get(FileEvaluate.class, 4);
+                project.setEvaluate("A+");
                 break;
             case 86:
             case 85:
@@ -206,15 +210,18 @@ public class EvaluateService {
             case 83:
             case 82:
                 fileEvaluate = fileEvaluateBaseDao.get(FileEvaluate.class, 5);
+                project.setEvaluate("A");
                 break;
             case 81:
             case 80:
                 fileEvaluate = fileEvaluateBaseDao.get(FileEvaluate.class, 6);
+                project.setEvaluate("A-");
                 break;
             case 79:
             case 78:
             case 77:
                 fileEvaluate = fileEvaluateBaseDao.get(FileEvaluate.class, 7);
+                project.setEvaluate("B+");
                 break;
             case 76:
             case 75:
@@ -222,13 +229,16 @@ public class EvaluateService {
             case 73:
             case 72:
                 fileEvaluate = fileEvaluateBaseDao.get(FileEvaluate.class, 8);
+                project.setEvaluate("B");
                 break;
             case 71:
             case 70:
                 fileEvaluate = fileEvaluateBaseDao.get(FileEvaluate.class, 9);
+                project.setEvaluate("B-");
                 break;
             default:
                 fileEvaluate = fileEvaluateBaseDao.get(FileEvaluate.class, 10);
+                project.setEvaluate("C");
                 break;
 
         }
