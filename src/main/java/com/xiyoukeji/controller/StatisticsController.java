@@ -1,5 +1,7 @@
 package com.xiyoukeji.controller;
 
+import com.xiyoukeji.beans.SearchStatistic;
+import com.xiyoukeji.entity.Foundation;
 import com.xiyoukeji.entity.User;
 import com.xiyoukeji.service.StatisticsService;
 import com.xiyoukeji.service.VocationService;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -72,6 +75,46 @@ public class StatisticsController {
             return MapTool.Map().put("code", 2);
         } else
             return MapTool.Mapok().put("data", statisticsService.getType3());
+    }
+
+    /*标签与项目数量的关系*/
+    @RequestMapping(value = "/vocation_project")
+    @ResponseBody
+    public Map vocation_project(SearchStatistic searchStatistic) {
+        if (searchStatistic == null) {
+            searchStatistic = new SearchStatistic();
+        }
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else if (user1.getRole().getType() == 1) {
+            /*外部角色*/
+            StringBuffer buffer = new StringBuffer();
+            List<Foundation> list = user1.getList_foundation();
+            for (int i = 0; i < list.size(); i++) {
+                buffer.append(list.get(i).getId());
+                if (i != list.size() - 1) {
+                    buffer.append(",");
+                }
+            }
+            searchStatistic.setFoundationList(buffer.toString());
+            return statisticsService.vocation_project(searchStatistic);
+
+        } else {
+            return statisticsService.vocation_project(searchStatistic);
+        }
+
+    }
+
+    /*地区与项目数量的关系*/
+    @RequestMapping(value = "/area_project")
+    @ResponseBody
+    public Map area_project() {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else
+            return statisticsService.area_project();
     }
 
 }
