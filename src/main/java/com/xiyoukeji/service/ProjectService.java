@@ -32,6 +32,8 @@ public class ProjectService {
     BaseDao<InvestmentOther> investmentOtherBaseDao;
     @Resource
     BaseDao<SearchCities> searchCitiesBaseDao;
+    @Resource
+    BaseDao<Vocation> vocationBaseDao;
 
     @Transactional
     public Map saveorupdateProject(Project project, int type) {
@@ -63,9 +65,44 @@ public class ProjectService {
                     project1.setCompany_tel(project.getCompany_tel());
                     project1.setCompany_contact(project.getCompany_contact());
                     project1.setContact_phone(project.getContact_phone());
-                    project1.setVocationOnes(project.getVocationOnes());
-                    project1.setVocationTwos(project.getVocationTwos());
-                    project1.setVocationThrees(project.getVocationThrees());
+
+                    List<Vocation> alist = new ArrayList<>();
+                    List<Vocation> vocations = project.getVocations();
+                    for (int i = 0; i < vocations.size(); i++) {
+                        Vocation vocation = vocationBaseDao.get(Vocation.class, vocations.get(i).getId());
+                        /*一级标签*/
+                        if (vocation.getType() == 0) {
+                            if (!alist.contains(vocation)) {
+                                alist.add(vocation);
+                            }
+                            /*二级标签*/
+                        } else if (vocation.getType() == 1) {
+                            if (!alist.contains(vocation)) {
+                                alist.add(vocation);
+                            }
+                            Vocation vocation1 = vocationBaseDao.get(Vocation.class, vocation.getParent_id());
+                            if (!alist.contains(vocation1)) {
+                                alist.add(vocation1);
+                            }
+                            /*三级标签*/
+                        } else if (vocation.getType() == 2) {
+                            if (!alist.contains(vocation)) {
+                                alist.add(vocation);
+                            }
+                            Vocation vocation2 = vocationBaseDao.get(Vocation.class, vocation.getParent_id());
+                            if (!alist.contains(vocation2)) {
+                                alist.add(vocation2);
+                            }
+                            Vocation vocation3 = vocationBaseDao.get(Vocation.class, vocation2.getParent_id());
+                            if ((!alist.contains(vocation3))) {
+                                alist.add(vocation3);
+                            }
+                        }
+                    }
+
+
+                    project1.setVocations(alist);
+
 
                     break;
                 case 1:
@@ -112,8 +149,6 @@ public class ProjectService {
                     project1.setInvestment_others(project.getInvestment_others());
 
 
-
-
                     break;
                 case 2:
                     project1.setProject_schedule(project.getProject_schedule());
@@ -152,7 +187,9 @@ public class ProjectService {
             return MapTool.Mapok().put("data", map);
 
 
-        } else {
+        } else
+
+        {
             /*新建 判断名字重复*/
             Project project2 = projectBaseDao.get("from Project where project_name = '" + project.getProject_name() + "'");
             if (project2 == null) {

@@ -101,37 +101,15 @@ public class Project {
     private ProjectFile projectFile;
 
     @ManyToMany
-    private List<VocationOne> vocationOnes = new ArrayList<>();
-    @ManyToMany
-    private List<VocationTwo> vocationTwos = new ArrayList<>();
-    @ManyToMany
-    private List<VocationThree> vocationThrees = new ArrayList<>();
-
-//    @JoinTable(name = "project_projectFile", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "projectFile_id")})
+    private List<Vocation> vocations = new ArrayList<>();
 
 
-    public List<VocationOne> getVocationOnes() {
-        return vocationOnes;
+    public List<Vocation> getVocations() {
+        return vocations;
     }
 
-    public void setVocationOnes(List<VocationOne> vocationOnes) {
-        this.vocationOnes = vocationOnes;
-    }
-
-    public List<VocationTwo> getVocationTwos() {
-        return vocationTwos;
-    }
-
-    public void setVocationTwos(List<VocationTwo> vocationTwos) {
-        this.vocationTwos = vocationTwos;
-    }
-
-    public List<VocationThree> getVocationThrees() {
-        return vocationThrees;
-    }
-
-    public void setVocationThrees(List<VocationThree> vocationThrees) {
-        this.vocationThrees = vocationThrees;
+    public void setVocations(List<Vocation> vocations) {
+        this.vocations = vocations;
     }
 
     public String getCity_name() {
