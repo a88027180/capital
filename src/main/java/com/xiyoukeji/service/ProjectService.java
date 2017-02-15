@@ -66,7 +66,11 @@ public class ProjectService {
                     project1.setCompany_contact(project.getCompany_contact());
                     project1.setContact_phone(project.getContact_phone());
 
-                    List<Vocation> alist = new ArrayList<>();
+
+//                    project1.setVocations(new ArrayList<Vocation>());
+
+                    List<Vocation> alist = project1.getVocations();
+                    alist.clear();
                     List<Vocation> vocations = project.getVocations();
                     for (int i = 0; i < vocations.size(); i++) {
                         Vocation vocation = vocationBaseDao.get(Vocation.class, vocations.get(i).getId());
@@ -101,7 +105,7 @@ public class ProjectService {
                     }
 
 
-                    project1.setVocations(alist);
+//                    project1.setVocations(alist);
 
 
                     break;
