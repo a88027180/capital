@@ -70,35 +70,17 @@ public class ProjectBean {
     private String sign_date;
     private String pay_date;
     private String pay_money;
-    private List<VocationOneBean> vocationOnes = new ArrayList<>();
-    private List<VocationTwoBean> vocationTwos = new ArrayList<>();
-    private List<VocationThreeBean> vocationThrees = new ArrayList<>();
+    private List<VocationBean> vocations = new ArrayList<>();
     //    private List<NoteBean> project_notes = new ArrayList<>();
 //    private List<EvaluateBean> project_evaluate = new ArrayList<>();
     private FileBean video;
-
-    public List<VocationOneBean> getVocationOnes() {
-        return vocationOnes;
+    public List<VocationBean> getVocations() {
+        return vocations;
     }
 
-    public void setVocationOnes(List<VocationOneBean> vocationOnes) {
-        this.vocationOnes = vocationOnes;
-    }
 
-    public List<VocationTwoBean> getVocationTwos() {
-        return vocationTwos;
-    }
-
-    public void setVocationTwos(List<VocationTwoBean> vocationTwos) {
-        this.vocationTwos = vocationTwos;
-    }
-
-    public List<VocationThreeBean> getVocationThrees() {
-        return vocationThrees;
-    }
-
-    public void setVocationThrees(List<VocationThreeBean> vocationThrees) {
-        this.vocationThrees = vocationThrees;
+    public void setVocations(List<VocationBean> vocations) {
+        this.vocations = vocations;
     }
 
     public Integer getProvince_id() {
