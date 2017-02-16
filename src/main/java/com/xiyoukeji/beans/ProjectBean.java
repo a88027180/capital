@@ -60,7 +60,7 @@ public class ProjectBean {
     private String share_common;
     private String investment_leader;
     private String enjoyor;
-    private String investment_enjoyor;
+    private long investment_enjoyor;
     private String share_enjoyor;
     private String other;
     private String investment_other;
@@ -74,6 +74,7 @@ public class ProjectBean {
     //    private List<NoteBean> project_notes = new ArrayList<>();
 //    private List<EvaluateBean> project_evaluate = new ArrayList<>();
     private FileBean video;
+
     public List<VocationBean> getVocations() {
         return vocations;
     }
@@ -492,11 +493,11 @@ public class ProjectBean {
         this.enjoyor = enjoyor;
     }
 
-    public String getInvestment_enjoyor() {
+    public long getInvestment_enjoyor() {
         return investment_enjoyor;
     }
 
-    public void setInvestment_enjoyor(String investment_enjoyor) {
+    public void setInvestment_enjoyor(long investment_enjoyor) {
         this.investment_enjoyor = investment_enjoyor;
     }
 
