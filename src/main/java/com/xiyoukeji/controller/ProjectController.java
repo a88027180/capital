@@ -1,10 +1,10 @@
 package com.xiyoukeji.controller;
 
 import com.google.gson.Gson;
-import com.xiyoukeji.beans.ProjectBean;
-import com.xiyoukeji.beans.Search;
+import com.xiyoukeji.beans.*;
 import com.xiyoukeji.entity.Project;
 import com.xiyoukeji.entity.User;
+import com.xiyoukeji.entity.Vocation;
 import com.xiyoukeji.service.ProjectService;
 import com.xiyoukeji.tools.MapTool;
 import com.xiyoukeji.utils.Core;
@@ -113,7 +113,44 @@ public class ProjectController {
             ProjectBean projectBean = new ProjectBean();
             Project project = projectService.getProject(id);
             Core.assignDest(projectBean, project);
-            return MapTool.Mapok().put("data", MapTool.Map().put("project", projectBean));
+            List<VocationBean> vocations = projectBean.getVocations();
+            List<VocationBean> list0 = new ArrayList<>();
+            List<VocationBean> list1 = new ArrayList<>();
+            List<VocationBean> list2 = new ArrayList<>();
+            for (int i = 0; i < vocations.size(); i++) {
+                if (vocations.get(i).getType() == 0) {
+                    list0.add(vocations.get(i));
+                } else if (vocations.get(i).getType() == 1) {
+                    list1.add(vocations.get(i));
+
+                } else if (vocations.get(i).getType() == 2) {
+                    list2.add(vocations.get(i));
+                }
+            }
+            Map map = new HashMap<>();
+            for (int i = 0; i < list2.size(); i++) {
+                Map map_i = new HashMap<>();
+
+                for (int j = 0; j < list1.size(); j++) {
+                    Map map_j = new HashMap<>();
+
+                    for (int k = 0; k < list0.size(); k++) {
+                        if (list1.get(j).getParent_id() == list0.get(k).getId())
+                            map_j.put("vocationThree", list0.get(k).getName());
+
+                    }
+
+
+                    if (list2.get(i).getParent_id() == list1.get(j).getId())
+
+                        map_i.put(list1.get(j).getName(), map_j);
+//
+                }
+                map.put(list2.get(i).getName(), map_i);
+            }
+
+
+            return MapTool.Mapok().put("data", MapTool.Map().put("project", projectBean).put("vocation", map));
         }
     }
 
