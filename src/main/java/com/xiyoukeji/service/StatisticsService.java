@@ -39,7 +39,7 @@ public class StatisticsService {
         String sql0 = "SELECT DISTINCT(foundation.id),foundation.name FROM `project` JOIN project_foundation ON (project.id = project_foundation.project_id) JOIN foundation ON (foundation.id = project_foundation.foundation_id)";
         String sql1 = "SELECT DISTINCT(city_name) from project";
         String sql2 = "SELECT DISTINCT(vocation.id),vocation.name FROM `project` JOIN project_vocation ON (project.id=project_vocation.Project_id) JOIN vocation ON(vocation.id = project_vocation.vocations_id)";
-        String sql3 = "SELECT DISTINCT(user.id),user.userName FROM `project` JOIN user_project ON (project.id = user_project.project_id) JOIN user ON (user.id = user_project.user_id)";
+        String sql3 = "SELECT DISTINCT(user.id),user.name FROM `project` JOIN user_project ON (project.id = user_project.project_id) JOIN user ON (user.id = user_project.user_id)";
         SQLQuery sqlQuery0 = sessionFactory.getCurrentSession().createSQLQuery(sql0);
         List<Object[]> list0 = sqlQuery0.list();
         SQLQuery sqlQuery1 = sessionFactory.getCurrentSession().createSQLQuery(sql1);
