@@ -147,7 +147,10 @@ public class StatisticsService {
             sql += " AND project.city_name = '" + searchStatistic.getCity() + "'";
         }
         if (searchStatistic.getUserId() != null && searchStatistic.getUserId() != 0) {
-            sql += " AND user.id = " + searchStatistic.getCity();
+            sql += " AND user.id = " + searchStatistic.getUserId();
+        }
+        if (searchStatistic.getFoundationId() != null && searchStatistic.getFoundationId() != 0) {
+            sql += " AND foundation.id = " + searchStatistic.getFoundationId();
         }
         if (searchStatistic.getFoundationList() != null && !searchStatistic.getFoundationList().equals("")) {
             sql += " AND foundation.id IN (" + searchStatistic.getFoundationList() + ")";
