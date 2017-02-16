@@ -127,30 +127,30 @@ public class ProjectController {
                     list2.add(vocations.get(i));
                 }
             }
-            Map map = new HashMap<>();
-            for (int i = 0; i < list2.size(); i++) {
-                Map map_i = new HashMap<>();
-
-                for (int j = 0; j < list1.size(); j++) {
-                    Map map_j = new HashMap<>();
-
-                    for (int k = 0; k < list0.size(); k++) {
-                        if (list1.get(j).getParent_id() == list0.get(k).getId())
-                            map_j.put("vocationThree", list0.get(k).getName());
-
-                    }
-
-
-                    if (list2.get(i).getParent_id() == list1.get(j).getId())
-
-                        map_i.put(list1.get(j).getName(), map_j);
+//            Map map = new HashMap<>();
+//            for (int i = 0; i < list2.size(); i++) {
+//                Map map_i = new HashMap<>();
 //
-                }
-                map.put(list2.get(i).getName(), map_i);
-            }
+//                for (int j = 0; j < list1.size(); j++) {
+//                    Map map_j = new HashMap<>();
+//
+//                    for (int k = 0; k < list0.size(); k++) {
+//                        if (list1.get(j).getParent_id() == list0.get(k).getId())
+//                            map_j.put("vocationThree", list0.get(k).getName());
+//
+//                    }
+//
+//
+//                    if (list2.get(i).getParent_id() == list1.get(j).getId())
+//
+//                        map_i.put(list1.get(j).getName(), map_j);
+////
+//                }
+//                map.put(list2.get(i).getName(), map_i);
+//            }
 
 
-            return MapTool.Mapok().put("data", MapTool.Map().put("project", projectBean).put("vocation", map));
+            return MapTool.Mapok().put("data", MapTool.Map().put("project", projectBean));
         }
     }
 
