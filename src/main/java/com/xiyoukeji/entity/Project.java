@@ -81,6 +81,7 @@ public class Project {
     private String investment_enjoyor;
     private String share_enjoyor;
     private double double_enjoyor;
+    private double double_valuation;
 
     @OneToMany
     @Cascade(CascadeType.ALL)
@@ -105,6 +106,13 @@ public class Project {
     @ManyToMany
     private List<Vocation> vocations = new ArrayList<>();
 
+    public double getDouble_valuation() {
+        return double_valuation;
+    }
+
+    public void setDouble_valuation(double double_valuation) {
+        this.double_valuation = double_valuation;
+    }
 
     public String getInvestment_enjoyor() {
         return investment_enjoyor;

@@ -144,6 +144,7 @@ public class ProjectService {
                     project1.setEnjoyor(project.getEnjoyor());
                     project1.setInvestment_enjoyor(project.getInvestment_enjoyor());
                     project1.setDouble_enjoyor(Double.valueOf(project.getInvestment_enjoyor().replace(",", "")));
+                    project1.setDouble_valuation(Double.valueOf(project.getValuation_afterInvest().replace(",", "")));
                     project1.setShare_enjoyor(project.getShare_enjoyor());
                     List<InvestmentOther> list = investmentOtherBaseDao.find("from InvestmentOther where project.id = " + project.getId());
                     if (list.size() > 0) {

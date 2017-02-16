@@ -57,7 +57,7 @@ public class StatisticsService {
     @Transactional
     public List<Statistics> getType0() {
         List<Statistics> statisticses = new ArrayList<>();
-        String sql = "SELECT foundation.id as foundation_id,foundation.name as foundation_name,SUM(project.valuation_afterInvest) as valuation_afterInvest,COUNT(project.id) as project_count ,SUM(project.double_enjoyor)AS money_thisTime FROM `project` JOIN project_foundation ON(project.id=project_foundation.project_id) JOIN foundation on(foundation.id=project_foundation.foundation_id) GROUP BY foundation.id";
+        String sql = "SELECT foundation.id as foundation_id,foundation.name as foundation_name,SUM(project.double_valuation) as valuation_afterInvest,COUNT(project.id) as project_count ,SUM(project.double_enjoyor)AS money_thisTime FROM `project` JOIN project_foundation ON(project.id=project_foundation.project_id) JOIN foundation on(foundation.id=project_foundation.foundation_id) GROUP BY foundation.id";
         SQLQuery sqlQuery = sessionFactory.getCurrentSession().createSQLQuery(sql);
         List<Object[]> list = sqlQuery.list();
         for (int i = 0; i < list.size(); i++) {
