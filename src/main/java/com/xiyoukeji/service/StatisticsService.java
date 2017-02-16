@@ -47,7 +47,7 @@ public class StatisticsService {
         SQLQuery sqlQuery2 = sessionFactory.getCurrentSession().createSQLQuery(sql2);
         List<Object[]> list2 = sqlQuery2.list();
         SQLQuery sqlQuery3 = sessionFactory.getCurrentSession().createSQLQuery(sql3);
-        List<Object[]> list3 = sqlQuery2.list();
+        List<Object[]> list3 = sqlQuery3.list();
         return MapTool.Mapok().put("data0", list0).put("data1", list1).put("data2", list2).put("data3", list3);
 
 
