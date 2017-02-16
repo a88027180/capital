@@ -178,26 +178,26 @@ public class StatisticsService {
         switch (type) {
             case 0:
                 /*地区*/
-                sql0 = "SELECT COUNT(DISTINCT(project.id)) AS number,SUM(project.money_thisTime) AS invest_money, project.city_name AS city_name";
+                sql0 = "SELECT COUNT(DISTINCT(project.id)) AS number,SUM(project.double_enjoyor) AS invest_money, project.city_name AS city_name";
                 sql0 += sql + con + " GROUP BY project.city_name ";
                 break;
             case 1:
                 /*阶段*/
-                sql0 = "SELECT COUNT(DISTINCT(project.id)) AS number,SUM(project.money_thisTime) AS invest_money, project.project_stage AS project_stage";
+                sql0 = "SELECT COUNT(DISTINCT(project.id)) AS number,SUM(project.double_enjoyor) AS invest_money, project.project_stage AS project_stage";
                 sql0 += sql + con + " GROUP BY project.project_stage ";
                 break;
             case 2:
                 /*评级*/
-                sql0 = "SELECT COUNT(DISTINCT(project.id)) AS number,SUM(project.money_thisTime) AS invest_money, project.evaluate AS evaluate";
+                sql0 = "SELECT COUNT(DISTINCT(project.id)) AS number,SUM(project.double_enjoyor) AS invest_money, project.evaluate AS evaluate";
                 sql0 += sql + con + " GROUP BY project.evaluate ";
                 break;
             case 3:
-                sql0 = "SELECT COUNT(DISTINCT(project.id)) AS number,SUM(project.money_thisTime) AS invest_money, project.project_resource AS project_resource";
+                sql0 = "SELECT COUNT(DISTINCT(project.id)) AS number,SUM(project.double_enjoyor) AS invest_money, project.project_resource AS project_resource";
                 sql0 += sql + con + " GROUP BY project.project_resource ";
                 /*来源*/
                 break;
             case 4:
-                sql0 = "SELECT COUNT(DISTINCT(project.id)) AS number,SUM(project.money_thisTime) AS invest_money, user.id AS user_id, user.name AS user_name";
+                sql0 = "SELECT COUNT(DISTINCT(project.id)) AS number,SUM(project.double_enjoyor) AS invest_money, user.id AS user_id, user.name AS user_name";
                 sql0 += sql + con + " GROUP BY user.id ";
                 /*负责人*/
                 break;

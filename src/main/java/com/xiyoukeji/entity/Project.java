@@ -78,8 +78,9 @@ public class Project {
     private String share_common;
     private String investment_leader;
     private String enjoyor;
-    private long investment_enjoyor;
+    private String investment_enjoyor;
     private String share_enjoyor;
+    private double double_enjoyor;
 
     @OneToMany
     @Cascade(CascadeType.ALL)
@@ -105,8 +106,24 @@ public class Project {
     private List<Vocation> vocations = new ArrayList<>();
 
 
+    public String getInvestment_enjoyor() {
+        return investment_enjoyor;
+    }
+
     public String getEvaluate() {
         return evaluate;
+    }
+
+    public void setInvestment_enjoyor(String investment_enjoyor) {
+        this.investment_enjoyor = investment_enjoyor;
+    }
+
+    public double getDouble_enjoyor() {
+        return double_enjoyor;
+    }
+
+    public void setDouble_enjoyor(double double_enjoyor) {
+        this.double_enjoyor = double_enjoyor;
     }
 
     public void setEvaluate(String evaluate) {
@@ -555,13 +572,6 @@ public class Project {
         this.enjoyor = enjoyor;
     }
 
-    public long getInvestment_enjoyor() {
-        return investment_enjoyor;
-    }
-
-    public void setInvestment_enjoyor(long investment_enjoyor) {
-        this.investment_enjoyor = investment_enjoyor;
-    }
 
     public String getShare_enjoyor() {
         return share_enjoyor;
