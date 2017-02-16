@@ -32,6 +32,27 @@ public class StatisticsService {
     @Resource
     HttpSession session;
 
+
+    /*查询条件列表*/
+    @Transactional
+    public Map getSearchList() {
+        String sql0 = "SELECT DISTINCT(foundation.id),foundation.name FROM `project` JOIN project_foundation ON (project.id = project_foundation.project_id) JOIN foundation ON (foundation.id = project_foundation.foundation_id)";
+        String sql1 = "SELECT DISTINCT(city_name) from project";
+        String sql2 = "SELECT DISTINCT(vocation.id),vocation.name FROM `project` JOIN project_vocation ON (project.id=project_vocation.Project_id) JOIN vocation ON(vocation.id = project_vocation.vocations_id)";
+        String sql3 = "SELECT DISTINCT(user.id),user.userName FROM `project` JOIN user_project ON (project.id = user_project.project_id) JOIN user ON (user.id = user_project.user_id)";
+        SQLQuery sqlQuery0 = sessionFactory.getCurrentSession().createSQLQuery(sql0);
+        List<Object[]> list0 = sqlQuery0.list();
+        SQLQuery sqlQuery1 = sessionFactory.getCurrentSession().createSQLQuery(sql1);
+        List<Object[]> list1 = sqlQuery1.list();
+        SQLQuery sqlQuery2 = sessionFactory.getCurrentSession().createSQLQuery(sql2);
+        List<Object[]> list2 = sqlQuery2.list();
+        SQLQuery sqlQuery3 = sessionFactory.getCurrentSession().createSQLQuery(sql3);
+        List<Object[]> list3 = sqlQuery2.list();
+        return MapTool.Mapok().put("data0", list0).put("data1", list1).put("data2", list2).put("data3", list3);
+
+
+    }
+
     /*已投项目*/
     @Transactional
     public List<Statistics> getType0() {

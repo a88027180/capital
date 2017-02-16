@@ -77,6 +77,18 @@ public class StatisticsController {
             return MapTool.Mapok().put("data", statisticsService.getType3());
     }
 
+
+    /*获取查询列表*/
+    @RequestMapping(value = "/getSearchList")
+    @ResponseBody
+    public Map getSearchList() {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else
+            return statisticsService.getSearchList();
+    }
+
     /*标签与项目数量的关系*/
     @RequestMapping(value = "/vocation_project")
     @ResponseBody
