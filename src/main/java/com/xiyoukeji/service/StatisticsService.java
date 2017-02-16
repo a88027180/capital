@@ -36,7 +36,7 @@ public class StatisticsService {
     @Transactional
     public List<Statistics> getType0() {
         List<Statistics> statisticses = new ArrayList<>();
-        String sql = "SELECT foundation.id as foundation_id,foundation.name as foundation_name,SUM(project.valuation_afterInvest) as valuation_afterInvest,COUNT(project.id) as project_count ,SUM(project.money_thisTime)AS money_thisTime FROM `project` JOIN project_foundation ON(project.id=project_foundation.project_id) JOIN foundation on(foundation.id=project_foundation.foundation_id) GROUP BY foundation.id";
+        String sql = "SELECT foundation.id as foundation_id,foundation.name as foundation_name,SUM(project.valuation_afterInvest) as valuation_afterInvest,COUNT(project.id) as project_count ,SUM(project.double_enjoyor)AS money_thisTime FROM `project` JOIN project_foundation ON(project.id=project_foundation.project_id) JOIN foundation on(foundation.id=project_foundation.foundation_id) GROUP BY foundation.id";
         SQLQuery sqlQuery = sessionFactory.getCurrentSession().createSQLQuery(sql);
         List<Object[]> list = sqlQuery.list();
         for (int i = 0; i < list.size(); i++) {
@@ -153,17 +153,15 @@ public class StatisticsService {
     public Map statistics_project(int type, SearchStatistic searchStatistic) {
         String sql = "";
         String sql0 = "";
-        String sql1 = "";
-        String sql2 = "";
-        String sql3 = "";
-        String sql4 = "";
 
         String con = "";
+        String con1 = " ";
+        if (searchStatistic.getFoundationId() != null && searchStatistic.getFoundationId() != 0) {
+            con1 += " AND foundation.id = " + searchStatistic.getFoundationId();
+        }
 
-
-        sql = " from project JOIN project_vocation ON (project.id = project_vocation.Project_id) JOIN vocation ON (vocation.id = project_vocation.vocations_id) JOIN project_foundation ON (project.id = project_foundation.project_id) JOIN foundation ON (project_foundation.foundation_id = foundation.id) JOIN user_project ON (project.id = user_project.project_id) JOIN user ON (user_project.user_id = user.id) WHERE 1=1";
         if (searchStatistic.getVocationId() != null && searchStatistic.getVocationId() != 0) {
-            con += " AND vocation.id = " + searchStatistic.getVocationId();
+            con1 += " AND `vocations_id` = " + searchStatistic.getVocationId();
         }
         if (searchStatistic.getCity() != null && !searchStatistic.getCity().equals("")) {
             con += " AND project.city_name = '" + searchStatistic.getCity() + "'";
@@ -174,37 +172,36 @@ public class StatisticsService {
         if (searchStatistic.getFoundationList() != null && !searchStatistic.getFoundationList().equals("")) {
             con += " AND foundation.id IN (" + searchStatistic.getFoundationList() + ")";
         }
-
+        sql = " from project JOIN project_foundation ON (project.id = project_foundation.project_id) JOIN foundation ON (project_foundation.foundation_id = foundation.id) JOIN user_project ON (project.id = user_project.project_id) JOIN user ON (user_project.user_id = user.id) WHERE 1=1 " + con + " AND project.id IN (SELECT DISTINCT(`Project_id`) FROM project_vocation WHERE 1=1" + con1 + ")";
         switch (type) {
             case 0:
                 /*地区*/
                 sql0 = "SELECT COUNT(DISTINCT(project.id)) AS number,SUM(project.double_enjoyor) AS invest_money, project.city_name AS city_name";
-                sql0 += sql + con + " GROUP BY project.city_name ";
+                sql0 += sql + " GROUP BY project.city_name ";
                 break;
             case 1:
                 /*阶段*/
                 sql0 = "SELECT COUNT(DISTINCT(project.id)) AS number,SUM(project.double_enjoyor) AS invest_money, project.project_stage AS project_stage";
-                sql0 += sql + con + " GROUP BY project.project_stage ";
+                sql0 += sql + " GROUP BY project.project_stage ";
                 break;
             case 2:
                 /*评级*/
                 sql0 = "SELECT COUNT(DISTINCT(project.id)) AS number,SUM(project.double_enjoyor) AS invest_money, project.evaluate AS evaluate";
-                sql0 += sql + con + " GROUP BY project.evaluate ";
+                sql0 += sql + " GROUP BY project.evaluate ";
                 break;
             case 3:
                 sql0 = "SELECT COUNT(DISTINCT(project.id)) AS number,SUM(project.double_enjoyor) AS invest_money, project.project_resource AS project_resource";
-                sql0 += sql + con + " GROUP BY project.project_resource ";
+                sql0 += sql + " GROUP BY project.project_resource ";
                 /*来源*/
                 break;
             case 4:
                 sql0 = "SELECT COUNT(DISTINCT(project.id)) AS number,SUM(project.double_enjoyor) AS invest_money, user.id AS user_id, user.name AS user_name";
-                sql0 += sql + con + " GROUP BY user.id ";
+                sql0 += sql + " GROUP BY user.id ";
                 /*负责人*/
                 break;
         }
         SQLQuery sqlQuery0 = sessionFactory.getCurrentSession().createSQLQuery(sql0);
         List<Object[]> list0 = sqlQuery0.list();
-
         return MapTool.Mapok().put("data", list0);
     }
 

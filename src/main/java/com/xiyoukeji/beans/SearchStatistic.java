@@ -11,6 +11,15 @@ public class SearchStatistic {
     private String city;
     private Integer vocationId;
     private Integer userId;
+    private Integer foundationId;
+
+    public Integer getFoundationId() {
+        return foundationId;
+    }
+
+    public void setFoundationId(Integer foundationId) {
+        this.foundationId = foundationId;
+    }
 
     public String getFoundationList() {
         return foundationList;
