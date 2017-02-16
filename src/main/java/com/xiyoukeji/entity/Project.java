@@ -78,7 +78,7 @@ public class Project {
     private String share_common;
     private String investment_leader;
     private String enjoyor;
-    private String investment_enjoyor;
+    private long investment_enjoyor;
     private String share_enjoyor;
 
     @OneToMany
@@ -555,11 +555,11 @@ public class Project {
         this.enjoyor = enjoyor;
     }
 
-    public String getInvestment_enjoyor() {
+    public long getInvestment_enjoyor() {
         return investment_enjoyor;
     }
 
-    public void setInvestment_enjoyor(String investment_enjoyor) {
+    public void setInvestment_enjoyor(long investment_enjoyor) {
         this.investment_enjoyor = investment_enjoyor;
     }
 

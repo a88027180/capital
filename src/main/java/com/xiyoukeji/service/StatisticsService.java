@@ -120,7 +120,7 @@ public class StatisticsService {
     @Transactional
     public Map vocation_project(SearchStatistic searchStatistic) {
         /*sql0 一级  sql1 二级  sql2三级*/
-
+/*, vocation.id AS vocation_id, vocation.parent_id AS parent_id*/
         String sql = "SELECT COUNT(DISTINCT(project.id)) AS number,vocation.name AS name from project JOIN project_vocation ON (project.id = project_vocation.Project_id) JOIN vocation ON (vocation.id = project_vocation.vocations_id) JOIN project_foundation ON (project.id = project_foundation.project_id) JOIN foundation ON (project_foundation.foundation_id = foundation.id) JOIN user_project ON (project.id = user_project.project_id) JOIN user ON (user_project.user_id = user.id) WHERE 1=1";
         if (searchStatistic.getCity() != null && !searchStatistic.getCity().equals("")) {
             sql += " AND project.city_name = '" + searchStatistic.getCity() + "'";
