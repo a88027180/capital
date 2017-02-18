@@ -37,7 +37,7 @@ public class UserService {
         User user1 = null;
         if (user.getId() == null) {
             /*新建*/
-            User user2 = userBaseDao.get("from User wnere userName = '" + user.getUserName() + "'");
+            User user2 = userBaseDao.get("from User where userName = '" + user.getUserName() + "'");
             if (user2 == null) {
                 user1 = user;
                 baseDao.saveOrUpdate(user1);
