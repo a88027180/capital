@@ -19,6 +19,7 @@ public class InvestmentOther {
     @GenericGenerator(name = "native", strategy = "native")
     private Integer id;
     @ManyToOne
+    @JoinTable(name = "project_InvestmentOther", joinColumns = {@JoinColumn(name = "investmentOther_id")}, inverseJoinColumns = {@JoinColumn(name = "project_id")})
     private Project project;
     private String other;
     private String investment_other;

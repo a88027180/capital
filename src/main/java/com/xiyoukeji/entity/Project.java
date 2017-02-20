@@ -118,6 +118,11 @@ public class Project {
     @JoinTable(name = "project_evaluateRecord", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "evaluateRecord_id")})
     private List<EvaluateRecord> project_evaluateRecord = new ArrayList<>();
 
+    @OneToMany(orphanRemoval = true)
+    @Cascade(CascadeType.ALL)
+    @JoinTable(name = "project_InvestmentOther", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "investmentOther_id")})
+    private List<EvaluateRecord> project_investmentOther = new ArrayList<>();
+
     @ManyToMany
     private List<Vocation> vocations = new ArrayList<>();
 
@@ -131,6 +136,14 @@ public class Project {
 
     public void setProject_evaluateRecord(List<EvaluateRecord> project_evaluateRecord) {
         this.project_evaluateRecord = project_evaluateRecord;
+    }
+
+    public List<EvaluateRecord> getProject_investmentOther() {
+        return project_investmentOther;
+    }
+
+    public void setProject_investmentOther(List<EvaluateRecord> project_investmentOther) {
+        this.project_investmentOther = project_investmentOther;
     }
 
     public void setProject_notice(List<Notice> project_notice) {
