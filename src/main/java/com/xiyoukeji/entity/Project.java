@@ -103,8 +103,47 @@ public class Project {
     @OneToOne
     private ProjectFile projectFile;
 
+    @OneToMany(orphanRemoval = true)
+    @Cascade(CascadeType.ALL)
+    @JoinTable(name = "project_notice", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "notice_id")})
+    private List<Notice> project_notice = new ArrayList<>();
+
+    @OneToMany(orphanRemoval = true)
+    @Cascade(CascadeType.ALL)
+    @JoinTable(name = "project_evaluateAvg", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "evaluateAvg_id")})
+    private List<EvaluateAvg> project_evaluateAvg = new ArrayList<>();
+
+    @OneToMany(orphanRemoval = true)
+    @Cascade(CascadeType.ALL)
+    @JoinTable(name = "project_evaluateRecord", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "evaluateRecord_id")})
+    private List<EvaluateRecord> project_evaluateRecord = new ArrayList<>();
+
     @ManyToMany
     private List<Vocation> vocations = new ArrayList<>();
+
+    public List<Notice> getProject_notice() {
+        return project_notice;
+    }
+
+    public List<EvaluateRecord> getProject_evaluateRecord() {
+        return project_evaluateRecord;
+    }
+
+    public void setProject_evaluateRecord(List<EvaluateRecord> project_evaluateRecord) {
+        this.project_evaluateRecord = project_evaluateRecord;
+    }
+
+    public void setProject_notice(List<Notice> project_notice) {
+        this.project_notice = project_notice;
+    }
+
+    public List<EvaluateAvg> getProject_evaluateAvg() {
+        return project_evaluateAvg;
+    }
+
+    public void setProject_evaluateAvg(List<EvaluateAvg> project_evaluateAvg) {
+        this.project_evaluateAvg = project_evaluateAvg;
+    }
 
     public double getDouble_valuation() {
         return double_valuation;

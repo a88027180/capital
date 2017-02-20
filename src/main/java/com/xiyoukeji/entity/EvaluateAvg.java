@@ -21,6 +21,7 @@ public class EvaluateAvg {
     @OneToOne
     private FileEvaluate fileEvaluate;
     @ManyToOne
+    @JoinTable(name = "project_evaluateAvg", joinColumns = {@JoinColumn(name = "evaluateAvg_id")}, inverseJoinColumns = {@JoinColumn(name = "project_id")})
     private Project project;
     private int item_all;
     private int item_one;

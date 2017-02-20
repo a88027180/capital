@@ -29,6 +29,7 @@ public class Notice {
     private long publish_time;
     private long notice_time;
     @ManyToOne
+    @JoinTable(name = "project_notice", joinColumns = {@JoinColumn(name = "notice_id")}, inverseJoinColumns = {@JoinColumn(name = "project_id")})
     private Project project;
     @OneToMany
     private List<File> files;

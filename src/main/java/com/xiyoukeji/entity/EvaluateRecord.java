@@ -19,6 +19,7 @@ public class EvaluateRecord {
     @GenericGenerator(name = "native", strategy = "native")
     private Integer id;
     @ManyToOne
+    @JoinTable(name = "project_evaluateRecord", joinColumns = {@JoinColumn(name = "evaluateRecord_id")}, inverseJoinColumns = {@JoinColumn(name = "project_id")})
     private Project project;
     private String quarter;//年+季度
     private String updateTime;
