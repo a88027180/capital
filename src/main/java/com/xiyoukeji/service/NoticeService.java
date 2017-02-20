@@ -42,8 +42,8 @@ public class NoticeService {
     @Transactional
     public Map getNoticeList(SearchNotice searchNotice) {
         User user = (User) session.getAttribute("user");
-        String sql_list = "SELECT * FROM (SELECT * from `notice` LEFT OUTER JOIN `user_notice` on notice.id = user_notice.notice_id WHERE `user_id` = " + user.getId();
-        String sql_count = "SELECT COUNT(*) from `notice` LEFT OUTER JOIN `user_notice` on notice.id = user_notice.notice_id WHERE `user_id`= " + user.getId();
+        String sql_list = "SELECT * from `notice`  JOIN `user_notice` on (notice.id = user_notice.notice_id) JOIN user ON (user.id = user_notice.user_id) JOIN project_notice ON (notice.id = project_notice.notice_id) JOIN project ON (project.id = project_notice.project_id) WHERE user.id = " + user.getId();
+        String sql_count = "SELECT COUNT(*) from `notice`  JOIN `user_notice` on (notice.id = user_notice.notice_id) JOIN user ON (user.id = user_notice.user_id) JOIN project_notice ON (notice.id = project_notice.notice_id) JOIN project ON (project.id = project_notice.project_id) WHERE user.id = " + user.getId();
         if (searchNotice.getBegin_time() != 0) {
             sql_list += " and notice_time > " + searchNotice.getBegin_time();
             sql_count += " and notice_time > " + searchNotice.getBegin_time();
@@ -52,7 +52,7 @@ public class NoticeService {
             sql_list += " and notice_time < " + searchNotice.getEnd_time();
             sql_count += " and notice_time < " + searchNotice.getEnd_time();
         }
-        sql_list += ")AS a ORDER by a.`publish_time` DESC ";
+        sql_list += " ORDER BY notice.publish_time DESC ";
         sql_list += "LIMIT " + (searchNotice.getPage() - 1) * searchNotice.getLine() + "," + searchNotice.getPage() * searchNotice.getLine();
         System.out.print(sql_list);
         SQLQuery sqlList = sessionFactory.getCurrentSession().createSQLQuery(sql_list);
