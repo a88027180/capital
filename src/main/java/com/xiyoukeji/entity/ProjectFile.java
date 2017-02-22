@@ -22,8 +22,6 @@ public class ProjectFile {
     private Integer id;
     @OneToOne
     private Project project;
-//    @JoinTable(name = "project_projectFile", joinColumns = {@JoinColumn(name = "projectFile_id")}, inverseJoinColumns = {@JoinColumn(name = "project_id")})
-
     @OneToOne
     private File briefing;
     @OneToOne
