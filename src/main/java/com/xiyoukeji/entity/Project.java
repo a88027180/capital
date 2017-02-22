@@ -95,7 +95,7 @@ public class Project {
     @JoinTable(name = "project_note", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "note_id")})
     private List<Note> project_notes = new ArrayList<>();
     @OneToMany(orphanRemoval = true)
-    @Cascade(CascadeType.SAVE_UPDATE)
+    @Cascade(CascadeType.ALL)
     @JoinTable(name = "project_evaluate", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "evaluate_id")})
     private List<Evaluate> project_evaluate = new ArrayList<>();
     @OneToOne
