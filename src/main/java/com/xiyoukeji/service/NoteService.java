@@ -47,6 +47,12 @@ public class NoteService {
     }
 
     @Transactional
+    public List<Note> getNoteListByUserId() {
+        User user1 = (User) session.getAttribute("user");
+        return baseDao.find("from Note where user_id = " + user1.getId());
+    }
+
+    @Transactional
     public Integer saveorupdateNote(Note note) {
         note.setCreate_time(Utils.getTime());
         baseDao.saveOrUpdate(note);
