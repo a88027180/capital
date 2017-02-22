@@ -101,6 +101,7 @@ public class Project {
     @OneToOne
     private File video;
     @OneToOne
+    @Cascade(CascadeType.ALL)
     private ProjectFile projectFile;
 
     @OneToMany(orphanRemoval = true)

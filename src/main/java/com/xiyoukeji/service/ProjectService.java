@@ -340,6 +340,7 @@ public class ProjectService {
         }
         sql += "1=1";
         list = projectBaseDao.find(sql, search.getPage(), search.getLine(), null);
+        System.out.print(sql);
         long count = projectBaseDao.count(sql);
         map.put("list", list);
         map.put("count", count);

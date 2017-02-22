@@ -34,7 +34,7 @@ public class ProjectController {
     @ExceptionHandler
     @ResponseBody
     public Map exception(RuntimeException runtimeException) {
-//        runtimeException.printStackTrace();
+        runtimeException.printStackTrace();
         return MapTool.Map().put("code", "1").put("msg", runtimeException.getMessage());
     }
 
