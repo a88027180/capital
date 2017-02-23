@@ -31,12 +31,12 @@ public class ProjectController {
     HttpSession session;
 
 
-//    @ExceptionHandler
-//    @ResponseBody
-//    public Map exception(RuntimeException runtimeException) {
-//        runtimeException.printStackTrace();
-//        return MapTool.Map().put("code", "1").put("msg", runtimeException.getMessage());
-//    }
+    @ExceptionHandler
+    @ResponseBody
+    public Map exception(RuntimeException runtimeException) {
+        runtimeException.printStackTrace();
+        return MapTool.Map().put("code", "1").put("msg", runtimeException.getMessage());
+    }
 
     /*新增或编辑项目*/
     @RequestMapping(value = "/saveorupdateProject")
