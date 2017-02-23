@@ -56,10 +56,11 @@ public class ProjectFileController {
         User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
-        } else if (user1.getRole().getType() != 2) {
-            return MapTool.Map().put("code", 3);
-        } else {
-
+        }
+//        else if (user1.getRole().getType() != 2) {
+//            return MapTool.Map().put("code", 3);
+//        }
+        else {
             return MapTool.Mapok().put("data", MapTool.Map().put("projectId", projectFileService.saveorupdateProjectFile(projectFile, signDate, payDate, payMoney)));
         }
     }
