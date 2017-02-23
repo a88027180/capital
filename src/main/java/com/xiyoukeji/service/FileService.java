@@ -28,6 +28,7 @@ public class FileService {
     public FileService() {
         mimeType.put("application/vnd.openxmlformats-officedocument.wordprocessingml.document", "docx");
         mimeType.put("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "xlsx");
+        mimeType.put("application/vnd.openxmlformats-officedocument.presentationml.presentation", "pptx");
         mimeType.put("application/msword", "doc");
         mimeType.put("application/vnd.ms-excel", "xls");
         mimeType.put("application/pdf", "pdf");
