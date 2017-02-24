@@ -75,6 +75,18 @@ public class ProjectController {
         }
     }
 
+    /*清空回收站*/
+    @RequestMapping(value = "/cleanRecycleBin")
+    @ResponseBody
+    public Map cleanRecycleBin() {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else {
+            return projectService.cleanRecycleBin();
+        }
+    }
+
 
     /*获取主页项目列表*/
     @RequestMapping(value = "/getMainProjectList")

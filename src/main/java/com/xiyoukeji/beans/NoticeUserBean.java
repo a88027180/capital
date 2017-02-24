@@ -13,6 +13,15 @@ public class NoticeUserBean {
     private Integer id;
     private String userName;
     private String position;
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getPosition() {
         return position;

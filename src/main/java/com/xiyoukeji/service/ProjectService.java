@@ -255,6 +255,13 @@ public class ProjectService {
     }
 
     @Transactional
+    public Map cleanRecycleBin() {
+        String sql = "update project set true_del = 1, truedel_current = " + System.currentTimeMillis() + " where false_del = 1";
+        sessionFactory.getCurrentSession().createSQLQuery(sql);
+        return MapTool.Mapok();
+    }
+
+    @Transactional
     public List<Project> getMainProjectList() {
 //        return projectBaseDao.find("from Project where state = 2 and exitState = 0 order by invest_current desc");
         return projectBaseDao.find("from Project where state = 2 and false_del = 0 order by invest_current desc");
