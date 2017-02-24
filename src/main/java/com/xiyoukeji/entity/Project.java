@@ -49,6 +49,9 @@ public class Project {
     @ManyToOne
     @JoinTable(name = "user_project", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "user_id")})
     private User createUser;
+//    @ManyToOne
+//    @JoinTable(name = "meeting_project", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "meeting_id")})
+//    private Meeting meeting;
     private String project_reason;
     private String company_name;
     private String company_web;
@@ -126,6 +129,46 @@ public class Project {
 
     @ManyToMany
     private List<Vocation> vocations = new ArrayList<>();
+
+    /*0,0  正常   1,0 回收箱  1,1回收箱中删除  */
+    private int false_del = 0;
+    private int true_del = 0;
+
+    private long falsedel_current;
+    private long truedel_current;
+
+
+    public long getFalsedel_current() {
+        return falsedel_current;
+    }
+
+    public void setFalsedel_current(long falsedel_current) {
+        this.falsedel_current = falsedel_current;
+    }
+
+    public long getTruedel_current() {
+        return truedel_current;
+    }
+
+    public void setTruedel_current(long truedel_current) {
+        this.truedel_current = truedel_current;
+    }
+
+    public int getFalse_del() {
+        return false_del;
+    }
+
+    public void setFalse_del(int false_del) {
+        this.false_del = false_del;
+    }
+
+    public int getTrue_del() {
+        return true_del;
+    }
+
+    public void setTrue_del(int true_del) {
+        this.true_del = true_del;
+    }
 
     public List<Notice> getProject_notice() {
         return project_notice;

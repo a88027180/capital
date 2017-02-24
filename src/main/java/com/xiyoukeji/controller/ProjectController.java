@@ -51,7 +51,7 @@ public class ProjectController {
         }
     }
 
-    /*删除项目*/
+    /*正常项目删除,放到回收箱*/
     @RequestMapping(value = "/deleteProject")
     @ResponseBody
     public Map deleteProject(Integer projectId) {
@@ -62,6 +62,19 @@ public class ProjectController {
             return projectService.deleteProject(projectId);
         }
     }
+
+    /*回收站操作*/
+    @RequestMapping(value = "/recoverProject")
+    @ResponseBody
+    public Map recoverProject(Integer projectId, int type) {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else {
+            return projectService.recoverProject(projectId, type);
+        }
+    }
+
 
     /*获取主页项目列表*/
     @RequestMapping(value = "/getMainProjectList")
@@ -176,6 +189,18 @@ public class ProjectController {
             return MapTool.Map().put("code", 2);
         } else {
             return MapTool.Mapok().put("data", MapTool.Map().put("projectId", projectService.addordeleteProjectMember(type, projectId, userId)));
+        }
+    }
+
+    /*获取项目列表通过userId*/
+    @RequestMapping(value = "/getProjectListByUser")
+    @ResponseBody
+    public Map getProjectListByUser() {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else {
+            return MapTool.Mapok().put("data", projectService.getProjectListByUser());
         }
     }
 

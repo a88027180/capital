@@ -1,10 +1,13 @@
 package com.xiyoukeji.service;
 
 import com.xiyoukeji.beans.Search;
+import com.xiyoukeji.beans.UserProjectBean;
 import com.xiyoukeji.entity.*;
 import com.xiyoukeji.tools.BaseDao;
 import com.xiyoukeji.tools.MapTool;
 import com.xiyoukeji.tools.Utils;
+import org.hibernate.SQLQuery;
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +37,8 @@ public class ProjectService {
     BaseDao<SearchCities> searchCitiesBaseDao;
     @Resource
     BaseDao<Vocation> vocationBaseDao;
+    @Resource
+    SessionFactory sessionFactory;
 
     @Transactional
     public Map saveorupdateProject(Project project, int type) {
@@ -223,14 +228,36 @@ public class ProjectService {
 
     @Transactional
     public Map deleteProject(Integer projectId) {
-        projectBaseDao.delete(projectBaseDao.get(Project.class, projectId));
+        Project project = projectBaseDao.get(Project.class, projectId);
+        project.setFalse_del(1);
+        project.setFalsedel_current(System.currentTimeMillis());
+        projectBaseDao.saveOrUpdate(project);
+        return MapTool.Map().put("code", 0);
+    }
+
+    @Transactional
+    public Map recoverProject(Integer projectId, int type) {
+        Project project = projectBaseDao.get(Project.class, projectId);
+        switch (type) {
+            case 0:
+                /*还原*/
+                project.setFalse_del(0);
+                project.setFalsedel_current(0);
+                break;
+            case 1:
+                /*删除*/
+                project.setTrue_del(1);
+                project.setTruedel_current(System.currentTimeMillis());
+                break;
+        }
+        projectBaseDao.saveOrUpdate(project);
         return MapTool.Map().put("code", 0);
     }
 
     @Transactional
     public List<Project> getMainProjectList() {
 //        return projectBaseDao.find("from Project where state = 2 and exitState = 0 order by invest_current desc");
-        return projectBaseDao.find("from Project where state = 2 order by invest_current desc");
+        return projectBaseDao.find("from Project where state = 2 and false_del = 0 order by invest_current desc");
     }
 
     @Transactional
@@ -248,31 +275,36 @@ public class ProjectService {
         if (search.getNameorcode() != null) {
             sql += "(project_name like '%" + search.getNameorcode() + "%' or project_code like '%" + search.getNameorcode() + "%') and ";
         }
+        /*必输*/
         if (search.getProject_type() != null) {
             switch (search.getProject_type()) {
                 case 0:
                     /*我的项目(草稿箱)*/
-                    sql += "state = 0 and createUser.id = " + user1.getId() + " and ";
+                    sql += "false_del = 0 and state = 0 and createUser.id = " + user1.getId() + " and ";
                     break;
                 case 1:
                     /*所有已发布的项目*/
-                    sql += "state = 1 and ";
+                    sql += "false_del = 0 and state = 1 and ";
                     break;
                 case 2:
                     /*所有已投的项目*/
-                    sql += "state = 2 and exitState = 0 and ";
+                    sql += "false_del = 0 and state = 2 and exitState = 0 and ";
                     break;
                 case 3:
                     /*所有退出投资的项目*/
-                    sql += "state = 2 and exitState = 1 and ";
+                    sql += "false_del = 0 and state = 2 and exitState = 1 and ";
                     break;
                 case 4:
                     /*我的项目(包含已发布和已投)*/
-                    sql += "state != 0 and createUser.id = " + user1.getId() + " and ";
+                    sql += "false_del = 0 and state != 0 and createUser.id = " + user1.getId() + " and ";
                     break;
                 case 5:
                     /*基金下项目列表查询  默认全部*/
-                    sql += "state = 2 and ";
+                    sql += "false_del = 0 and state = 2 and ";
+                    break;
+                case 6:
+                    /*回收站*/
+                    sql += "false_del = 1 and ";
                     break;
             }
 
@@ -298,6 +330,9 @@ public class ProjectService {
                 case 5:
                     sql += "invest_current >= '" + search.getBegin_time() + "' and ";
                     break;
+                case 6:
+                    sql += "falsedel_current >= '" + search.getBegin_time() + "' and ";
+                    break;
             }
         }
         if (search.getEnd_time() != 0) {
@@ -319,6 +354,9 @@ public class ProjectService {
                     break;
                 case 5:
                     sql += "invest_current <= '" + search.getEnd_time() + "' and ";
+                    break;
+                case 6:
+                    sql += "falsedel_current <= '" + search.getEnd_time() + "' and ";
                     break;
             }
 
@@ -383,5 +421,14 @@ public class ProjectService {
         return project.getId();
     }
 
+    @Transactional
+    public List<Object[]> getProjectListByUser() {
+        User user1 = (User) session.getAttribute("user");
+        String sql = "SELECT project.id,project.project_name,project.province_name,project.city_name,project.project_resource,project.project_stage,user.name as user_name,foundation.name as foundation_name ,evaluate.item_all,project.project_schedule from project JOIN project_note ON project.id = project_note.project_id JOIN note on note.id = project_note.note_id JOIN user_project ON project.id = user_project.project_id JOIN user ON user.id = user_project.user_id LEFT OUTER JOIN project_foundation ON project.id = project_foundation.project_id LEFT OUTER JOIN foundation ON foundation.id = project_foundation.foundation_id LEFT OUTER JOIN project_evaluate ON project.id = project_evaluate.project_id LEFT OUTER JOIN evaluate ON evaluate.id = project_evaluate.evaluate_id WHERE note.user_id = " + user1.getId() + " AND (project.false_del = 0 OR project.false_del is null) GROUP by project.id";
+        System.out.print(sql);
+        SQLQuery sqlQuery0 = sessionFactory.getCurrentSession().createSQLQuery(sql);
+        List<Object[]> list = sqlQuery0.list();
+        return list;
+    }
 
 }

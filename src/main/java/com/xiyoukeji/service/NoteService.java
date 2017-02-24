@@ -4,6 +4,7 @@ import com.xiyoukeji.entity.*;
 import com.xiyoukeji.tools.BaseDao;
 import com.xiyoukeji.tools.MapTool;
 import com.xiyoukeji.tools.Utils;
+import org.hibernate.SQLQuery;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,9 +48,9 @@ public class NoteService {
     }
 
     @Transactional
-    public List<Note> getNoteListByUserId() {
+    public List<Note> getNoteListByProject(Integer projectId) {
         User user1 = (User) session.getAttribute("user");
-        return baseDao.find("from Note where user_id = " + user1.getId());
+        return baseDao.find("from Note where user_id = " + user1.getId() + " and project.id = " + projectId + " ORDER by create_time DESC");
     }
 
     @Transactional

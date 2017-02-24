@@ -76,6 +76,7 @@ public class ProjectBean {
     private FileBean video;
     private double double_enjoyor;
 
+
     public List<VocationBean> getVocations() {
         return vocations;
     }

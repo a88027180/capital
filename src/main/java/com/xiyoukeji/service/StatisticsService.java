@@ -36,10 +36,10 @@ public class StatisticsService {
     /*查询条件列表*/
     @Transactional
     public Map getSearchList() {
-        String sql0 = "SELECT DISTINCT(foundation.id),foundation.name FROM `project` JOIN project_foundation ON (project.id = project_foundation.project_id) JOIN foundation ON (foundation.id = project_foundation.foundation_id)";
-        String sql1 = "SELECT DISTINCT(city_name) FROM `project` JOIN project_foundation ON (project.id = project_foundation.project_id) JOIN foundation ON (foundation.id = project_foundation.foundation_id)";
-        String sql2 = "SELECT DISTINCT(vocation.id),vocation.name FROM `project` JOIN project_vocation ON (project.id=project_vocation.Project_id) JOIN vocation ON(vocation.id = project_vocation.vocations_id)";
-        String sql3 = "SELECT DISTINCT(user.id),user.name FROM `project` JOIN user_project ON (project.id = user_project.project_id) JOIN user ON (user.id = user_project.user_id)";
+        String sql0 = "SELECT DISTINCT(foundation.id),foundation.name FROM `project` JOIN project_foundation ON (project.id = project_foundation.project_id) JOIN foundation ON (foundation.id = project_foundation.foundation_id) WHERE project.false_del = 0";
+        String sql1 = "SELECT DISTINCT(city_name) FROM `project` JOIN project_foundation ON (project.id = project_foundation.project_id) JOIN foundation ON (foundation.id = project_foundation.foundation_id) WHERE project.false_del = 0";
+        String sql2 = "SELECT DISTINCT(vocation.id),vocation.name FROM `project` JOIN project_vocation ON (project.id=project_vocation.Project_id) JOIN vocation ON(vocation.id = project_vocation.vocations_id) WHERE project.false_del = 0";
+        String sql3 = "SELECT DISTINCT(user.id),user.name FROM `project` JOIN user_project ON (project.id = user_project.project_id) JOIN user ON (user.id = user_project.user_id) WHERE project.false_del = 0";
         SQLQuery sqlQuery0 = sessionFactory.getCurrentSession().createSQLQuery(sql0);
         List<Object[]> list0 = sqlQuery0.list();
         SQLQuery sqlQuery1 = sessionFactory.getCurrentSession().createSQLQuery(sql1);
@@ -57,7 +57,7 @@ public class StatisticsService {
     @Transactional
     public List<Statistics> getType0() {
         List<Statistics> statisticses = new ArrayList<>();
-        String sql = "SELECT foundation.id as foundation_id,foundation.name as foundation_name,SUM(project.double_valuation) as valuation_afterInvest,COUNT(project.id) as project_count ,SUM(project.double_enjoyor)AS money_thisTime FROM `project` JOIN project_foundation ON(project.id=project_foundation.project_id) JOIN foundation on(foundation.id=project_foundation.foundation_id) GROUP BY foundation.id";
+        String sql = "SELECT foundation.id as foundation_id,foundation.name as foundation_name,SUM(project.double_valuation) as valuation_afterInvest,COUNT(project.id) as project_count ,SUM(project.double_enjoyor)AS money_thisTime FROM `project` JOIN project_foundation ON(project.id=project_foundation.project_id) JOIN foundation on(foundation.id=project_foundation.foundation_id) WHERE project.false_del = 0 GROUP BY foundation.id";
         SQLQuery sqlQuery = sessionFactory.getCurrentSession().createSQLQuery(sql);
         List<Object[]> list = sqlQuery.list();
         for (int i = 0; i < list.size(); i++) {
@@ -83,7 +83,7 @@ public class StatisticsService {
     @Transactional
     public ExitBean getType1() {
         ExitBean exitBean = new ExitBean();
-        String sql = "SELECT foundation.id as foundation_id,foundation.name as foundation_name,COUNT(project.id) as project_count FROM `project` JOIN project_foundation ON(project.id=project_foundation.project_id) JOIN foundation on(foundation.id=project_foundation.foundation_id) WHERE project.exitState = 1 GROUP BY foundation.id";
+        String sql = "SELECT foundation.id as foundation_id,foundation.name as foundation_name,COUNT(project.id) as project_count FROM `project` JOIN project_foundation ON(project.id=project_foundation.project_id) JOIN foundation on(foundation.id=project_foundation.foundation_id) WHERE project.exitState = 1 AND project.false_del = 0 GROUP BY foundation.id";
         SQLQuery sqlQuery = sessionFactory.getCurrentSession().createSQLQuery(sql);
         List<Object[]> list = sqlQuery.list();
         List<Statistics> statisticses = new ArrayList<>();
@@ -98,7 +98,7 @@ public class StatisticsService {
                 statistics.setProject_count(objects[2].toString());
             statisticses.add(statistics);
         }
-        String sql1 = "SELECT COUNT(*) FROM `project` WHERE `exitState` = 1 and `exit_current` > " + Tools.getCurrentMonth() + " UNION ALL SELECT COUNT(*) FROM `project` WHERE `exitState` = 1 and `exit_current` > " + Tools.getCurrentYear();
+        String sql1 = "SELECT COUNT(*) FROM `project` WHERE `exitState` = 1 AND false_del = 0 and `exit_current` > " + Tools.getCurrentMonth() + " UNION ALL SELECT COUNT(*) FROM `project` WHERE `exitState` = 1 AND false_del = 0 and `exit_current` > " + Tools.getCurrentYear();
         SQLQuery sqlQuery1 = sessionFactory.getCurrentSession().createSQLQuery(sql1);
 //        List<Object[]> list1 = sqlQuery1.list();
         exitBean.setList(statisticses);
@@ -116,7 +116,7 @@ public class StatisticsService {
     public WaitBean getType2() {
         WaitBean waitBean = new WaitBean();
         /*1 同意立项 2同意上会 3已上会 4同意投资*/
-        String sql = "SELECT COUNT(*) FROM `project` WHERE `project`.`project_schedule` = 1 UNION ALL SELECT COUNT(*) FROM `project` WHERE `project`.`project_schedule` = 2 UNION ALL SELECT COUNT(*) FROM `project` WHERE `project`.`project_schedule` = 3 UNION ALL SELECT COUNT(*) FROM `project` WHERE `project`.`project_schedule` = 4";
+        String sql = "SELECT COUNT(*) FROM `project` WHERE `project`.`project_schedule` = 1 AND false_del = 0 UNION ALL SELECT COUNT(*) FROM `project` WHERE `project`.`project_schedule` = 2 AND false_del = 0 UNION ALL SELECT COUNT(*) FROM `project` WHERE `project`.`project_schedule` = 3 AND false_del = 0 UNION ALL SELECT COUNT(*) FROM `project` WHERE `project`.`project_schedule` = 4 AND false_del = 0";
         SQLQuery sqlQuery = sessionFactory.getCurrentSession().createSQLQuery(sql);
         List<BigInteger> list = sqlQuery.list();
         waitBean.setOne(list.get(0).longValue());
@@ -130,7 +130,7 @@ public class StatisticsService {
     @Transactional
     public ExitBean getType3() {
         ExitBean exitBean = new ExitBean();
-        String sql = "SELECT COUNT(*) FROM `project` WHERE `project`.`state` = 2 and `project`.`invest_current` > " + Tools.getCurrentMonth() + " UNION ALL SELECT COUNT(*) FROM `project` WHERE `project`.`state` = 2 and `project`.`invest_current` > " + Tools.getCurrentYear();
+        String sql = "SELECT COUNT(*) FROM `project` WHERE `project`.`state` = 2 AND false_del = 0 and `project`.`invest_current` > " + Tools.getCurrentMonth() + " UNION ALL SELECT COUNT(*) FROM `project` WHERE `project`.`state` = 2 AND false_del = 0 and `project`.`invest_current` > " + Tools.getCurrentYear();
         SQLQuery sqlQuery = sessionFactory.getCurrentSession().createSQLQuery(sql);
         List<BigInteger> list = sqlQuery.list();
         exitBean.setMonth(list.get(0).longValue());
@@ -155,9 +155,9 @@ public class StatisticsService {
         if (searchStatistic.getFoundationList() != null && !searchStatistic.getFoundationList().equals("")) {
             sql += " AND foundation.id IN (" + searchStatistic.getFoundationList() + ")";
         }
-        String sql0 = sql + " AND vocation.type = 0 GROUP BY vocation.name";
-        String sql1 = sql + " AND vocation.type = 1 GROUP BY vocation.name";
-        String sql2 = sql + " AND vocation.type = 2 GROUP BY vocation.name";
+        String sql0 = sql + " AND project.false_del = 0 AND vocation.type = 0 GROUP BY vocation.name";
+        String sql1 = sql + " AND project.false_del = 0 AND vocation.type = 1 GROUP BY vocation.name";
+        String sql2 = sql + " AND project.false_del = 0 AND vocation.type = 2 GROUP BY vocation.name";
 
         System.out.print(sql0);
         System.out.print(sql1);
@@ -196,7 +196,7 @@ public class StatisticsService {
         if (searchStatistic.getFoundationList() != null && !searchStatistic.getFoundationList().equals("")) {
             con += " AND foundation.id IN (" + searchStatistic.getFoundationList() + ")";
         }
-        sql = " from project JOIN project_foundation ON (project.id = project_foundation.project_id) JOIN foundation ON (project_foundation.foundation_id = foundation.id) JOIN user_project ON (project.id = user_project.project_id) JOIN user ON (user_project.user_id = user.id) WHERE 1=1 " + con + " AND project.id IN (SELECT DISTINCT(`Project_id`) FROM project_vocation WHERE 1=1" + con1 + ")";
+        sql = " from project JOIN project_foundation ON (project.id = project_foundation.project_id) JOIN foundation ON (project_foundation.foundation_id = foundation.id) JOIN user_project ON (project.id = user_project.project_id) JOIN user ON (user_project.user_id = user.id) WHERE 1=1 " + con + " AND project.false_del = 0 AND project.id IN (SELECT DISTINCT(`Project_id`) FROM project_vocation WHERE 1=1" + con1 + ")";
         switch (type) {
             case 0:
                 /*地区*/

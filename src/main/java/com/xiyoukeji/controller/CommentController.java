@@ -71,9 +71,11 @@ public class CommentController {
         User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
-        } else if (user1.getRole().getType() != 2) {
+        }
+        else if (user1.getRole().getType() != 2) {
             return MapTool.Map().put("code", 3);
-        } else {
+        }
+        else {
             return MapTool.Mapok().put("noticeTabId", commentService.saveorupdateNoticeTab(commentId, commentText));
         }
     }

@@ -81,15 +81,15 @@ public class NoteController {
     }
 
     /*通过userId获取noteList*/
-    @RequestMapping(value = "/getNoteListByUserId")
+    @RequestMapping(value = "/getNoteListByProject")
     @ResponseBody
-    public Map getNoteList() {
+    public Map getNoteListByProject(Integer projectId) {
         User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
             List<NoteBean> list = new ArrayList<>();
-            List<Note> notes = noteService.getNoteListByUserId();
+            List<Note> notes = noteService.getNoteListByProject(projectId);
             for (int i = 0; i < notes.size(); i++) {
                 NoteBean noteBean = new NoteBean();
                 Core.assignDest(noteBean, notes.get(i));
@@ -99,15 +99,13 @@ public class NoteController {
         }
     }
 
-    /*删除项目笔记,管理员权限*/
+    /*删除项目笔记*/
     @RequestMapping(value = "/deleteNote")
     @ResponseBody
     public Map deleteNote(Integer noteId) {
         User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
-        } else if (user1.getRole().getType() != 2) {
-            return MapTool.Map().put("code", 3);
         } else {
             return noteService.deleteNote(noteId);
         }
