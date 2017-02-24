@@ -257,7 +257,7 @@ public class ProjectService {
     @Transactional
     public Map cleanRecycleBin() {
         String sql = "update project set true_del = 1, truedel_current = " + System.currentTimeMillis() + " where false_del = 1";
-        sessionFactory.getCurrentSession().createSQLQuery(sql);
+        sessionFactory.getCurrentSession().createSQLQuery(sql).executeUpdate();
         return MapTool.Mapok();
     }
 
