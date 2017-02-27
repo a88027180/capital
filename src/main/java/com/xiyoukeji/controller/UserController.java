@@ -140,16 +140,16 @@ public class UserController {
     }
 
     /*删除用户信息 管理员权限*/
-    @RequestMapping(value = "/deleteUser")
+    @RequestMapping(value = "/update_user")
     @ResponseBody
-    public Map deleteUser(Integer id) {
+    public Map update_user(Integer id, int type) {
         User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else if (user1.getRole().getType() != 2) {
             return MapTool.Map().put("code", 3);
         } else {
-            return MapTool.Mapok().put("data", userService.deleteUser(id));
+            return MapTool.Mapok().put("data", userService.update_user(id, type));
         }
     }
 
@@ -160,7 +160,7 @@ public class UserController {
         return userService.login(user);
     }
 
-    /*登录前端*/
+    /*登录后台*/
     @RequestMapping(value = "/login_back")
     @ResponseBody
     public Map login_back(User user) {

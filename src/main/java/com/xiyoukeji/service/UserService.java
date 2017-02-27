@@ -119,10 +119,16 @@ public class UserService {
     }
 
     @Transactional
-    public Map deleteUser(Integer id) {
+    public Map update_user(Integer id, int type) {
         Map map = new HashMap<>();
         User user = baseDao.get(User.class, id);
-        user.setAvailable(0);
+        /*禁用*/
+        if (type == 0) {
+            user.setAvailable(0);
+        } else {
+            /*启用*/
+            user.setAvailable(1);
+        }
         baseDao.update(user);
         map.put("userId", user.getId());
         return map;
