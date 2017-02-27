@@ -95,6 +95,7 @@ public class UserService {
     @Transactional
     public List<User> getUserList(int type) {
         List<User> list = new ArrayList<>();
+        List<User> list1 = new ArrayList<>();
         switch (type) {
             case 0:
                 list = baseDao.find("from User where available = 1 and role.type = 0");
@@ -110,7 +111,9 @@ public class UserService {
                 break;
             case 4:
                 /*后台管理系统 禁用启用用户列表*/
-                list = baseDao.find("from User ORDER BY role.id DESC,position DESC");
+                list = baseDao.find("from User WHERE position is NOT NULL AND role.id is NOT NULL ORDER BY role.id ASC,position ASC");
+                list1 = baseDao.find("from User WHERE position is  NULL OR role.id is NULL ORDER BY role.id DESC,position DESC");
+                list.addAll(list1);
                 break;
         }
         return list;
