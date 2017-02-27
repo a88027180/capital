@@ -134,7 +134,7 @@ public class UserService {
         Map map = new HashMap<>();
         map.put("userName", user.getUserName());
         map.put("password", user.getPassword());
-        list = baseDao.find("from User where userName = :userName and password = :password", map);
+        list = baseDao.find("from User where userName = :userName and password = :password and available = 1 ", map);
         if (list.size() != 0) {
             session.setAttribute("user", list.get(0));
             return MapTool.Mapok().put("userId", list.get(0).getId());
@@ -143,6 +143,30 @@ public class UserService {
         }
 
     }
+
+    @Transactional
+    public Map login_back(User user) {
+        List<User> list = new ArrayList<>();
+        Map map = new HashMap<>();
+        map.put("userName", user.getUserName());
+        map.put("password", user.getPassword());
+        list = baseDao.find("from User where userName = :userName and password = :password and available = 1 ", map);
+        if (list.size() != 0) {
+            /*管理员*/
+            if (list.get(0).getRole().getType() == 2) {
+                session.setAttribute("user", list.get(0));
+                return MapTool.Mapok().put("userId", list.get(0).getId());
+            } else
+            /*无权限*/
+                return MapTool.Map().put("code", "3");
+
+        } else {
+            /*用户名或密码错误*/
+            return MapTool.Map().put("code", "1");
+        }
+
+    }
+
 
     @Transactional
     public void logout() {

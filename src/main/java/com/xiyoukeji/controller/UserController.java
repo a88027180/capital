@@ -153,11 +153,18 @@ public class UserController {
         }
     }
 
-    /*登录*/
+    /*登录前端*/
     @RequestMapping(value = "/login")
     @ResponseBody
     public Map login(User user) {
         return userService.login(user);
+    }
+
+    /*登录前端*/
+    @RequestMapping(value = "/login_back")
+    @ResponseBody
+    public Map login_back(User user) {
+        return userService.login_back(user);
     }
 
     /*注销*/
