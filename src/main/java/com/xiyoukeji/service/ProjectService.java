@@ -311,7 +311,7 @@ public class ProjectService {
                     break;
                 case 6:
                     /*回收站*/
-                    sql += "false_del = 1 and true_del = 0";
+                    sql += "false_del = 1 and true_del = 0 and ";
                     break;
             }
 
