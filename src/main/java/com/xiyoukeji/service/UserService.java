@@ -110,7 +110,7 @@ public class UserService {
                 break;
             case 4:
                 /*后台管理系统 禁用启用用户列表*/
-                list = baseDao.find("from User order by role.type ASC, available DESC");
+                list = baseDao.find("from User");
                 break;
         }
         return list;
