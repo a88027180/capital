@@ -71,12 +71,24 @@ public class CommentController {
         User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
-        }
-        else if (user1.getRole().getType() != 2) {
+        } else if (user1.getRole().getType() != 2) {
             return MapTool.Map().put("code", 3);
-        }
-        else {
+        } else {
             return MapTool.Mapok().put("noticeTabId", commentService.saveorupdateNoticeTab(commentId, commentText));
+        }
+    }
+
+    /*获取标签 管理员权限*/
+    @RequestMapping(value = "/getCommentTab")
+    @ResponseBody
+    public Map getCommentTab(Integer commentId) {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else if (user1.getRole().getType() != 2) {
+            return MapTool.Map().put("code", 3);
+        } else {
+            return MapTool.Mapok().put("CommentTab", commentService.getCommentTab(commentId));
         }
     }
 

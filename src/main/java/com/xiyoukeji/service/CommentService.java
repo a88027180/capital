@@ -82,4 +82,9 @@ public class CommentService {
         }
         return list;
     }
+
+    @Transactional
+    public CommentTab getCommentTab(Integer commentId) {
+        return baseDao.get(CommentTab.class, commentId);
+    }
 }
