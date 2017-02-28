@@ -54,7 +54,7 @@ public class NoticeController {
         }
     }
 
-    /*公告列表*/
+    /*公告列表—前端*/
     @RequestMapping(value = "/getNoticeList")
     @ResponseBody
     public Map getNoticeList(SearchNotice searchNotice) {
@@ -72,6 +72,29 @@ public class NoticeController {
             }
             return MapTool.Mapok().put("noticeList", list).put("count", map.get("count"));
         }
+    }
+
+    /*公告列表—后台 管理员权限*/
+    @RequestMapping(value = "/getNoticeList_back")
+    @ResponseBody
+    public Map getNoticeList_back(SearchNotice searchNotice) {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else if (user1.getRole().getType() != 2) {
+            return MapTool.Map().put("code", 3);
+        } else {
+            List<NoticeBean> list = new ArrayList<>();
+            Map map = noticeService.getNoticeList_back(searchNotice);
+            List<Notice> notices = (List<Notice>) map.get("list");
+            for (int i = 0; i < notices.size(); i++) {
+                NoticeBean noticeBean = new NoticeBean();
+                Core.assignDest(noticeBean, notices.get(i));
+                list.add(noticeBean);
+            }
+            return MapTool.Mapok().put("noticeList", list).put("count", map.get("count"));
+        }
+
     }
 
     /*公告明细*/
