@@ -1,5 +1,6 @@
 package com.xiyoukeji.controller;
 
+import com.google.gson.Gson;
 import com.xiyoukeji.beans.FoundationBean;
 import com.xiyoukeji.entity.Foundation;
 import com.xiyoukeji.entity.Project;
@@ -38,13 +39,14 @@ public class FoundationController {
     /*创建或编辑基金 管理员权限*/
     @RequestMapping(value = "/saveorupdateFoundation")
     @ResponseBody
-    public Map saveorupdate(Foundation foundation) {
+    public Map saveorupdate(String strFoundation) {
         User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else if (user1.getRole().getType() != 2) {
             return MapTool.Map().put("code", 3);
         } else {
+            Foundation foundation = new Gson().fromJson(strFoundation, Foundation.class);
             return MapTool.Mapok().put("data", MapTool.Map().put("foundationId", foundationService.saveorupdateFoundation(foundation)));
         }
     }

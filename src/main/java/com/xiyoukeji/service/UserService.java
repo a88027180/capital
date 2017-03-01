@@ -98,6 +98,7 @@ public class UserService {
         List<User> list1 = new ArrayList<>();
         switch (type) {
             case 0:
+                /*内部角色*/
                 list = baseDao.find("from User where available = 1 and role.type = 0");
                 break;
             case 1:
