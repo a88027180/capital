@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.math.BigInteger;
 import java.text.NumberFormat;
 import java.util.*;
 
@@ -390,6 +391,20 @@ public class ProjectService {
         map.put("list", list);
         map.put("count", count);
         return map;
+    }
+
+    @Transactional
+    public Map getProjectList_back() {
+        String sql = "SELECT project.id,project.project_name,project.province_name,project.city_name,project.project_resource,project.project_stage,user.name as user_name,foundation.name as foundation_name ,evaluate.item_all,project.project_schedule from project JOIN project_note ON project.id = project_note.project_id JOIN note on note.id = project_note.note_id JOIN user_project ON project.id = user_project.project_id JOIN user ON user.id = user_project.user_id LEFT OUTER JOIN project_foundation ON project.id = project_foundation.project_id LEFT OUTER JOIN foundation ON foundation.id = project_foundation.foundation_id LEFT OUTER JOIN project_evaluate ON project.id = project_evaluate.project_id LEFT OUTER JOIN evaluate ON evaluate.id = project_evaluate.evaluate_id WHERE (project.false_del = 0 OR project.false_del is null) GROUP by project.id";
+        String sql1 = "SELECT COUNT(*) from project JOIN project_note ON project.id = project_note.project_id JOIN note on note.id = project_note.note_id JOIN user_project ON project.id = user_project.project_id JOIN user ON user.id = user_project.user_id LEFT OUTER JOIN project_foundation ON project.id = project_foundation.project_id LEFT OUTER JOIN foundation ON foundation.id = project_foundation.foundation_id LEFT OUTER JOIN project_evaluate ON project.id = project_evaluate.project_id LEFT OUTER JOIN evaluate ON evaluate.id = project_evaluate.evaluate_id WHERE (project.false_del = 0 OR project.false_del is null) GROUP by project.id";
+        System.out.print(sql);
+        SQLQuery sqlQuery0 = sessionFactory.getCurrentSession().createSQLQuery(sql);
+        SQLQuery sqlQuery1 = sessionFactory.getCurrentSession().createSQLQuery(sql1);
+        List<Object[]> list = sqlQuery0.list();
+        List<BigInteger> list1 = sqlQuery1.list();
+        long count = list1.get(0).longValue();
+
+        return MapTool.Mapok().put("list", list).put("count", count);
     }
 
     @Transactional

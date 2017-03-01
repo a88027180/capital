@@ -107,7 +107,7 @@ public class ProjectController {
         }
     }
 
-    /*获取项目列表*/
+    /*获取项目列表-前端*/
     @RequestMapping(value = "/getProjectList")
     @ResponseBody
     public Map getProjectList(Search search) {
@@ -127,6 +127,28 @@ public class ProjectController {
         }
 
     }
+
+    /*获取项目列表-后台*/
+    @RequestMapping(value = "/getProjectList_back")
+    @ResponseBody
+    public Map getProjectList_back() {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else {
+            List<ProjectBean> list = new ArrayList<>();
+            Map map = projectService.getProjectList_back();
+            List<Project> projects = (List<Project>) map.get("list");
+            for (int i = 0; i < projects.size(); i++) {
+                ProjectBean projectBean = new ProjectBean();
+                Core.assignDest(projectBean, projects.get(i));
+                list.add(projectBean);
+            }
+            return MapTool.Mapok().put("data", MapTool.Map().put("list", list).put("count", map.get("count")));
+        }
+
+    }
+
 
     /*获取项目*/
     @RequestMapping(value = "/getProject")
