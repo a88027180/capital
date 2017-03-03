@@ -54,6 +54,12 @@ public class NoteService {
     }
 
     @Transactional
+    public List<Note> getNoteListByProject_back(Integer projectId) {
+        User user1 = (User) session.getAttribute("user");
+        return baseDao.find("from Note where project.id = " + projectId + " ORDER by create_time DESC");
+    }
+
+    @Transactional
     public Integer saveorupdateNote(Note note) {
         note.setCreate_time(Utils.getTime());
         baseDao.saveOrUpdate(note);

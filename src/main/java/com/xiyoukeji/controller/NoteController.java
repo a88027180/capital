@@ -99,6 +99,25 @@ public class NoteController {
         }
     }
 
+    /*通过userId获取noteList*/
+    @RequestMapping(value = "/getNoteListByProject_back")
+    @ResponseBody
+    public Map getNoteListByProject_back(Integer projectId) {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else {
+            List<NoteBean> list = new ArrayList<>();
+            List<Note> notes = noteService.getNoteListByProject_back(projectId);
+            for (int i = 0; i < notes.size(); i++) {
+                NoteBean noteBean = new NoteBean();
+                Core.assignDest(noteBean, notes.get(i));
+                list.add(noteBean);
+            }
+            return MapTool.Mapok().put("data", list);
+        }
+    }
+
     /*删除项目笔记*/
     @RequestMapping(value = "/deleteNote")
     @ResponseBody
