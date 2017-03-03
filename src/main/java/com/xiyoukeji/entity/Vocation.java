@@ -21,8 +21,26 @@ public class Vocation {
     @GenericGenerator(name = "native", strategy = "native")
     private Integer id;
     private String name;
-    private Integer type;
-    private Integer parent_id;
+    private int type;
+    private int parent_id = 0;
+    private int double_parent_id = 0;
+    private int available = 1;
+
+    public Integer getDouble_parent_id() {
+        return double_parent_id;
+    }
+
+    public void setDouble_parent_id(Integer double_parent_id) {
+        this.double_parent_id = double_parent_id;
+    }
+
+    public int getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(int available) {
+        this.available = available;
+    }
 
     public Integer getId() {
         return id;

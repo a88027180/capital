@@ -1,7 +1,9 @@
 package com.xiyoukeji.controller;
 
+import com.google.gson.Gson;
 import com.xiyoukeji.beans.SearchCity;
 import com.xiyoukeji.entity.User;
+import com.xiyoukeji.entity.Vocation;
 import com.xiyoukeji.service.AreaService;
 import com.xiyoukeji.service.VocationService;
 import com.xiyoukeji.tools.MapTool;
@@ -69,5 +71,33 @@ public class VocationController {
         }
     }
 
+    /*增加标签*/
+    @RequestMapping(value = "/saveorupdateVocation")
+    @ResponseBody
 
+    public Map saveorupdateVocation(Vocation vocation) {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else if (user1.getRole().getType() != 2) {
+            return MapTool.Map().put("code", 3);
+        } else {
+            return MapTool.Mapok().put("vocationId", vocationService.saveorupdateVocation(vocation));
+        }
+    }
+
+    /*增加标签*/
+    @RequestMapping(value = "/deleteVocation")
+    @ResponseBody
+
+    public Map saveorupdateVocation(Integer vocationId) {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null) {
+            return MapTool.Map().put("code", 2);
+        } else if (user1.getRole().getType() != 2) {
+            return MapTool.Map().put("code", 3);
+        } else {
+            return vocationService.deleteVocation(vocationId);
+        }
+    }
 }

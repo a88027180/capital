@@ -136,7 +136,28 @@ public class ProjectController {
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
-            return projectService.getProjectList_back(search);
+            Map map = projectService.getProjectList_back(search);
+            List<Object[]> list = (List<Object[]>) map.get("list");
+            List<ProjectTwoBean> projectTwoBeen = new ArrayList<>();
+            for (int i = 0; i < list.size(); i++) {
+                ProjectTwoBean projectTwoBean = new ProjectTwoBean();
+
+                projectTwoBean.setProject_id((Integer) list.get(i)[0]);
+                projectTwoBean.setProject_name((String) list.get(i)[1]);
+                projectTwoBean.setProvince_name((String) list.get(i)[2]);
+                projectTwoBean.setCity_name((String) list.get(i)[3]);
+                projectTwoBean.setProject_resource((String) list.get(i)[4]);
+                projectTwoBean.setProject_stage((String) list.get(i)[5]);
+                projectTwoBean.setUser_name((String) list.get(i)[6]);
+                projectTwoBean.setFoundation_name((String) list.get(i)[7]);
+                projectTwoBean.setItem_all((Integer) list.get(i)[8]);
+                projectTwoBean.setProject_schedule((Integer) list.get(i)[9]);
+
+                projectTwoBeen.add(projectTwoBean);
+
+            }
+
+            return MapTool.Mapok().put("list", projectTwoBeen).put("count", map.get("count"));
         }
 
     }
@@ -226,7 +247,27 @@ public class ProjectController {
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
-            return MapTool.Mapok().put("data", projectService.getProjectListByUser());
+            List<Object[]> list = projectService.getProjectListByUser();
+            List<ProjectTwoBean> projectTwoBeen = new ArrayList<>();
+            for (int i = 0; i < list.size(); i++) {
+                ProjectTwoBean projectTwoBean = new ProjectTwoBean();
+
+                projectTwoBean.setProject_id((Integer) list.get(i)[0]);
+                projectTwoBean.setProject_name((String) list.get(i)[1]);
+                projectTwoBean.setProvince_name((String) list.get(i)[2]);
+                projectTwoBean.setCity_name((String) list.get(i)[3]);
+                projectTwoBean.setProject_resource((String) list.get(i)[4]);
+                projectTwoBean.setProject_stage((String) list.get(i)[5]);
+                projectTwoBean.setUser_name((String) list.get(i)[6]);
+                projectTwoBean.setFoundation_name((String) list.get(i)[7]);
+                projectTwoBean.setItem_all((Integer) list.get(i)[8]);
+                projectTwoBean.setProject_schedule((Integer) list.get(i)[9]);
+
+                projectTwoBeen.add(projectTwoBean);
+
+            }
+
+            return MapTool.Mapok().put("data", projectTwoBeen);
         }
     }
 
