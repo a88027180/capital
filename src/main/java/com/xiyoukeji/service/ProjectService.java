@@ -432,7 +432,7 @@ public class ProjectService {
             sql += "and user.id = " + search.getUserId() + " ";
             sql1 += "and user.id = " + search.getUserId() + " ";
         }
-        sql += "GROUP by project.id LIMIT " + (search.getPage() - 1) * search.getLine() + "," + search.getPage() * search.getLine();
+        sql += "GROUP by project.id LIMIT " + (search.getPage() - 1) * search.getLine() + "," + search.getLine();
         System.out.print(sql);
         SQLQuery sqlQuery0 = sessionFactory.getCurrentSession().createSQLQuery(sql);
         SQLQuery sqlQuery1 = sessionFactory.getCurrentSession().createSQLQuery(sql1);
