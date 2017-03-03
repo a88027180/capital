@@ -397,7 +397,7 @@ public class ProjectService {
     public Map getProjectList_back(Search search) {
 //GROUP by project.id
         String sql = "SELECT project.id,project.project_name,project.province_name,project.city_name,project.project_resource,project.project_stage,user.name as user_name,foundation.name as foundation_name ,evaluate.item_all,project.project_schedule from project JOIN project_note ON project.id = project_note.project_id JOIN note on note.id = project_note.note_id JOIN user_project ON project.id = user_project.project_id JOIN user ON user.id = user_project.user_id LEFT OUTER JOIN project_foundation ON project.id = project_foundation.project_id LEFT OUTER JOIN foundation ON foundation.id = project_foundation.foundation_id LEFT OUTER JOIN project_evaluate ON project.id = project_evaluate.project_id LEFT OUTER JOIN evaluate ON evaluate.id = project_evaluate.evaluate_id WHERE (project.false_del = 0 OR project.false_del is null) ";
-        String sql1 = "SELECT COUNT(*) from project JOIN project_note ON project.id = project_note.project_id JOIN note on note.id = project_note.note_id JOIN user_project ON project.id = user_project.project_id JOIN user ON user.id = user_project.user_id LEFT OUTER JOIN project_foundation ON project.id = project_foundation.project_id LEFT OUTER JOIN foundation ON foundation.id = project_foundation.foundation_id LEFT OUTER JOIN project_evaluate ON project.id = project_evaluate.project_id LEFT OUTER JOIN evaluate ON evaluate.id = project_evaluate.evaluate_id WHERE (project.false_del = 0 OR project.false_del is null) ";
+        String sql1 = "SELECT COUNT(DISTINCT(project.id)) from project JOIN project_note ON project.id = project_note.project_id JOIN note on note.id = project_note.note_id JOIN user_project ON project.id = user_project.project_id JOIN user ON user.id = user_project.user_id LEFT OUTER JOIN project_foundation ON project.id = project_foundation.project_id LEFT OUTER JOIN foundation ON foundation.id = project_foundation.foundation_id LEFT OUTER JOIN project_evaluate ON project.id = project_evaluate.project_id LEFT OUTER JOIN evaluate ON evaluate.id = project_evaluate.evaluate_id WHERE (project.false_del = 0 OR project.false_del is null) ";
         if (search.getFoundationId() != null) {
             sql += "and foundation.id = " + search.getFoundationId() + " and project.state = 2 ";
             sql1 += "and foundation.id = " + search.getFoundationId() + " and project.state = 2 ";
@@ -433,7 +433,6 @@ public class ProjectService {
             sql1 += "and user.id = " + search.getUserId() + " ";
         }
         sql += "GROUP by project.id LIMIT " + (search.getPage() - 1) * search.getLine() + "," + search.getPage() * search.getLine();
-        sql1 += "GROUP by project.id ";
         System.out.print(sql);
         SQLQuery sqlQuery0 = sessionFactory.getCurrentSession().createSQLQuery(sql);
         SQLQuery sqlQuery1 = sessionFactory.getCurrentSession().createSQLQuery(sql1);
