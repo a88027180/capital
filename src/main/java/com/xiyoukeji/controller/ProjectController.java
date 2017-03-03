@@ -136,15 +136,7 @@ public class ProjectController {
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
-            List<ProjectBean> list = new ArrayList<>();
-            Map map = projectService.getProjectList_back(search);
-            List<Project> projects = (List<Project>) map.get("list");
-            for (int i = 0; i < projects.size(); i++) {
-                ProjectBean projectBean = new ProjectBean();
-                Core.assignDest(projectBean, projects.get(i));
-                list.add(projectBean);
-            }
-            return MapTool.Mapok().put("data", MapTool.Map().put("list", list).put("count", map.get("count")));
+            return projectService.getProjectList_back(search);
         }
 
     }
