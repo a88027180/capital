@@ -15,8 +15,8 @@ public class ProjectTwoBean {
     private String project_stage;
     private String user_name;
     private String foundation_name;
-    private int item_all;
-    private int project_schedule;
+    private Integer item_all;
+    private Integer project_schedule;
 
     public Integer getProject_id() {
         return project_id;
@@ -82,19 +82,19 @@ public class ProjectTwoBean {
         this.foundation_name = foundation_name;
     }
 
-    public int getItem_all() {
+    public Integer getItem_all() {
         return item_all;
     }
 
-    public void setItem_all(int item_all) {
+    public void setItem_all(Integer item_all) {
         this.item_all = item_all;
     }
 
-    public int getProject_schedule() {
+    public Integer getProject_schedule() {
         return project_schedule;
     }
 
-    public void setProject_schedule(int project_schedule) {
+    public void setProject_schedule(Integer project_schedule) {
         this.project_schedule = project_schedule;
     }
 }
