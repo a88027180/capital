@@ -49,7 +49,7 @@ public class Project {
     @ManyToOne
     @JoinTable(name = "user_project", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "user_id")})
     private User createUser;
-//    @ManyToOne
+    //    @ManyToOne
 //    @JoinTable(name = "meeting_project", joinColumns = {@JoinColumn(name = "project_id")}, inverseJoinColumns = {@JoinColumn(name = "meeting_id")})
 //    private Meeting meeting;
     private String project_reason;
@@ -85,6 +85,8 @@ public class Project {
     private String share_enjoyor;
     private double double_enjoyor;
     private double double_valuation;
+
+    private int sequence = 0;
 
     @OneToMany
     @Cascade(CascadeType.ALL)
@@ -137,6 +139,13 @@ public class Project {
     private long falsedel_current;
     private long truedel_current;
 
+    public int getSequence() {
+        return sequence;
+    }
+
+    public void setSequence(int sequence) {
+        this.sequence = sequence;
+    }
 
     public long getFalsedel_current() {
         return falsedel_current;
