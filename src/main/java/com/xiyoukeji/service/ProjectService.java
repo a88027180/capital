@@ -295,7 +295,7 @@ public class ProjectService {
                     sql += "false_del = 0 and state = 1 and ";
                     break;
                 case 2:
-                    /*所有已投的项目*/
+                    /*所有已投未退出的项目*/
                     sql += "false_del = 0 and state = 2 and exitState = 0 and ";
                     break;
                 case 3:
@@ -313,6 +313,10 @@ public class ProjectService {
                 case 6:
                     /*回收站*/
                     sql += "false_del = 1 and true_del = 0 and ";
+                    break;
+                case 7:
+                    /*所有已投项目(包括未退已退)*/
+                    sql += "false_del = 0 and state = 2 and ";
                     break;
             }
 
@@ -341,6 +345,9 @@ public class ProjectService {
                 case 6:
                     sql += "falsedel_current >= '" + search.getBegin_time() + "' and ";
                     break;
+                case 7:
+                    sql += "invest_current >= '" + search.getBegin_time() + "' and ";
+                    break;
             }
         }
         if (search.getEnd_time() != 0) {
@@ -365,6 +372,9 @@ public class ProjectService {
                     break;
                 case 6:
                     sql += "falsedel_current <= '" + search.getEnd_time() + "' and ";
+                    break;
+                case 2:
+                    sql += "invest_current <= '" + search.getEnd_time() + "' and ";
                     break;
             }
 
