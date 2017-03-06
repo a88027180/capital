@@ -373,7 +373,7 @@ public class ProjectService {
                 case 6:
                     sql += "falsedel_current <= '" + search.getEnd_time() + "' and ";
                     break;
-                case 2:
+                case 7:
                     sql += "invest_current <= '" + search.getEnd_time() + "' and ";
                     break;
             }
