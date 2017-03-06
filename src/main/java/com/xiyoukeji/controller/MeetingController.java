@@ -79,7 +79,7 @@ public class MeetingController {
                 projectTwoBeen.add(projectTwoBean);
 
             }
-            return MapTool.Mapok().put("list", list);
+            return MapTool.Mapok().put("list", projectTwoBeen);
         }
 
     }
