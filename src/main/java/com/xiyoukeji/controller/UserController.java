@@ -2,6 +2,7 @@ package com.xiyoukeji.controller;
 
 import com.google.gson.Gson;
 import com.xiyoukeji.beans.UserBean;
+import com.xiyoukeji.entity.Foundation;
 import com.xiyoukeji.entity.Role;
 import com.xiyoukeji.entity.User;
 import com.xiyoukeji.service.UserService;
@@ -173,6 +174,25 @@ public class UserController {
     public Map logout() {
         userService.logout();
         return MapTool.Mapok();
+    }
+
+    /*根据基金id获取所有投资人*/
+    @RequestMapping(value = "/getInvestByFoundationId")
+    @ResponseBody
+    public Map getInvestByFoundationId(Integer foundationId) {
+        Foundation foundation1 = userService.getInvestByFoundationId(foundationId);
+        List<User> list = foundation1.getList_user();
+        List<UserBean> users = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getRole().getType() == 1) {
+                UserBean userBean = new UserBean();
+                Core.assignDest(userBean, list.get(i));
+                users.add(userBean);
+            }
+        }
+
+        return MapTool.Mapok().put("list", users);
+
     }
 
 }

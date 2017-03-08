@@ -186,4 +186,9 @@ public class UserService {
     public void logout() {
         session.removeAttribute("user");
     }
+
+    @Transactional
+    public Foundation getInvestByFoundationId(Integer foundationId) {
+        return foundationBaseDao.get(Foundation.class, foundationId);
+    }
 }
