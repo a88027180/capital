@@ -43,7 +43,7 @@ public class AreaService {
     public List getSearchCityList(int type, Integer foundationId) {
         User user1 = (User) session.getAttribute("user");
 
-        String sql = "select distinct city_name from Project WHERE 1=1 ";
+        String sql = "select distinct city_name from Project WHERE city_name IS NOT null ";
         switch (type) {
             /*我的项目(草稿箱)*/
             case 0:
