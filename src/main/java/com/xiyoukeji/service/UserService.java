@@ -57,6 +57,7 @@ public class UserService {
             user1.setPosition(user.getPosition());
             user1.setUserName(user.getUserName());
             user1.setRemark(user.getRemark());
+            user1.setList_foundation(user.getList_foundation());
             if (user.getPhoto() != null) {
                 user1.setPhoto(user.getPhoto());
             }

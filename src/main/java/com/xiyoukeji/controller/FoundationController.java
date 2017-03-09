@@ -71,7 +71,7 @@ public class FoundationController {
                 foundation.setResponsibility(foundations.get(i).getResponsibility());
                 List<Project> list1 = new ArrayList<>();
                 for (int j = 0; j < foundations.get(i).getList_project().size(); j++) {
-                    if (foundations.get(i).getList_project().get(j).getState() == 2) {
+                    if (foundations.get(i).getList_project().get(j).getState() == 2 && foundations.get(i).getList_project().get(j).getFalse_del() == 0) {
                         list1.add(foundations.get(i).getList_project().get(j));
                     }
                 }
