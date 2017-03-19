@@ -39,9 +39,14 @@ public class VocationService {
     }
 
     @Transactional
-    public Integer saveorupdateVocation(Vocation vocation) {
-        vocationBaseDao.saveOrUpdate(vocation);
-        return vocation.getId();
+    public Map saveorupdateVocation(Vocation vocation) {
+        Vocation vocation1 = vocationBaseDao.get(Vocation.class, vocation.getId());
+        if (vocation1 == null || vocation1.getAvailable() == 0) {
+            vocationBaseDao.saveOrUpdate(vocation);
+            return MapTool.Mapok().put("vocationId", vocation.getId());
+        } else
+            return MapTool.Map().put("code", "4");
+
     }
 
     @Transactional

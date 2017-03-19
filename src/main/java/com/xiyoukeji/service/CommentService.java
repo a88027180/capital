@@ -24,9 +24,13 @@ public class CommentService {
     HttpSession session;
 
     @Transactional
-    public Integer saveorupdateCommentTab(CommentTab commentTab) {
-        baseDao.saveOrUpdate(commentTab);
-        return commentTab.getId();
+    public Map saveorupdateCommentTab(CommentTab commentTab) {
+        CommentTab commentTab1 = baseDao.get(CommentTab.class, commentTab.getName());
+        if (commentTab1 == null || commentTab1.getState() == 0) {
+            baseDao.saveOrUpdate(commentTab);
+            return MapTool.Mapok().put("CommentTabId", commentTab.getId());
+        } else
+            return MapTool.Map().put("code", "4");
     }
 
 

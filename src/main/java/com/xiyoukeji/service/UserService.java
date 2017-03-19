@@ -94,10 +94,12 @@ public class UserService {
     }
 
     @Transactional
-    public List<User> getUserList(int type) {
+    public List<User> getUserList(int type, Integer roleId, String nameorcode, Integer available) {
+        /*, Integer roleId, String nameorcode, Integer available*/
         List<User> list = new ArrayList<>();
         List<User> list1 = new ArrayList<>();
         switch (type) {
+
             case 0:
                 /*内部角色*/
                 list = baseDao.find("from User where available = 1 and role.type = 0");
@@ -113,9 +115,33 @@ public class UserService {
                 break;
             case 4:
                 /*后台管理系统 禁用启用用户列表*/
-                list = baseDao.find("from User WHERE position is NOT NULL AND role.id is NOT NULL ORDER BY role.id ASC,position ASC");
-                list1 = baseDao.find("from User WHERE position is  NULL OR role.id is NULL ORDER BY role.id DESC,position DESC");
+                String sql = "";
+                String sql1 = "";
+                if (roleId != null) {
+                    sql += "from User WHERE position is NOT NULL AND role.id = " + roleId;
+                    sql1 += "from User WHERE position is NULL AND role.id = " + roleId;
+                } else {
+                    sql += "from User WHERE position is NOT NULL AND role.id is NOT NULL";
+                    sql1 += "from User WHERE (position is  NULL OR role.id is NULL)";
+                }
+                if (nameorcode != null && !nameorcode.equals(""))/*增加心魔查询*/ {
+                    sql += " AND name like '%" + nameorcode + "%' or userName like '%" + nameorcode + "%'";
+                    sql1 += " AND name like '%" + nameorcode + "%' or userName like '%" + nameorcode + "%'";
+                }
+                if (available != null) {
+                    sql += " AND available = " + available;
+                    sql1 += " AND available = " + available;
+                }
+                sql += " ORDER BY role.id ASC,position ASC";
+                sql1 += " ORDER BY role.id DESC,position DESC";
+                list = baseDao.find(sql);
+                list1 = baseDao.find(sql1);
                 list.addAll(list1);
+
+
+//                list = baseDao.find("from User WHERE position is NOT NULL AND role.id is NOT NULL ORDER BY role.id ASC,position ASC");
+//                list1 = baseDao.find("from User WHERE position is  NULL OR role.id is NULL ORDER BY role.id DESC,position DESC");
+//                list.addAll(list1);
                 break;
         }
         return list;

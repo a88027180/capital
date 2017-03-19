@@ -132,6 +132,8 @@ public class WxController {
         result.put("code", "0");
         return result;
     }
+//    @RequestMapping(value = "/getMaterial")
+//    @ResponseBody
 
 
     public String sendHttpGet(String httpUrl) {

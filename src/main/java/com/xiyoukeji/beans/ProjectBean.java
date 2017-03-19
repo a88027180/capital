@@ -74,8 +74,16 @@ public class ProjectBean {
     //    private List<NoteBean> project_notes = new ArrayList<>();
 //    private List<EvaluateBean> project_evaluate = new ArrayList<>();
     private FileBean video;
+    private int sequence = 0;
     private double double_enjoyor;
 
+    public int getSequence() {
+        return sequence;
+    }
+
+    public void setSequence(int sequence) {
+        this.sequence = sequence;
+    }
 
     public List<VocationBean> getVocations() {
         return vocations;

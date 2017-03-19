@@ -95,13 +95,13 @@ public class UserController {
     /*获取用户列表*/
     @RequestMapping(value = "/getUserList")
     @ResponseBody
-    public Map getUserList(int type) {
+    public Map getUserList(int type, Integer roleId, String nameorcode, Integer available) {
         User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
             List<UserBean> list = new ArrayList<>();
-            List<User> users = userService.getUserList(type);
+            List<User> users = userService.getUserList(type, roleId, nameorcode, available);
             for (int i = 0; i < users.size(); i++) {
                 UserBean user = new UserBean();
                 try {

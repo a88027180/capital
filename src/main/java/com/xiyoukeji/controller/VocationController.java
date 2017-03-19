@@ -82,11 +82,11 @@ public class VocationController {
         } else if (user1.getRole().getType() != 2) {
             return MapTool.Map().put("code", 3);
         } else {
-            return MapTool.Mapok().put("vocationId", vocationService.saveorupdateVocation(vocation));
+            return vocationService.saveorupdateVocation(vocation);
         }
     }
 
-    /*增加标签*/
+    /*shanchu标签*/
     @RequestMapping(value = "/deleteVocation")
     @ResponseBody
 

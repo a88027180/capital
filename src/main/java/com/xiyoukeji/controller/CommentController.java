@@ -46,7 +46,7 @@ public class CommentController {
         } else if (user1.getRole().getType() != 2) {
             return MapTool.Map().put("code", 3);
         } else {
-            return MapTool.Mapok().put("commentTabId", commentService.saveorupdateCommentTab(commentTab));
+            return commentService.saveorupdateCommentTab(commentTab);
         }
     }
 
