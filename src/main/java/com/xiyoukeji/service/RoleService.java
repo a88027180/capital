@@ -24,12 +24,29 @@ public class RoleService {
 
     @Transactional
     public Map saveorupdateRole(Role role) {
-
         Map map = new HashMap<>();
-        baseDao.saveOrUpdate(role);
-        map.put("roleId", role.getId());
-        if (role.getAuthority() != null) {
-            map.put("authorityId", role.getAuthority().getId());
+        if (role.getId() == null) {
+            /*新建*/
+            baseDao.saveOrUpdate(role);
+            map.put("roleId", role.getId());
+            if (role.getAuthority() != null) {
+                map.put("authorityId", role.getAuthority().getId());
+            }
+        } else {
+/*编辑*/
+            Role role1 = baseDao.get("from Role where id != " + role.getId() + " and roleName = '" + role.getRoleName() + "'");
+            if (role1 != null) {
+                return MapTool.Map().put("code", "4");
+            } else {
+                Role role2 = baseDao.get(Role.class, role.getId());
+                role2.setRoleName(role.getRoleName());
+                role2.setType(role.getType());
+                role2.setUsers(role.getUsers());
+                role2.setAuthority(role.getAuthority());
+                baseDao.saveOrUpdate(role2);
+                return MapTool.Mapok().put("roleId", role.getId());
+
+            }
         }
 
 

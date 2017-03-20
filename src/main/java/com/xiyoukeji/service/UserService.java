@@ -48,22 +48,27 @@ public class UserService {
             }
 
         } else {
-            user1 = baseDao.get(User.class, user.getId());
-            user1.setPassword(user.getPassword());
-            user1.setRole(user.getRole());
-            user1.setName(user.getName());
-            user1.setAddress(user.getAddress());
-            user1.setPhone(user.getPhone());
-            user1.setPosition(user.getPosition());
-            user1.setUserName(user.getUserName());
-            user1.setRemark(user.getRemark());
-            user1.setList_foundation(user.getList_foundation());
-            if (user.getPhoto() != null) {
-                user1.setPhoto(user.getPhoto());
+            User user2 = baseDao.get("from User where id != " + user.getId() + " and userName = '" + user.getUserName() + "'");
+            if (user2 != null) {
+                return MapTool.Map().put("code", 4);
+            } else {
+                user1 = baseDao.get(User.class, user.getId());
+                user1.setPassword(user.getPassword());
+                user1.setRole(user.getRole());
+                user1.setName(user.getName());
+                user1.setAddress(user.getAddress());
+                user1.setPhone(user.getPhone());
+                user1.setPosition(user.getPosition());
+                user1.setUserName(user.getUserName());
+                user1.setRemark(user.getRemark());
+                user1.setList_foundation(user.getList_foundation());
+                if (user.getPhoto() != null) {
+                    user1.setPhoto(user.getPhoto());
+                }
+                baseDao.saveOrUpdate(user1);
+                map.put("userId", user.getId());
+                return MapTool.Mapok().put("data", map);
             }
-            baseDao.saveOrUpdate(user1);
-            map.put("userId", user.getId());
-            return MapTool.Mapok().put("data", map);
         }
 
 
