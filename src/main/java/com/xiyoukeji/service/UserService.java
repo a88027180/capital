@@ -185,7 +185,7 @@ public class UserService {
             session.setAttribute("user", list.get(0));
             return MapTool.Mapok().put("userId", list.get(0).getId());
         } else {
-            return MapTool.Mapok().put("userId", 0);
+            return MapTool.Map().put("code", "5");
         }
 
     }
