@@ -179,16 +179,21 @@ public class UserController {
     /*根据基金id获取所有投资人*/
     @RequestMapping(value = "/getInvestByFoundationId")
     @ResponseBody
-    public Map getInvestByFoundationId(Integer foundationId) {
+    public Map getInvestByFoundationId(Integer foundationId, Integer roleId) {
         Foundation foundation1 = userService.getInvestByFoundationId(foundationId);
         List<User> list = foundation1.getList_user();
         List<UserBean> users = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getRole().getType() == 1) {
+            if (list.get(i).getRole().getId() == roleId) {
                 UserBean userBean = new UserBean();
                 Core.assignDest(userBean, list.get(i));
                 users.add(userBean);
             }
+//            if (list.get(i).getRole().getType() == 1) {
+//                UserBean userBean = new UserBean();
+//                Core.assignDest(userBean, list.get(i));
+//                users.add(userBean);
+//            }
         }
 
         return MapTool.Mapok().put("list", users);
