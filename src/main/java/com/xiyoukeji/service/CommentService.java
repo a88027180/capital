@@ -25,12 +25,26 @@ public class CommentService {
 
     @Transactional
     public Map saveorupdateCommentTab(CommentTab commentTab) {
-        CommentTab commentTab1 = baseDao.get(CommentTab.class, commentTab.getName());
-        if (commentTab1 == null || commentTab1.getState() == 0) {
-            baseDao.saveOrUpdate(commentTab);
-            return MapTool.Mapok().put("CommentTabId", commentTab.getId());
-        } else
-            return MapTool.Map().put("code", "4");
+
+        if (commentTab.getId() == null) {
+            /*新建查重*/
+            CommentTab commentTab1 = baseDao.get("from CommentTab where name = '" + commentTab.getName() + "'");
+            if (commentTab1 == null || commentTab1.getState() == 0) {
+                baseDao.saveOrUpdate(commentTab);
+                return MapTool.Mapok().put("commentTabId", commentTab.getId());
+            } else
+                return MapTool.Map().put("code", "4");
+        } else {
+            /*修改查重*/
+            CommentTab commentTab1 = baseDao.get("from CommentTab where name = '" + commentTab.getName() + "' and id != " + commentTab.getId());
+            if (commentTab1 == null) {
+                baseDao.saveOrUpdate(commentTab);
+                return MapTool.Mapok().put("commentTabId", commentTab.getId());
+            } else
+                return MapTool.Map().put("code", "4");
+        }
+
+
     }
 
 

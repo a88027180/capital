@@ -46,12 +46,8 @@ public class CommentTab {
         this.notice_text = notice_text;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
