@@ -40,12 +40,22 @@ public class VocationService {
 
     @Transactional
     public Map saveorupdateVocation(Vocation vocation) {
-        Vocation vocation1 = vocationBaseDao.get(Vocation.class, vocation.getId());
-        if (vocation1 == null || vocation1.getAvailable() == 0) {
-            vocationBaseDao.saveOrUpdate(vocation);
-            return MapTool.Mapok().put("vocationId", vocation.getId());
-        } else
-            return MapTool.Map().put("code", "4");
+        if (vocation.getId() == null) {
+            /*新建*/
+            Vocation vocation1 = vocationBaseDao.get("from Vocation where name  = '" + vocation.getName() + "'");
+            if (vocation1 == null || vocation1.getAvailable() == 0) {
+                vocationBaseDao.saveOrUpdate(vocation);
+                return MapTool.Mapok().put("vocationId", vocation.getId());
+            } else
+                return MapTool.Map().put("code", "4");
+        } else {
+            Vocation vocation1 = vocationBaseDao.get("from Vocation where name = '" + vocation.getName() + "' and id != " + vocation.getId());
+            if (vocation1 == null) {
+                vocationBaseDao.saveOrUpdate(vocation);
+                return MapTool.Mapok().put("vocationId", vocation.getId());
+            } else
+                return MapTool.Map().put("code", "4");
+        }
 
     }
 
