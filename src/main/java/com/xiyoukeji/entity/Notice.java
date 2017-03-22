@@ -33,7 +33,7 @@ public class Notice {
     private Project project;
     @OneToMany
     private List<File> files;
-    private String type;
+    private String type;//"通知  公告"
 
     public String getType() {
         return type;

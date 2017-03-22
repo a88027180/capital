@@ -11,6 +11,15 @@ public class SearchNotice {
     private long end_time;
     private Integer page;
     private Integer line;
+    private Integer type;
+
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
 
     public long getBegin_time() {
         return begin_time;
