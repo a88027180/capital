@@ -45,12 +45,14 @@ public class NoticeService {
         User user = (User) session.getAttribute("user");
         String sql_list = "SELECT * from `notice` LEFT OUTER JOIN `user_notice` on (notice.id = user_notice.notice_id) LEFT OUTER JOIN user ON (user.id = user_notice.user_id) LEFT OUTER JOIN project_notice ON (notice.id = project_notice.notice_id) LEFT OUTER JOIN project ON (project.id = project_notice.project_id) WHERE user.id = " + user.getId() + " AND (project.false_del = 0 or project.false_del IS NULL) ";
         String sql_count = "SELECT COUNT(*) from `notice` LEFT OUTER JOIN `user_notice` on (notice.id = user_notice.notice_id) LEFT OUTER JOIN user ON (user.id = user_notice.user_id) LEFT OUTER JOIN project_notice ON (notice.id = project_notice.notice_id) LEFT OUTER JOIN project ON (project.id = project_notice.project_id) WHERE user.id =" + user.getId() + " AND (project.false_del = 0 or project.false_del IS NULL) ";
-        if (searchNotice.getType() == 0) {
-            sql_list += "AND notice.type = '通知' ";
-            sql_count += "AND notice.type = '通知' ";
-        } else if (searchNotice.getType() == 1) {
-            sql_list += "AND notice.type = '公告' ";
-            sql_count += "AND notice.type = '公告' ";
+        if (searchNotice.getType() != null) {
+            if (searchNotice.getType() == 0) {
+                sql_list += "AND notice.type = '通知' ";
+                sql_count += "AND notice.type = '通知' ";
+            } else if (searchNotice.getType() == 1) {
+                sql_list += "AND notice.type = '公告' ";
+                sql_count += "AND notice.type = '公告' ";
+            }
         }
         if (searchNotice.getBegin_time() != 0) {
             sql_list += " and notice_time > " + searchNotice.getBegin_time();
