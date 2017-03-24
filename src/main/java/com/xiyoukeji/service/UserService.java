@@ -130,8 +130,8 @@ public class UserService {
                     sql1 += "from User WHERE (position is  NULL OR role.id is NULL)";
                 }
                 if (nameorcode != null && !nameorcode.equals(""))/*增加心魔查询*/ {
-                    sql += " AND name like '%" + nameorcode + "%' or userName like '%" + nameorcode + "%'";
-                    sql1 += " AND name like '%" + nameorcode + "%' or userName like '%" + nameorcode + "%'";
+                    sql += " AND (name like '%" + nameorcode + "%' or userName like '%" + nameorcode + "%')";
+                    sql1 += " AND (name like '%" + nameorcode + "%' or userName like '%" + nameorcode + "%')";
                 }
                 if (available != null) {
                     sql += " AND available = " + available;

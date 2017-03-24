@@ -15,8 +15,18 @@ public class FoundationProjectBean {
     private long exit_current;
     private int state;
     private int exitState;
+    private ProjectUserBean createUser;
     private Integer province_id;
     private Integer city_id;
+
+
+    public ProjectUserBean getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(ProjectUserBean createUser) {
+        this.createUser = createUser;
+    }
 
     public Integer getProvince_id() {
         return province_id;

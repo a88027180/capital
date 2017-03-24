@@ -78,7 +78,7 @@ public class NoticeService {
     public Map getNoticeList_back(SearchNotice searchNotice) {
 //        List<Notice> list = baseDao.find("SELECT DISTINCT(id) as id from Notice", 1, 10, null);
 //        return MapTool.Mapok().put("list", list);
-
+/*GROUP by notice.id*/
         String sql_list = "SELECT * from `notice` LEFT OUTER JOIN `user_notice` on (notice.id = user_notice.notice_id) LEFT OUTER JOIN user ON (user.id = user_notice.user_id) LEFT OUTER JOIN project_notice ON (notice.id = project_notice.notice_id) LEFT OUTER JOIN project ON (project.id = project_notice.project_id) WHERE (project.false_del = 0 or project.false_del IS NULL) ";
         String sql_count = "SELECT COUNT(*) from `notice` LEFT OUTER JOIN `user_notice` on (notice.id = user_notice.notice_id) LEFT OUTER JOIN user ON (user.id = user_notice.user_id) LEFT OUTER JOIN project_notice ON (notice.id = project_notice.notice_id) LEFT OUTER JOIN project ON (project.id = project_notice.project_id) WHERE (project.false_del = 0 or project.false_del IS NULL) ";
         if (searchNotice.getBegin_time() != 0) {
@@ -89,7 +89,7 @@ public class NoticeService {
             sql_list += " and notice_time < " + searchNotice.getEnd_time();
             sql_count += " and notice_time < " + searchNotice.getEnd_time();
         }
-        sql_list += " ORDER BY notice.publish_time DESC ";
+        sql_list += " GROUP by notice.id ORDER BY notice.publish_time DESC ";
         sql_list += "LIMIT " + (searchNotice.getPage() - 1) * searchNotice.getLine() + "," + searchNotice.getPage() * searchNotice.getLine();
         System.out.print(sql_list);
         SQLQuery sqlList = sessionFactory.getCurrentSession().createSQLQuery(sql_list);
