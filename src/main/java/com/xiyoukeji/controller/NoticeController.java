@@ -86,7 +86,7 @@ public class NoticeController {
         } else {
             List<NoticeBean> list = new ArrayList<>();
             Map map = noticeService.getNoticeList_back(searchNotice);
-            List<Notice> notices = (List<Notice>) map.get("list");
+            List<Notice> notices = (List<Notice>) map.get("O");
             for (int i = 0; i < notices.size(); i++) {
                 NoticeBean noticeBean = new NoticeBean();
                 Core.assignDest(noticeBean, notices.get(i));

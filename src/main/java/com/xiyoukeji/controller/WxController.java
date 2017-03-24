@@ -1,5 +1,8 @@
 package com.xiyoukeji.controller;
 
+import com.xiyoukeji.beans.WeixinOauth2Token;
+import com.xiyoukeji.entity.User;
+import com.xiyoukeji.tools.BaseDao;
 import com.xiyoukeji.utils.Constant;
 import com.xiyoukeji.utils.WxUtils;
 import org.apache.http.HttpEntity;
@@ -16,6 +19,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,6 +33,11 @@ import java.util.Map;
  */
 @Controller
 public class WxController {
+    @Resource
+    HttpSession session;
+
+    @Resource
+    BaseDao<User> userBaseDao;
 
     private static RequestConfig requestConfig = RequestConfig.custom()
             .setSocketTimeout(15000)
@@ -132,8 +142,30 @@ public class WxController {
         result.put("code", "0");
         return result;
     }
-//    @RequestMapping(value = "/getMaterial")
-//    @ResponseBody
+
+    @RequestMapping(value = "/getWXUserInfo")
+    @ResponseBody
+    public String getUserInfo(String code) {
+        // 拼接请求地址
+        String requestUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code";
+        requestUrl = requestUrl.replace("APPID", Constant.appID);
+        requestUrl = requestUrl.replace("SECRET", Constant.appsecret);
+        requestUrl = requestUrl.replace("CODE", code);
+        // 获取网页授权凭证
+        JSONObject json = new JSONObject(sendHttpGet(requestUrl));
+        String access_token = json.getString("access_token");
+        String openid = json.getString("openid");
+
+        // 拼接请求地址
+        String _requestUrl = "https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID";
+        _requestUrl = _requestUrl.replace("ACCESS_TOKEN", access_token).replace("OPENID", openid);
+        if (_requestUrl != null && !_requestUrl.equals("")) {
+            User user = (User) session.getAttribute("user");
+            user.setIsBand(1);
+            userBaseDao.saveOrUpdate(user);
+        }
+        return sendHttpGet(_requestUrl);
+    }
 
 
     public String sendHttpGet(String httpUrl) {
