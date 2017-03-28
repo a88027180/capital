@@ -98,13 +98,13 @@ public class NoticeService {
         List<BigInteger> list1 = sqlCount.list();
         long count = list1.get(0).longValue();
         List<Notice> list = sqlList.addEntity(Notice.class).list();
-        List<Notice> returnList = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            if (!returnList.contains(list.get(i))) {
-                returnList.add(list.get(i));
-            }
-        }
-        return MapTool.Map().put("list", returnList).put("count", count);
+//        List<Notice> returnList = new ArrayList<>();
+//        for (int i = 0; i < list.size(); i++) {
+//            if (!returnList.contains(list.get(i))) {
+//                returnList.add(list.get(i));
+//            }
+//        }
+        return MapTool.Map().put("list", list).put("count", count);
     }
 
     @Transactional
