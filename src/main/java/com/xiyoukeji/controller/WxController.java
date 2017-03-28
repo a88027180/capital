@@ -2,7 +2,10 @@ package com.xiyoukeji.controller;
 
 import com.xiyoukeji.beans.WeixinOauth2Token;
 import com.xiyoukeji.entity.User;
+import com.xiyoukeji.service.UserService;
+import com.xiyoukeji.service.WXService;
 import com.xiyoukeji.tools.BaseDao;
+import com.xiyoukeji.tools.MapTool;
 import com.xiyoukeji.utils.Constant;
 import com.xiyoukeji.utils.WxUtils;
 import org.apache.http.HttpEntity;
@@ -27,6 +30,7 @@ import java.io.InputStream;
 import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by dasiy on 16/12/20.
@@ -38,6 +42,9 @@ public class WxController {
 
     @Resource
     BaseDao<User> userBaseDao;
+
+    @Resource
+    WXService wxService;
 
     private static RequestConfig requestConfig = RequestConfig.custom()
             .setSocketTimeout(15000)
@@ -143,29 +150,68 @@ public class WxController {
         return result;
     }
 
-    @RequestMapping(value = "/getWXUserInfo")
+    @RequestMapping(value = "/getStateString")
     @ResponseBody
-    public String getUserInfo(String code) {
-        // 拼接请求地址
+    public Map getStateString() {
+        String state = UUID.randomUUID().toString();
+        wxService.getStateString(state);
+        return MapTool.Mapok().put("state", state);
+
+    }
+
+    @RequestMapping(value = "/bindorlogin")
+    @ResponseBody
+    public Map bindorlogin(String code, String state, Integer type) {
         String requestUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code";
-        requestUrl = requestUrl.replace("APPID", Constant.appID);
-        requestUrl = requestUrl.replace("SECRET", Constant.appsecret);
+        requestUrl = requestUrl.replace("APPID", Constant.appIDText);
+        requestUrl = requestUrl.replace("SECRET", Constant.appsecretText);
         requestUrl = requestUrl.replace("CODE", code);
         // 获取网页授权凭证
         JSONObject json = new JSONObject(sendHttpGet(requestUrl));
-        String access_token = json.getString("access_token");
-        String openid = json.getString("openid");
+        Map map = null;
+        if (json.has("access_token")) {
+            String openid = json.getString("openid");/*用户唯一标识*/
+            switch (type) {
+                case 0:
+                /*绑定*/
+                    if (openid != null && !openid.equals("")) {
+                        map = wxService.saveWXUser(openid,state);
+                    }
+                    break;
+                case 1:
+                /*登录*/
+                    map = wxService.login(openid);
+                    break;
+            }
+        } else
+            map = MapTool.Map().put("code", "7");/*code无效*/
+        return map;
 
-        // 拼接请求地址
-        String _requestUrl = "https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID";
-        _requestUrl = _requestUrl.replace("ACCESS_TOKEN", access_token).replace("OPENID", openid);
-        if (_requestUrl != null && !_requestUrl.equals("")) {
-            User user = (User) session.getAttribute("user");
-            user.setIsBand(1);
-            userBaseDao.saveOrUpdate(user);
-        }
-        return sendHttpGet(_requestUrl);
     }
+
+//    @RequestMapping(value = "/getWXUserInfo")
+//    @ResponseBody
+//    public String getUserInfo(String code) {
+//        // 拼接请求地址
+//        String requestUrl = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code";
+//        requestUrl = requestUrl.replace("APPID", Constant.appID);
+//        requestUrl = requestUrl.replace("SECRET", Constant.appsecret);
+//        requestUrl = requestUrl.replace("CODE", code);
+//        // 获取网页授权凭证
+//        JSONObject json = new JSONObject(sendHttpGet(requestUrl));
+//        String access_token = json.getString("access_token");
+//        String openid = json.getString("openid");
+//
+//        // 拼接请求地址
+//        String _requestUrl = "https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID";
+//        _requestUrl = _requestUrl.replace("ACCESS_TOKEN", access_token).replace("OPENID", openid);
+//        if (_requestUrl != null && !_requestUrl.equals("")) {
+//            User user = (User) session.getAttribute("user");
+//            user.setIsBand(1);
+//            userBaseDao.saveOrUpdate(user);
+//        }
+//        return sendHttpGet(_requestUrl);
+//    }
 
 
     public String sendHttpGet(String httpUrl) {

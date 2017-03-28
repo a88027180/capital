@@ -35,6 +35,8 @@ public class User {
     private String remark;
     private int isBand = 0;
     private int available = 1;
+    private String open_id;
+    private String state_string;
     @ManyToMany
     @JoinTable(name = "user_foundation", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "foundation_id")})
     private List<Foundation> list_foundation = new ArrayList<>();
@@ -50,8 +52,24 @@ public class User {
         return list_notice;
     }
 
+    public String getState_string() {
+        return state_string;
+    }
+
+    public void setState_string(String state_string) {
+        this.state_string = state_string;
+    }
+
     public void setList_notice(List<Notice> list_notice) {
         this.list_notice = list_notice;
+    }
+
+    public String getOpen_id() {
+        return open_id;
+    }
+
+    public void setOpen_id(String open_id) {
+        this.open_id = open_id;
     }
 
     public String getRemark() {
