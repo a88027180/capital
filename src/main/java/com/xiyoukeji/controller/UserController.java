@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
@@ -146,6 +147,7 @@ public class UserController {
     public Map update_user(Integer id, int type) {
         User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
+
             return MapTool.Map().put("code", 2);
         } else if (user1.getRole().getType() != 2) {
             return MapTool.Map().put("code", 3);
@@ -157,7 +159,7 @@ public class UserController {
     /*登录前端*/
     @RequestMapping(value = "/login")
     @ResponseBody
-    public Map login(User user) {
+    public Map login( User user) {
         return userService.login(user);
     }
 

@@ -19,6 +19,7 @@ import java.util.List;
 public class RoleUserBean {
     private Integer id;
     private String userName;
+    private String password;
     private String name;
     private String position;
     private String address;
@@ -27,7 +28,16 @@ public class RoleUserBean {
     private int isBand;
     private int available;
 
+
     private List<UserProjectBean> list_project = new ArrayList<>();
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public String getRemark() {
         return remark;
