@@ -20,7 +20,6 @@ public class ProjectUserBean {
     private Integer id;
     private FileBean photo;
     private String userName;
-    private String password;
     private UserRoleBean role;
     private String name;
     private String position;
@@ -76,14 +75,6 @@ public class ProjectUserBean {
 
     public void setUserName(String userName) {
         this.userName = userName;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
 

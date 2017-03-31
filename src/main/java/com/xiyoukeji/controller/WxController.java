@@ -154,8 +154,12 @@ public class WxController {
     @ResponseBody
     public Map getStateString() {
         String state = UUID.randomUUID().toString();
+        String requestUrl  = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=URI&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
+        requestUrl = requestUrl.replace("APPID", Constant.appIDText);
+        requestUrl = requestUrl.replace("URI", Constant.uri);
+        requestUrl = requestUrl.replace("STATE", state);
         wxService.getStateString(state);
-        return MapTool.Mapok().put("state", state);
+        return MapTool.Mapok().put("uri", requestUrl);
 
     }
 

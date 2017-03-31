@@ -19,7 +19,6 @@ import java.util.List;
 public class RoleUserBean {
     private Integer id;
     private String userName;
-    private String password;
     private String name;
     private String position;
     private String address;
@@ -70,13 +69,6 @@ public class RoleUserBean {
         this.userName = userName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getName() {
         return name;

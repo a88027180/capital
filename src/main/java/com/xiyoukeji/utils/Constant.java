@@ -8,6 +8,7 @@ public class Constant {
     public static String appsecret = "bbb6684955781ca96653ded6ef03b235";
     public static String appIDText = "wxc97ae03a5f126b14";
     public static String appsecretText = "056716841ee8772d956def48c72955f0";
+    public static String uri="http%3a%2f%2fenjoyorcapital.xiyoukeji.com";
     public static String access_token = "";
     public static long expires_in = 0;
     public static long current = 0;

@@ -37,6 +37,7 @@ public class User {
     private int available = 1;
     private String open_id;
     private String state_string;
+    private String session_token;
     @ManyToMany
     @JoinTable(name = "user_foundation", joinColumns = {@JoinColumn(name = "user_id")}, inverseJoinColumns = {@JoinColumn(name = "foundation_id")})
     private List<Foundation> list_foundation = new ArrayList<>();
@@ -90,6 +91,14 @@ public class User {
 
     public Integer getId() {
         return id;
+    }
+
+    public String getSession_token() {
+        return session_token;
+    }
+
+    public void setSession_token(String session_token) {
+        this.session_token = session_token;
     }
 
     public void setId(Integer id) {

@@ -10,10 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by dasiy on 16/12/22.
@@ -178,15 +175,29 @@ public class UserService {
     public Map login(User user) {
         List<User> list = new ArrayList<>();
         Map map = new HashMap<>();
-        map.put("userName", user.getUserName());
-        map.put("password", user.getPassword());
-        list = baseDao.find("from User where userName = :userName and password = :password and available = 1 ", map);
-        if (list.size() != 0) {
-            session.setAttribute("user", list.get(0));
-            return MapTool.Mapok().put("userId", list.get(0).getId());
+        if (user.getSession_token() == null || user.getSession_token().equals("")) {
+            /*web*/
+            map.put("userName", user.getUserName());
+            map.put("password", user.getPassword());
+            list = baseDao.find("from User where userName = :userName and password = :password and available = 1 ", map);
+            if (list.size() != 0) {
+                User user1 = list.get(0);
+                user1.setSession_token(UUID.randomUUID().toString());
+                baseDao.saveOrUpdate(user1);
+                session.setAttribute("user", list.get(0));
+                return MapTool.Mapok().put("userId", list.get(0).getId()).put("session_token", user1.getSession_token());
+            } else {
+                return MapTool.Map().put("code", "5");
+            }
         } else {
-            return MapTool.Map().put("code", "5");
+            /*订阅号*/
+            User user2 = baseDao.get("from User where session_token = '" + user.getSession_token() + "'");
+            if (user2 != null)
+                return MapTool.Mapok().put("userId", user2.getId()).put("session_token", user2.getSession_token());
+            else
+                return MapTool.Map().put("code", "6");
         }
+
 
     }
 

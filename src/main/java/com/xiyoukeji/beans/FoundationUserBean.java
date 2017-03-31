@@ -19,7 +19,6 @@ import java.util.List;
 public class FoundationUserBean {
     private Integer id;
     private String userName;
-    private String password;
 //    private RoleBean role;
     private String name;
     private String position;
@@ -61,13 +60,6 @@ public class FoundationUserBean {
         this.userName = userName;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 //
 //    public RoleBean getRole() {
 //        return role;
