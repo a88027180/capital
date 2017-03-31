@@ -159,8 +159,8 @@ public class UserController {
     /*登录前端*/
     @RequestMapping(value = "/login")
     @ResponseBody
-    public Map login( User user) {
-        return userService.login(user);
+    public Map login(HttpServletResponse response, User user) {
+        return userService.login(response, user);
     }
 
     /*登录后台*/
@@ -173,8 +173,8 @@ public class UserController {
     /*注销*/
     @RequestMapping(value = "/logout")
     @ResponseBody
-    public Map logout() {
-        userService.logout();
+    public Map logout(HttpServletResponse response) {
+        userService.logout(response);
         return MapTool.Mapok();
     }
 

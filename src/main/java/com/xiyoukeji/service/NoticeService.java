@@ -90,7 +90,7 @@ public class NoticeService {
             sql_count += " and notice_time < " + searchNotice.getEnd_time();
         }
         sql_list += " GROUP by notice.id ORDER BY notice.publish_time DESC ";
-        sql_list += "LIMIT " + (searchNotice.getPage() - 1) * searchNotice.getLine() + "," + searchNotice.getPage() * searchNotice.getLine();
+        sql_list += "LIMIT " + (searchNotice.getPage() - 1) * searchNotice.getLine() + "," + searchNotice.getLine();
         System.out.print(sql_list);
         SQLQuery sqlList = sessionFactory.getCurrentSession().createSQLQuery(sql_list);
         SQLQuery sqlCount = sessionFactory.getCurrentSession().createSQLQuery(sql_count);

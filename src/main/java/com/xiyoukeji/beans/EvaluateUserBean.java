@@ -13,7 +13,6 @@ public class EvaluateUserBean {
     private Integer id;
     private FileBean photo;
     private String userName;
-    private String password;
     private String name;
     private String position;
     private String address;
@@ -22,13 +21,6 @@ public class EvaluateUserBean {
     private int available;
     private int isBand;
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
     public String getRemark() {
         return remark;

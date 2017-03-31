@@ -43,7 +43,7 @@ public class WXService {
         if (user1 == null)
             return MapTool.Map().put("code", "6");/*用户未绑定*/
         else
-            return userService.login(user1);
+            return userService.login(null, user1);
     }
 
     @Transactional

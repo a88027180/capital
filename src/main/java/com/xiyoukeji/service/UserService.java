@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.*;
@@ -174,29 +175,29 @@ public class UserService {
     }
 
     @Transactional
-    public Map login( User user) {
+    public Map login(HttpServletResponse response, User user) {
         List<User> list = new ArrayList<>();
         Map map = new HashMap<>();
 //        if (user.getSession_token() == null || user.getSession_token().equals("")) {
             /*web*/
-            map.put("userName", user.getUserName());
-            map.put("password", user.getPassword());
-            list = baseDao.find("from User where userName = :userName and password = :password and available = 1 ", map);
-            if (list.size() != 0) {
-//                User user1 = list.get(0);
-//                String cookieStr = UUID.randomUUID().toString();
-//                user1.setSession_token(cookieStr);
-//                baseDao.saveOrUpdate(user1);
-                session.setAttribute("user", list.get(0));
-//                Cookie cookie = new Cookie("cookieStr", cookieStr);
-//                cookie.setPath("/");
-//                cookie.setHttpOnly(true);
-//                cookie.setMaxAge(31536000);
-//                response.addCookie(cookie);
-                return MapTool.Mapok().put("userId", list.get(0).getId());
-            } else {
-                return MapTool.Map().put("code", "5");
-            }
+        map.put("userName", user.getUserName());
+        map.put("password", user.getPassword());
+        list = baseDao.find("from User where userName = :userName and password = :password and available = 1 ", map);
+        if (list.size() != 0) {
+            User user1 = list.get(0);
+            String cookieStr = UUID.randomUUID().toString();
+            user1.setSession_token(cookieStr);
+            baseDao.saveOrUpdate(user1);
+            session.setAttribute("user", list.get(0));
+            Cookie cookie = new Cookie("cookieStr", cookieStr);
+            cookie.setPath("/");
+            cookie.setHttpOnly(true);
+            cookie.setMaxAge(31536000);
+            response.addCookie(cookie);
+            return MapTool.Mapok().put("userId", list.get(0).getId());
+        } else {
+            return MapTool.Map().put("code", "5");
+        }
 //        } else {
 //            /*订阅号*/
 //            User user2 = baseDao.get("from User where session_token = '" + user.getSession_token() + "'");
@@ -234,7 +235,15 @@ public class UserService {
 
 
     @Transactional
-    public void logout() {
+    public void logout(HttpServletResponse response) {
+        User user = (User) session.getAttribute("user");
+        user.setSession_token(null);
+        saveorupdateUser(user);
+        Cookie cookie = new Cookie("cookieStr", "");
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
         session.removeAttribute("user");
     }
 
@@ -244,6 +253,6 @@ public class UserService {
     }
 
     public User getCookie(String value) {
-        return userBaseDao.get("from User where session_token = :session_token",MapTool.Map().put("session_token",value));
+        return userBaseDao.get("from User where session_token = :session_token", MapTool.Map().put("session_token", value));
     }
 }
