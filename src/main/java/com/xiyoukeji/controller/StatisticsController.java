@@ -137,7 +137,7 @@ public class StatisticsController {
         } else if (user1.getRole().getType() == 1) {
             /*外部角色*/
             StringBuffer buffer = new StringBuffer();
-            List<Foundation> list = user1.getList_foundation();
+            List<Foundation> list = userService.getUser(user1.getId()).getList_foundation();
             for (int i = 0; i < list.size(); i++) {
                 buffer.append(list.get(i).getId());
                 if (i != list.size() - 1) {
