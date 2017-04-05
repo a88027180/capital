@@ -40,6 +40,8 @@ public class ProjectService {
     BaseDao<Vocation> vocationBaseDao;
     @Resource
     SessionFactory sessionFactory;
+    @Resource
+    UserService userService;
 
     @Transactional
     public Map saveorupdateProject(Project project, int type) {
@@ -265,7 +267,43 @@ public class ProjectService {
     @Transactional
     public List<Project> getMainProjectList() {
 //        return projectBaseDao.find("from Project where state = 2 and exitState = 0 order by invest_current desc");
-        return projectBaseDao.find("from Project where state = 2 and false_del = 0 order by invest_current desc");
+        User user1 = (User) session.getAttribute("user");
+        StringBuffer stringBuffer = new StringBuffer();
+        if (user1.getRole().getType() == 1) {
+            /*外部角色-投资人*/
+            List<Foundation> list = userService.getUser(user1.getId()).getList_foundation();
+            if (list != null && list.size() > 0) {
+                for (int i = 0; i < list.size(); i++) {
+                    stringBuffer.append(list.get(i).getId());
+                    if (i != list.size() - 1)
+                        stringBuffer.append(",");
+                }
+                String sql = "SELECT project.id AS id,project.invest_current AS invest_current,project.project_name AS project_name,file.id AS logo_id,file.url AS logo_url,foundation.name AS foundation_name,project.project_introduction AS project_introduction FROM `project` JOIN project_foundation ON project.id = project_foundation.project_id JOIN foundation ON foundation.id = project_foundation.foundation_id LEFT OUTER JOIN file ON project.logo_id = file.id WHERE project_foundation.foundation_id in (" + stringBuffer.toString() + ") AND state =2 and false_del = 0 order by invest_current desc";
+                SQLQuery sqlQuery0 = sessionFactory.getCurrentSession().createSQLQuery(sql);
+                List<Object[]> list2 = sqlQuery0.list();
+                List<Project> projects = new ArrayList<>();
+                for (int i = 0; i < list2.size(); i++) {
+                    File file = new File();
+                    Foundation foundation = new Foundation();
+                    Project project = new Project();
+                    project.setId((Integer) list2.get(i)[0]);
+                    project.setInvest_current(((BigInteger) list2.get(i)[1]).longValue());
+                    project.setProject_name((String) list2.get(i)[2]);
+                    project.setProject_introduction((String) list2.get(i)[6]);
+                    if (list2.get(i)[3] != null && list2.get(i)[4] != null) {
+                        file.setId((Integer) list2.get(i)[3]);
+                        file.setUrl((String) list2.get(i)[4]);
+                    }
+                    foundation.setName((String) list2.get(i)[5]);
+                    project.setFoundation(foundation);
+                    project.setLogo(file);
+                    projects.add(project);
+                }
+                return projects;
+            } else
+                return new ArrayList<>();
+        } else
+            return projectBaseDao.find("from Project where state = 2 and false_del = 0 order by invest_current desc");
     }
 
     @Transactional
