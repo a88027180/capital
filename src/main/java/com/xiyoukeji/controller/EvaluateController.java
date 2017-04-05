@@ -68,7 +68,7 @@ public class EvaluateController {
     @ResponseBody
     public Map getEvaluateAvgList(Integer projectId, int number) {
         Map map = null;
-        if (userService.isAuthority()) {
+        if (userService.isLog()) {
             List<EvaluateAvgBean> list = new ArrayList<>();
             List<EvaluateAvg> evaluateAvgs = evaluateService.getEvaluateAvgList(projectId, number);
             for (int i = 0; i < evaluateAvgs.size(); i++) {
@@ -97,7 +97,7 @@ public class EvaluateController {
     @ResponseBody
     public Map getEvaluateRecordList(Integer projectId, Integer userId, int number) {
         Map map = null;
-        if (userService.isAuthority()) {
+        if (userService.isLog()) {
             List<EvaluateRecordBean> list = new ArrayList<>();
             List<EvaluateRecord> evaluateRecords = evaluateService.getEvaluateRecordList(projectId, userId, number);
             for (int i = 0; i < evaluateRecords.size(); i++) {

@@ -54,7 +54,6 @@ public class UserService {
                 return MapTool.Map().put("code", 4);
             } else {
                 user1 = baseDao.get(User.class, user.getId());
-                user1.setPassword(user.getPassword());
                 user1.setRole(user.getRole());
                 user1.setName(user.getName());
                 user1.setAddress(user.getAddress());
