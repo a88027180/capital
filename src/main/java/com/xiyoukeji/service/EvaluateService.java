@@ -43,10 +43,20 @@ public class EvaluateService {
 
     @Transactional
     public List<Evaluate> getEvaluateList(Integer projectId, Integer userId, int number) {
-        if (userId == null) {
-            SQLQuery sqlQuery = sessionFactory.getCurrentSession().createSQLQuery("SELECT * from (SELECT * FROM (SELECT * from evaluate LEFT OUTER JOIN project_evaluate on evaluate.id = project_evaluate.evaluate_id WHERE project_evaluate.project_id = " + projectId + ")AS a ORDER by a.`updateTime` DESC)AS b GROUP BY b.`user_id`");
-            List<Evaluate> list = sqlQuery.addEntity(Evaluate.class).list();
-            return list;
+        if (userId == null) {//SELECT * from (SELECT * FROM (SELECT * from evaluate LEFT OUTER JOIN project_evaluate on evaluate.id = project_evaluate.evaluate_id WHERE project_evaluate.project_id = " + projectId + ")AS a ORDER by a.`updateTime` DESC)AS b GROUP BY b.`user_id`
+            String sql = "SELECT DISTINCT(user_id) FROM `evaluate` JOIN project_evaluate ON evaluate.id = project_evaluate.evaluate_id WHERE project_evaluate.project_id=" + projectId;
+
+            SQLQuery sqlQuery = sessionFactory.getCurrentSession().createSQLQuery(sql);
+            List<Integer[]> list = sqlQuery.list();
+            List<Evaluate> evaluateList = new ArrayList<>();
+            for (int i = 0; i < list.size(); i++) {
+                String search = "SELECT * FROM `evaluate` JOIN project_evaluate ON evaluate.id = project_evaluate.evaluate_id WHERE project_evaluate.project_id = " + projectId + " and user_id = " + list.get(i) + " ORDER  by updateTime DESC ";
+                SQLQuery searchQuery = sessionFactory.getCurrentSession().createSQLQuery(search);
+                Evaluate evaluate = (Evaluate) searchQuery.addEntity(Evaluate.class).list().get(0);
+                if (evaluate != null)
+                    evaluateList.add(evaluate);
+            }
+            return evaluateList;
         } else {
             Map map = new HashMap<>();
             map.put("projectId", projectId);
