@@ -8,6 +8,7 @@ import com.xiyoukeji.entity.User;
 import com.xiyoukeji.service.FoundationService;
 import com.xiyoukeji.tools.MapTool;
 import com.xiyoukeji.utils.Core;
+import com.xiyoukeji.utils.ErrCodeExcetion;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,7 +34,10 @@ public class FoundationController {
     @ExceptionHandler
     @ResponseBody
     public Map exception(RuntimeException runtimeException) {
-        return MapTool.Map().put("code", "1").put("msg", runtimeException.getMessage());
+        if (runtimeException instanceof ErrCodeExcetion)
+            return MapTool.Map().put("code", ((ErrCodeExcetion) runtimeException).getCode()).put("msg", runtimeException.getMessage());
+        else
+            return MapTool.Map().put("code", "1").put("msg", runtimeException.getMessage());
     }
 
     /*创建或编辑基金 管理员权限*/

@@ -6,8 +6,10 @@ import com.xiyoukeji.entity.Project;
 import com.xiyoukeji.entity.User;
 import com.xiyoukeji.service.AreaService;
 import com.xiyoukeji.service.FileService;
+import com.xiyoukeji.service.UserService;
 import com.xiyoukeji.tools.MapTool;
 import com.xiyoukeji.utils.Core;
+import com.xiyoukeji.utils.ErrCodeExcetion;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,12 +31,17 @@ public class AreaController {
     AreaService areaService;
     @Resource
     HttpSession session;
+    @Resource
+    UserService userService;
 
 
     @ExceptionHandler
     @ResponseBody
     public Map exception(RuntimeException runtimeException) {
-        return MapTool.Map().put("code", "1").put("msg", runtimeException.getMessage());
+        if (runtimeException instanceof ErrCodeExcetion)
+            return MapTool.Map().put("code", ((ErrCodeExcetion) runtimeException).getCode()).put("msg", runtimeException.getMessage());
+        else
+            return MapTool.Map().put("code", "1").put("msg", runtimeException.getMessage());
     }
 
     /*获取省列表*/
@@ -55,18 +62,11 @@ public class AreaController {
     @RequestMapping(value = "/getSearchCityList")
     @ResponseBody
     public Map getSearchCityList(int type, Integer foundationId) {
-        User user1 = (User) session.getAttribute("user");
-        if (user1 == null) {
-            return MapTool.Map().put("code", 2);
-        } else {
-            List<SearchCity> list = new ArrayList<>();
+        Map map = null;
+        if (userService.isLog()) {
             List projects = areaService.getSearchCityList(type, foundationId);
-//            for (int i = 0; i < projects.size(); i++) {
-//                SearchCity searchCity = new SearchCity();
-//                Core.assignDest(searchCity, projects.get(i));
-//                list.add(searchCity);
-//            }
-            return MapTool.Mapok().put("data", MapTool.Map().put("list", projects));
+            map = MapTool.Map().put("list", projects);
         }
+        return MapTool.Mapok().put("data", map);
     }
 }

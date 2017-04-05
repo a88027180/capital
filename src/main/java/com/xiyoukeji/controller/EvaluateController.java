@@ -7,8 +7,10 @@ import com.xiyoukeji.beans.EvaluateRecordBean;
 import com.xiyoukeji.beans.ProjectBean;
 import com.xiyoukeji.entity.*;
 import com.xiyoukeji.service.EvaluateService;
+import com.xiyoukeji.service.UserService;
 import com.xiyoukeji.tools.MapTool;
 import com.xiyoukeji.utils.Core;
+import com.xiyoukeji.utils.ErrCodeExcetion;
 import org.hibernate.event.spi.EventSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -30,32 +32,25 @@ public class EvaluateController {
     EvaluateService evaluateService;
     @Resource
     HttpSession session;
+    @Resource
+    UserService userService;
 
 
     @ExceptionHandler
     @ResponseBody
     public Map exception(RuntimeException runtimeException) {
-        return MapTool.Map().put("code", "1").put("msg", runtimeException.getMessage());
+        if (runtimeException instanceof ErrCodeExcetion)
+            return MapTool.Map().put("code", ((ErrCodeExcetion) runtimeException).getCode()).put("msg", runtimeException.getMessage());
+        else
+            return MapTool.Map().put("code", "1").put("msg", runtimeException.getMessage());
     }
-//
-//    /*用户获取评级-一条*/
-//    @RequestMapping(value = "/getEvaluate")
-//    @ResponseBody
-//    public Map getEvaluate(Integer projectId, Integer userId) {
-//        Evaluate evaluate = evaluateService.getEvaluate(projectId, userId);
-//        EvaluateBean evaluateBean = new EvaluateBean();
-//        Core.assignDest(evaluateBean, evaluate);
-//        return MapTool.Mapok().put("data", MapTool.Map().put("evaluate", evaluateBean));
-//    }
 
     /*用户获取评级列表*/
     @RequestMapping(value = "/getEvaluateList")
     @ResponseBody
     public Map getEvaluateList(Integer projectId, Integer userId, int number) {
-        User user1 = (User) session.getAttribute("user");
-        if (user1 == null) {
-            return MapTool.Map().put("code", 2);
-        } else {
+        Map map = null;
+        if (userService.isLog()) {
             List<EvaluateBean> list = new ArrayList<>();
             List<Evaluate> evaluates = evaluateService.getEvaluateList(projectId, userId, number);
             for (int i = 0; i < evaluates.size(); i++) {
@@ -63,28 +58,17 @@ public class EvaluateController {
                 Core.assignDest(evaluateBean, evaluates.get(i));
                 list.add(evaluateBean);
             }
-            return MapTool.Mapok().put("data", MapTool.Map().put("list", list));
+            map = MapTool.Mapok().put("data", MapTool.Map().put("list", list));
         }
+        return map;
     }
-//
-//    /*获取项目评级平均值*/
-//    @RequestMapping(value = "/getEvaluateAvg")
-//    @ResponseBody
-//    public Map getEvaluateAvg(Integer projectId) {
-//        EvaluateAvg evaluateAvg = evaluateService.getEvaluateAvg(projectId);
-//        EvaluateAvgBean evaluateAvgBean = new EvaluateAvgBean();
-//        Core.assignDest(evaluateAvgBean, evaluateAvg);
-//        return MapTool.Mapok().put("data", MapTool.Map().put("evaluateAvg", evaluateAvgBean));
-//    }
 
     /*获取项目评级平均值列表*/
     @RequestMapping(value = "/getEvaluateAvgList")
     @ResponseBody
     public Map getEvaluateAvgList(Integer projectId, int number) {
-        User user1 = (User) session.getAttribute("user");
-        if (user1 == null) {
-            return MapTool.Map().put("code", 2);
-        } else {
+        Map map = null;
+        if (userService.isAuthority()) {
             List<EvaluateAvgBean> list = new ArrayList<>();
             List<EvaluateAvg> evaluateAvgs = evaluateService.getEvaluateAvgList(projectId, number);
             for (int i = 0; i < evaluateAvgs.size(); i++) {
@@ -103,18 +87,17 @@ public class EvaluateController {
                 evaluateAvgBean.setItem_ten(evaluateAvgs.get(i).getItem_ten() / evaluateAvgs.get(i).getNumber());
                 list.add(evaluateAvgBean);
             }
-            return MapTool.Mapok().put("data", MapTool.Map().put("list", list));
+            map = MapTool.Mapok().put("data", MapTool.Map().put("list", list));
         }
+        return map;
     }
 
     /*获取主页项目评级5条*/
     @RequestMapping(value = "/getEvaluateRecordList")
     @ResponseBody
     public Map getEvaluateRecordList(Integer projectId, Integer userId, int number) {
-        User user1 = (User) session.getAttribute("user");
-        if (user1 == null) {
-            return MapTool.Map().put("code", 2);
-        } else {
+        Map map = null;
+        if (userService.isAuthority()) {
             List<EvaluateRecordBean> list = new ArrayList<>();
             List<EvaluateRecord> evaluateRecords = evaluateService.getEvaluateRecordList(projectId, userId, number);
             for (int i = 0; i < evaluateRecords.size(); i++) {
@@ -122,8 +105,9 @@ public class EvaluateController {
                 Core.assignDest(evaluateRecordBean, evaluateRecords.get(i));
                 list.add(evaluateRecordBean);
             }
-            return MapTool.Mapok().put("data", MapTool.Map().put("list", list));
+            map = MapTool.Mapok().put("data", MapTool.Map().put("list", list));
         }
+        return map;
 
     }
 
@@ -132,13 +116,12 @@ public class EvaluateController {
     @ResponseBody
     public Map saveorupdateEvaluate(String strEvaluate) {
         Evaluate evaluate = new Gson().fromJson(strEvaluate, Evaluate.class);
-        User user1 = (User) session.getAttribute("user");
-        if (user1 == null) {
-            return MapTool.Map().put("code", 2);
-        } else {
-            evaluate.setUser(user1);
-            return MapTool.Mapok().put("data", MapTool.Map().put("projectId", evaluateService.saveorupdateEvaluate(evaluate)));
+        Map map = null;
+        if (userService.isLog()) {
+            evaluate.setUser((User) session.getAttribute("user"));
+            map = MapTool.Map().put("projectId", evaluateService.saveorupdateEvaluate(evaluate));
         }
+        return MapTool.Mapok().put("data", map);
 
     }
 }

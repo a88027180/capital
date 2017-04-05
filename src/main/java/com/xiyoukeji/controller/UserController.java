@@ -145,15 +145,18 @@ public class UserController {
     @RequestMapping(value = "/update_user")
     @ResponseBody
     public Map update_user(Integer id, int type) {
-        User user1 = (User) session.getAttribute("user");
-        if (user1 == null) {
-
-            return MapTool.Map().put("code", 2);
-        } else if (user1.getRole().getType() != 2) {
-            return MapTool.Map().put("code", 3);
-        } else {
-            return MapTool.Mapok().put("data", userService.update_user(id, type));
-        }
+        Map map = null;
+        if (userService.isAuthority())
+            map = userService.update_user(id, type);
+        return MapTool.Mapok().put("data", map);
+//        User user1 = (User) session.getAttribute("user");
+//        if (user1 == null) {
+//            return MapTool.Map().put("code", 2);
+//        } else if (user1.getRole().getType() != 2) {
+//            return MapTool.Map().put("code", 3);
+//        } else {
+//            return MapTool.Mapok().put("data", userService.update_user(id, type));
+//        }
     }
 
     /*登录前端*/

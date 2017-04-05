@@ -3,7 +3,9 @@ package com.xiyoukeji.controller;
 import com.xiyoukeji.beans.SearchStatistic;
 import com.xiyoukeji.entity.Foundation;
 import com.xiyoukeji.entity.User;
+import com.xiyoukeji.service.FoundationService;
 import com.xiyoukeji.service.StatisticsService;
+import com.xiyoukeji.service.UserService;
 import com.xiyoukeji.service.VocationService;
 import com.xiyoukeji.tools.MapTool;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,10 @@ public class StatisticsController {
     StatisticsService statisticsService;
     @Resource
     HttpSession session;
+    @Resource
+    FoundationService foundationService;
+    @Resource
+    UserService userService;
 
 
     @ExceptionHandler
@@ -102,7 +108,7 @@ public class StatisticsController {
         } else if (user1.getRole().getType() == 1) {
             /*外部角色*/
             StringBuffer buffer = new StringBuffer();
-            List<Foundation> list = user1.getList_foundation();
+            List<Foundation> list = userService.getUser(user1.getId()).getList_foundation();
             for (int i = 0; i < list.size(); i++) {
                 buffer.append(list.get(i).getId());
                 if (i != list.size() - 1) {

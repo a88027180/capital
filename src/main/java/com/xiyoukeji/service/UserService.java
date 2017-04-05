@@ -5,6 +5,7 @@ import com.xiyoukeji.entity.Role;
 import com.xiyoukeji.entity.User;
 import com.xiyoukeji.tools.BaseDao;
 import com.xiyoukeji.tools.MapTool;
+import com.xiyoukeji.utils.ErrCodeExcetion;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -254,5 +255,27 @@ public class UserService {
 
     public User getCookie(String value) {
         return userBaseDao.get("from User where session_token = :session_token", MapTool.Map().put("session_token", value));
+    }
+
+    public boolean isLog() {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null)
+            throw new ErrCodeExcetion("2");
+        else
+            return true;
+
+
+    }
+
+    public boolean isAuthority() {
+        User user1 = (User) session.getAttribute("user");
+        if (user1 == null)
+            throw new ErrCodeExcetion("2");
+        else if (user1.getRole().getType() != 2)
+            throw new ErrCodeExcetion("3");
+        else
+            return true;
+
+
     }
 }
