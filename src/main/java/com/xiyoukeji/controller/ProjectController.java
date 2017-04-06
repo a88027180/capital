@@ -6,8 +6,10 @@ import com.xiyoukeji.entity.Project;
 import com.xiyoukeji.entity.User;
 import com.xiyoukeji.entity.Vocation;
 import com.xiyoukeji.service.ProjectService;
+import com.xiyoukeji.service.UserService;
 import com.xiyoukeji.tools.MapTool;
 import com.xiyoukeji.utils.Core;
+import com.xiyoukeji.utils.ErrCodeExcetion;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,14 +31,18 @@ public class ProjectController {
     ProjectService projectService;
     @Resource
     HttpSession session;
+    @Resource
+    UserService userService;
 
 
-//    @ExceptionHandler
-//    @ResponseBody
-//    public Map exception(RuntimeException runtimeException) {
-//        runtimeException.printStackTrace();
-//        return MapTool.Map().put("code", "1").put("msg", runtimeException.getMessage());
-//    }
+    @ExceptionHandler
+    @ResponseBody
+    public Map exception(RuntimeException runtimeException) {
+        if (runtimeException instanceof ErrCodeExcetion)
+            return MapTool.Map().put("code", ((ErrCodeExcetion) runtimeException).getCode()).put("msg", runtimeException.getMessage());
+        else
+            return MapTool.Map().put("code", "1").put("msg", runtimeException.getMessage());
+    }
 
     /*新增或编辑项目*/
     @RequestMapping(value = "/saveorupdateProject")
@@ -269,6 +275,17 @@ public class ProjectController {
 
             return MapTool.Mapok().put("data", projectTwoBeen);
         }
+    }
+
+    @RequestMapping(value = "/updateProjectResponser")
+    @ResponseBody
+    public Map updateProjectResponser(Integer projectId, Integer userId) {
+        Map map = null;
+        if (userService.isAuthority()) {
+            map = projectService.updateProjectResponser(projectId, userId);
+
+        }
+        return map;
     }
 
 

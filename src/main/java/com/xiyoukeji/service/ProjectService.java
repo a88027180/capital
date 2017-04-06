@@ -537,4 +537,13 @@ public class ProjectService {
         return list;
     }
 
+    @Transactional
+    public Map updateProjectResponser(Integer projectId, Integer userId) {
+        User user = userBaseDao.get(User.class, userId);
+        Project project = projectBaseDao.get(Project.class, projectId);
+        project.setCreateUser(user);
+        projectBaseDao.saveOrUpdate(project);
+        return MapTool.Mapok();
+    }
+
 }
