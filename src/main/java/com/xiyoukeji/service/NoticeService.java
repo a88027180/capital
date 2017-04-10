@@ -63,14 +63,14 @@ public class NoticeService {
             sql_count += " and notice_time < " + searchNotice.getEnd_time();
         }
         sql_list += " ORDER BY notice.publish_time DESC ";
-        sql_list += "LIMIT " + (searchNotice.getPage() - 1) * searchNotice.getLine() + "," + searchNotice.getPage() * searchNotice.getLine();
+//        sql_list += "LIMIT " + (searchNotice.getPage() - 1) * searchNotice.getLine() + "," + searchNotice.getPage() * searchNotice.getLine();
         System.out.print(sql_list);
         SQLQuery sqlList = sessionFactory.getCurrentSession().createSQLQuery(sql_list);
         SQLQuery sqlCount = sessionFactory.getCurrentSession().createSQLQuery(sql_count);
 //        SQLQuery sqlQuery = sessionFactory.getCurrentSession().createSQLQuery("SELECT * FROM (SELECT * from `notice` LEFT OUTER JOIN `user_notice` on notice.id = user_notice.notice_id WHERE `user_id`= " + user.getId() + ")AS a ORDER by a.`publish_time` DESC");
         List<BigInteger> list1 = sqlCount.list();
         long count = list1.get(0).longValue();
-        List<Notice> list = sqlList.addEntity(Notice.class).list();
+        List<Notice> list = sqlList.addEntity(Notice.class).setFirstResult((searchNotice.getPage() - 1) * searchNotice.getLine()).setMaxResults(searchNotice.getPage() * searchNotice.getLine()).list();
         return MapTool.Map().put("list", list).put("count", count);
     }
 
@@ -90,14 +90,14 @@ public class NoticeService {
             sql_count += " and notice_time < " + searchNotice.getEnd_time();
         }
         sql_list += " GROUP by notice.id ORDER BY notice.publish_time DESC ";
-        sql_list += "LIMIT " + (searchNotice.getPage() - 1) * searchNotice.getLine() + "," + searchNotice.getLine();
+//        sql_list += "LIMIT " + (searchNotice.getPage() - 1) * searchNotice.getLine() + "," + searchNotice.getLine();
         System.out.print(sql_list);
         SQLQuery sqlList = sessionFactory.getCurrentSession().createSQLQuery(sql_list);
         SQLQuery sqlCount = sessionFactory.getCurrentSession().createSQLQuery(sql_count);
 //        SQLQuery sqlQuery = sessionFactory.getCurrentSession().createSQLQuery("SELECT * FROM (SELECT * from `notice` LEFT OUTER JOIN `user_notice` on notice.id = user_notice.notice_id WHERE `user_id`= " + user.getId() + ")AS a ORDER by a.`publish_time` DESC");
         List<BigInteger> list1 = sqlCount.list();
         long count = list1.get(0).longValue();
-        List<Notice> list = sqlList.addEntity(Notice.class).list();
+        List<Notice> list = sqlList.addEntity(Notice.class).setFirstResult((searchNotice.getPage() - 1) * searchNotice.getLine()).setMaxResults(searchNotice.getPage() * searchNotice.getLine()).list();
 //        List<Notice> returnList = new ArrayList<>();
 //        for (int i = 0; i < list.size(); i++) {
 //            if (!returnList.contains(list.get(i))) {

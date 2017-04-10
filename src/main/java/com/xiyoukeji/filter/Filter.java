@@ -37,16 +37,18 @@ public class Filter implements javax.servlet.Filter {
         User user1 = (User) session.getAttribute("user");
         if (user1 == null) {
             Cookie[] cookies = request.getCookies();
-            for (Cookie cookie : cookies) {
-                if ("cookieStr".equals(cookie.getName())) {
-                    String value = cookie.getValue();
-                    if (!StringUtils.isEmpty(value)) {
-                        User user = SpringContextHolder.getBean(UserService.class).getCookie(value);
-                        if (user != null) {
-                            session.setAttribute("user", user);
+            if (cookies != null) {
+                for (Cookie cookie : cookies) {
+                    if ("cookieStr".equals(cookie.getName())) {
+                        String value = cookie.getValue();
+                        if (!StringUtils.isEmpty(value)) {
+                            User user = SpringContextHolder.getBean(UserService.class).getCookie(value);
+                            if (user != null) {
+                                session.setAttribute("user", user);
+                            }
                         }
+                        break;
                     }
-                    break;
                 }
             }
         }

@@ -205,4 +205,9 @@ public class UserController {
 
     }
 
+    @RequestMapping(value = "/test")
+    @ResponseBody
+    public Map test(String testString) {
+        return MapTool.Mapok().put("string", testString);
+    }
 }

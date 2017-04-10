@@ -13,7 +13,7 @@ import java.util.Map;
  */
 @Controller
 public class MainController {
-    @RequestMapping(value = "/test")
+    @RequestMapping(value = "/text")
     @ResponseBody
     public Map index(){
         Map<String,Object> map=new HashMap<>();

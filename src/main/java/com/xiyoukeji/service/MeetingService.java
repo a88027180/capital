@@ -75,7 +75,7 @@ public class MeetingService {
         System.out.print(sourceStrArray.length);
         for (int i = 0; i < sourceStrArray.length; i++) {
             Project project = projectBaseDao.get(Project.class, Integer.valueOf(sourceStrArray[i]));
-            project.setSequence(i);
+            project.setSequence(i + 1);
             projectBaseDao.save(project);
         }
         return MapTool.Mapok();
