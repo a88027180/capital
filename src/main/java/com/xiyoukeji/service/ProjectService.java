@@ -207,7 +207,7 @@ public class ProjectService {
 
         {
             /*新建 判断名字重复*/
-            Project project2 = projectBaseDao.get("from Project where project_name = '" + project.getProject_name() + "'");
+            Project project2 = projectBaseDao.get("from Project where project_name = '" + project.getProject_name() + "' and true_del = 0");
             if (project2 == null) {
                 project1 = project;
                 project1.setCreate_current(System.currentTimeMillis());

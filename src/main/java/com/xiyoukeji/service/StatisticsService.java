@@ -49,15 +49,13 @@ public class StatisticsService {
         SQLQuery sqlQuery3 = sessionFactory.getCurrentSession().createSQLQuery(sql3);
         List<Object[]> list3 = sqlQuery3.list();
         return MapTool.Mapok().put("data0", list0).put("data1", list1).put("data2", list2).put("data3", list3);
-
-
     }
 
     /*已投项目*/
     @Transactional
     public List<Statistics> getType0() {
         List<Statistics> statisticses = new ArrayList<>();
-        String sql = "SELECT foundation.id as foundation_id,foundation.name as foundation_name,SUM(project.double_valuation) as valuation_afterInvest,COUNT(project.id) as project_count ,SUM(project.double_enjoyor)AS money_thisTime FROM `project` JOIN project_foundation ON(project.id=project_foundation.project_id) JOIN foundation on(foundation.id=project_foundation.foundation_id) WHERE project.false_del = 0 GROUP BY foundation.id";
+        String sql = "SELECT foundation.id as foundation_id,foundation.name as foundation_name,SUM(project.double_valuation * project.share_enjoyor / 100) as valuation_afterInvest,COUNT(project.id) as project_count ,SUM(project.double_enjoyor)AS money_thisTime FROM `project` JOIN project_foundation ON(project.id=project_foundation.project_id) JOIN foundation on(foundation.id=project_foundation.foundation_id) WHERE project.false_del = 0 GROUP BY foundation.id";
         SQLQuery sqlQuery = sessionFactory.getCurrentSession().createSQLQuery(sql);
         List<Object[]> list = sqlQuery.list();
         for (int i = 0; i < list.size(); i++) {
