@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -73,7 +74,7 @@ public class MeetingController {
                 projectTwoBean.setProject_stage((String) list.get(i)[5]);
                 projectTwoBean.setUser_name((String) list.get(i)[6]);
                 projectTwoBean.setFoundation_name((String) list.get(i)[7]);
-                projectTwoBean.setItem_all((Integer) list.get(i)[8]);
+                projectTwoBean.setItem_all(((BigDecimal) list.get(i)[8]).intValue());
                 projectTwoBean.setProject_schedule((Integer) list.get(i)[9]);
 
                 projectTwoBeen.add(projectTwoBean);
