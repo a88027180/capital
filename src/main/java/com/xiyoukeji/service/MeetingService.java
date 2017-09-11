@@ -40,13 +40,21 @@ public class MeetingService {
         switch (type) {
             /*add*/
             case 0:
-                if (list.size() == 0) {
+                if (list == null || list.size() == 0) {
                     meeting = new Meeting();
+                    project.setSequence(1);
                 } else {
                     meeting = list.get(0);
+                    String sql = "select max(project.sequence) from project";
+                    SQLQuery sqlQuery = sessionFactory.getCurrentSession().createSQLQuery(sql);
+                    List<Object[]> queryList = sqlQuery.list();
+                    project.setSequence((Integer) queryList.get(0)[0] + 1);
+
                 }
                 meeting.getProjects().add(project);
                 meetingBaseDao.saveOrUpdate(meeting);
+                projectBaseDao.saveOrUpdate(project);
+
                 break;
             case 1:
                 /*del*/
