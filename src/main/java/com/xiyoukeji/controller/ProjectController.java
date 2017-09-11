@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -49,7 +50,13 @@ public class ProjectController {
     @ResponseBody
     public Map saveorupdateProject(String strProject, int type) {
         User user1 = (User) session.getAttribute("user");
-        Project project = new Gson().fromJson(strProject, Project.class);
+        Project project = null;
+        try {
+            project = new Gson().fromJson(strProject, Project.class);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         if (user1 == null) {
             return MapTool.Map().put("code", 2);
         } else {
@@ -156,7 +163,12 @@ public class ProjectController {
                 projectTwoBean.setProject_stage((String) list.get(i)[5]);
                 projectTwoBean.setUser_name((String) list.get(i)[6]);
                 projectTwoBean.setFoundation_name((String) list.get(i)[7]);
-                projectTwoBean.setItem_all((Integer) list.get(i)[8]);
+                if (list.get(i)[8] == null) {
+                    projectTwoBean.setItem_all(0);
+                } else {
+                    projectTwoBean.setItem_all(((BigDecimal) (list.get(i)[8])).intValue());
+
+                }
                 projectTwoBean.setProject_schedule((Integer) list.get(i)[9]);
 
                 projectTwoBeen.add(projectTwoBean);
@@ -266,7 +278,15 @@ public class ProjectController {
                 projectTwoBean.setProject_stage((String) list.get(i)[5]);
                 projectTwoBean.setUser_name((String) list.get(i)[6]);
                 projectTwoBean.setFoundation_name((String) list.get(i)[7]);
-                projectTwoBean.setItem_all((Integer) list.get(i)[8]);
+                try {
+                    if (list.get(i)[8] == null)
+                        projectTwoBean.setItem_all(0);
+                    else
+                        projectTwoBean.setItem_all(((BigDecimal) (list.get(i)[8])).intValue());
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 projectTwoBean.setProject_schedule((Integer) list.get(i)[9]);
 
                 projectTwoBeen.add(projectTwoBean);

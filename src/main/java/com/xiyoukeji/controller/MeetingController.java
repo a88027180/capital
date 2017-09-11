@@ -74,7 +74,16 @@ public class MeetingController {
                 projectTwoBean.setProject_stage((String) list.get(i)[5]);
                 projectTwoBean.setUser_name((String) list.get(i)[6]);
                 projectTwoBean.setFoundation_name((String) list.get(i)[7]);
-                projectTwoBean.setItem_all(((BigDecimal) list.get(i)[8]).intValue());
+
+                try {
+                    if (list.get(i)[8] == null)
+                        projectTwoBean.setItem_all(0);
+                    else
+                        projectTwoBean.setItem_all(((BigDecimal) (list.get(i)[8])).intValue());
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 projectTwoBean.setProject_schedule((Integer) list.get(i)[9]);
 
                 projectTwoBeen.add(projectTwoBean);
