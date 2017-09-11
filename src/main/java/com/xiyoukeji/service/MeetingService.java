@@ -47,8 +47,13 @@ public class MeetingService {
                     meeting = list.get(0);
                     String sql = "select max(project.sequence) from project";
                     SQLQuery sqlQuery = sessionFactory.getCurrentSession().createSQLQuery(sql);
-                    List<Object[]> queryList = sqlQuery.list();
-                    project.setSequence((Integer) queryList.get(0)[0] + 1);
+                    List<Integer> queryList = sqlQuery.list();
+                    try {
+                        project.setSequence(queryList.get(0) + 1);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
                 }
                 meeting.getProjects().add(project);
